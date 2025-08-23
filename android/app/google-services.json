@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "474164506708",
+    "project_id": "kheet-amal",
+    "storage_bucket": "kheet-amal.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:474164506708:android:d0b281316c86baba573dc1",
+        "android_client_info": {
+          "package_name": "com.example.kheet_amal"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfFEE8HtUVMRMrY6ldrY8N65HFHkWIFKw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
