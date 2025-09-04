@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kheet_amal/core/routing/app_router.dart';
+import 'package:kheet_amal/core/routing/app_routes.dart';
 import 'package:kheet_amal/core/theme/app_theme.dart';
 
 void main() async {
@@ -36,8 +37,8 @@ class MyApp extends StatelessWidget {
           locale: context.locale,
           debugShowCheckedModeBanner: false,
           theme: AppTheme.lightTheme,
-          routes: AppRouter.routes,
-          home: const Scaffold(),
+          initialRoute: AppRoutes.splash,
+          onGenerateRoute: (settings) => AppRouter.generateRoute(settings),
         );
       },
     );
