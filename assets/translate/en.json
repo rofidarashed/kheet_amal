@@ -1,3 +1,12 @@
 {
-    "app_name": "Kheet Amal"
+  "app_name": "Kheet Amal",
+  "welcome_title": "Welcome 👋",
+  "welcome_subtitle": "Our app helps reunite missing children with their families",
+  "search_title": "Search with us 🔍",
+  "search_subtitle": "You can search for missing children or add a new report easily",
+  "together_title": "Together we bring them back 🏠",
+  "together_subtitle": "Join us and help bring a smile back to every home",
+  "next_button": "Next",
+  "get_started_button": "Get Started",
+  "skip": "Skip"
 }

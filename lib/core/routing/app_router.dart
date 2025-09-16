@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:kheet_amal/core/routing/app_routes.dart';
 import 'package:kheet_amal/feature/home/home_screen.dart';
 import 'package:kheet_amal/feature/splash/presentation/splash_screen.dart';
+import 'package:kheet_amal/feature/onboarding/onboarding_screen.dart';
 
 class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case AppRoutes.splash:
         return MaterialPageRoute(builder: (_) => const SplashScreen());
+      case AppRoutes.onboarding:
+        return MaterialPageRoute(builder: (_) => const OnboardingScreen());
       case AppRoutes.home:
         return MaterialPageRoute(builder: (_) => const HomeScreen());
       default:
