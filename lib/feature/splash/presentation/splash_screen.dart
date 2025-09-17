@@ -50,7 +50,7 @@ class _SplashScreenState extends State<SplashScreen>
       child: BlocListener<SplashCubit, SplashState>(
         listener: (context, state) {
           if (state is SplashNavigateToHome) {
-            Navigator.of(context).pushReplacementNamed(AppRoutes.onboarding);
+            Navigator.of(context).pushReplacementNamed(AppRoutes.home);
           }
         },
         child: Scaffold(

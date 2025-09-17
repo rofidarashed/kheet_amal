@@ -1,12 +1,32 @@
 {
-  "app_name": "Kheet Amal",
-  "welcome_title": "Welcome 👋",
-  "welcome_subtitle": "Our app helps reunite missing children with their families",
-  "search_title": "Search with us 🔍",
-  "search_subtitle": "You can search for missing children or add a new report easily",
-  "together_title": "Together we bring them back 🏠",
-  "together_subtitle": "Join us and help bring a smile back to every home",
-  "next_button": "Next",
-  "get_started_button": "Get Started",
-  "skip": "Skip"
+    "app_name": "Kheet Amal",
+    "forgot_password": "Forgot Password?",
+    "enter_verification_code": "Enter Verification Code",
+    "reset_password": "Reset Password",
+    "enter_phone_number_msg": "Please enter your registered mobile number to send the verification code",
+    "enter_verification_code_msg": "Please enter the verification code sent to your mobile number",
+    "new_password_different": "The new password must be different from the previous one",
+    "new_password": "New Password",
+    "phone_number": "Phone Number",
+    "enter_new_password": "Enter New Password",
+    "country_code": "+20",
+    "enter_phone_number": "Enter Phone Number",
+    "timer": "1:00",
+    "resend_code": "Resend Code",
+    "confirm_new_password": "Confirm New Password",
+    "enter_new_password_again": "Enter New Password Again",
+    "confirm_code": "Confirm Code",
+    "password_changed_success": "Password changed successfully!",
+    "login_with_new_password": "You can now use the new password to log in securely",
+    "send_code": "Send Code",
+    "resend": "Resend",
+    "did_not_receive_code": "Didn’t receive the code?",
+    "confirm": "Confirm",
+
+    "password_reset_success": {
+        "title": "Password Reset",
+        "success_title": "Password changed successfully!",
+        "success_description": "You can now use the new password to log in securely",
+        "login_button": "Login"
+    }
 }
