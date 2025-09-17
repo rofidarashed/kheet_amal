@@ -76,131 +76,138 @@ class _VerificationScreenState extends State<VerificationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:CustomAppBar(),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 24.w),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(height: 40.h),
+      appBar: const CustomAppBar(),
+      body: SafeArea(
+        child: Center(
+          // 🔥 بيخلي كل المحتوى في النص
+          child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 20.h),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center, // 🔥 عمودي في النص
+              crossAxisAlignment: CrossAxisAlignment.center, // 🔥 أفقي في النص
+              children: [
+                SizedBox(height: 40.h),
 
-            /// عنوان الشاشة
-            Text(
-              "enter_verification_code".tr(),
-              style: TextStyle(
-                fontSize: 24.sp,
-                fontWeight: FontWeight.w600,
-                color: Colors.black,
-              ),
-              textAlign: TextAlign.center,
-            ),
-
-            SizedBox(height: 16.h),
-
-            Text(
-              "enter_verification_code_msg".tr(),
-              style: TextStyle(
-                fontSize: 14.sp,
-                color: Colors.grey[600],
-                height: 1.5,
-              ),
-              textAlign: TextAlign.center,
-            ),
-
-            SizedBox(height: 40.h),
-
-            /// مربعات إدخال الكود باستخدام Pinput
-            Pinput(
-              length: 4,
-              showCursor: true,
-              onChanged: (value) {
-                setState(() {
-                  _code = value;
-                });
-              },
-              onCompleted: (value) {
-                _code = value;
-                _verifyCode();
-              },
-              defaultPinTheme: PinTheme(
-                width: 60.w,
-                height: 60.h,
-                textStyle: TextStyle(
-                  fontSize: 20.sp,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black,
+                /// العنوان
+                Text(
+                  "enter_verification_code".tr(),
+                  style: TextStyle(
+                    fontSize: 24.sp,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-                decoration: BoxDecoration(
-                  border: Border.all(color: AppColors.primaryColor, width: 1),
-                  borderRadius: BorderRadius.circular(8.r),
+
+                SizedBox(height: 16.h),
+
+                /// الوصف
+                Text(
+                  "enter_verification_code_msg".tr(),
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                    color: Colors.grey[600],
+                    height: 1.5,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-              ),
-              focusedPinTheme: PinTheme(
-                width: 60.w,
-                height: 60.h,
-                textStyle: TextStyle(
-                  fontSize: 20.sp,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black,
-                ),
-                decoration: BoxDecoration(
-                  border: Border.all(color: AppColors.secondaryColor, width: 2),
-                  borderRadius: BorderRadius.circular(8.r),
-                ),
-              ),
-            ),
 
-            SizedBox(height: 24.h),
+                SizedBox(height: 40.h),
 
-            if (!_isResendEnabled)
-              Text(
-                '${"resend_code".tr()} ${_formatTime(_remainingSeconds)}',
-                style: TextStyle(fontSize: 14.sp, color: Colors.grey[600]),
-                textAlign: TextAlign.center,
-              ),
-
-            SizedBox(height: 32.h),
-
-            CustomButton(
-              text: "confirm_code".tr(),
-              onPressed: _verifyCode,
-            ),
-
-            SizedBox(height: 24.h),
-
-            GestureDetector(
-              onTap: _isResendEnabled ? _resendCode : null,
-              child: RichText(
-                textAlign: TextAlign.center,
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text: "${"did_not_receive_code".tr()} ",
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        color: Colors.grey[600],
-                      ),
+                /// مربعات إدخال الكود
+                Pinput(
+                  length: 4,
+                  showCursor: true,
+                  onChanged: (value) => setState(() => _code = value),
+                  onCompleted: (value) {
+                    _code = value;
+                    _verifyCode();
+                  },
+                  defaultPinTheme: PinTheme(
+                    width: 60.w,
+                    height: 60.h,
+                    textStyle: TextStyle(
+                      fontSize: 20.sp,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black,
                     ),
-                    TextSpan(
-                      text: "resend".tr(),
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        color: _isResendEnabled
-                            ? AppColors.secondaryColor
-                            : Colors.grey[400],
-                        fontWeight: FontWeight.w600,
-                        decoration: _isResendEnabled
-                            ? TextDecoration.underline
-                            : null,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: AppColors.primaryColor,
+                        width: 1,
                       ),
+                      borderRadius: BorderRadius.circular(8.r),
                     ),
-                  ],
+                  ),
+                  focusedPinTheme: PinTheme(
+                    width: 60.w,
+                    height: 60.h,
+                    textStyle: TextStyle(
+                      fontSize: 20.sp,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black,
+                    ),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: AppColors.secondaryColor,
+                        width: 2,
+                      ),
+                      borderRadius: BorderRadius.circular(8.r),
+                    ),
+                  ),
                 ),
-              ),
-            ),
 
-            const Spacer(),
-          ],
+                SizedBox(height: 24.h),
+
+                if (!_isResendEnabled)
+                  Text(
+                    '${"resend_code".tr()} ${_formatTime(_remainingSeconds)}',
+                    style: TextStyle(fontSize: 14.sp, color: Colors.grey[600]),
+                    textAlign: TextAlign.center,
+                  ),
+
+                SizedBox(height: 32.h),
+
+                CustomButton(text: "confirm_code".tr(), onPressed: _verifyCode),
+
+                SizedBox(height: 24.h),
+
+                GestureDetector(
+                  onTap: _isResendEnabled ? _resendCode : null,
+                  child: RichText(
+                    textAlign: TextAlign.center,
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: "${"did_not_receive_code".tr()} ",
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            color: Colors.grey[600],
+                          ),
+                        ),
+                        TextSpan(
+                          text: "resend".tr(),
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            color: _isResendEnabled
+                                ? AppColors.secondaryColor
+                                : Colors.grey[400],
+                            fontWeight: FontWeight.w600,
+                            decoration: _isResendEnabled
+                                ? TextDecoration.underline
+                                : null,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+
+                SizedBox(height: 400.h),
+              ],
+            ),
+          ),
         ),
       ),
     );

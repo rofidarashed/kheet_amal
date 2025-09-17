@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:kheet_amal/core/utils/app_colors.dart';
+import 'package:country_code_picker/country_code_picker.dart';
 import '../../../core/routing/app_routes.dart';
 import '../widgets/custom_appbar.dart';
 import '../widgets/custom_button.dart';
@@ -18,6 +19,8 @@ class _ForgetPassScreenState extends State<ForgetPassScreen> {
   final TextEditingController _phoneController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
+  String _selectedCode = "+20";
+
   @override
   void dispose() {
     _phoneController.dispose();
@@ -27,7 +30,6 @@ class _ForgetPassScreenState extends State<ForgetPassScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       appBar: const CustomAppBar(),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 15.w),
@@ -65,9 +67,10 @@ class _ForgetPassScreenState extends State<ForgetPassScreen> {
                 ),
               ),
               Gap(5.h),
-              TextFormField(onTapOutside: ((event) {
-                FocusScope.of(context).unfocus();
-              }),
+              TextFormField(
+                onTapOutside: ((event) {
+                  FocusScope.of(context).unfocus();
+                }),
                 controller: _phoneController,
                 keyboardType: TextInputType.phone,
                 decoration: InputDecoration(
@@ -85,29 +88,32 @@ class _ForgetPassScreenState extends State<ForgetPassScreen> {
                     ],
                   ),
                   prefixIcon: Container(
-                    width: 12,
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 12.w,
-                      vertical: 8.h,
-                    ),
                     decoration: BoxDecoration(
                       color: AppColors.secondaryColor,
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(20),
                     ),
-                    child: Center(
-                      child: Text(
-                        '+20',
-                        style: TextStyle(
-                          color: AppColors.backgroundColor,
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w500,
-                        ),
+                    child: CountryCodePicker(
+                      onChanged: (code) {
+                        setState(() {
+                          _selectedCode = code.dialCode!;
+                        });
+                      },
+                      initialSelection: '+20',
+                      favorite: ['+20', '+966', '+971'],
+                      showCountryOnly: false,
+                      showOnlyCountryWhenClosed: false,
+                      alignLeft: false,
+                      textStyle: TextStyle(
+                        color: AppColors.backgroundColor,
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w500,
                       ),
+                      padding: EdgeInsets.zero,
                     ),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.r),
-                    borderSide: BorderSide(color:AppColors.primaryColor),
+                    borderSide: BorderSide(color: AppColors.primaryColor),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.r),
@@ -136,6 +142,9 @@ class _ForgetPassScreenState extends State<ForgetPassScreen> {
                   text: 'send_code'.tr(),
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
+                      final fullNumber =
+                          "$_selectedCode${_phoneController.text}";
+
                       Navigator.of(context).pushNamed(AppRoutes.verification);
                     }
                   },
