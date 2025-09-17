@@ -1,3 +1,32 @@
 {
-    "app_name": "خيط أمل"
+    "app_name": "خيط أمل",
+    "forgot_password": "هل نسيت كلمة المرور؟",
+    "enter_verification_code": "أدخل رمز التحقق",
+    "reset_password": "إعادة تعيين كلمة المرور",
+    "enter_phone_number_msg": "من فضلك أدخل رقم هاتفك المسجل لإرسال رمز التحقق",
+    "enter_verification_code_msg": "من فضلك أدخل رمز التحقق المرسل إلى رقم هاتفك",
+    "new_password_different": "يجب أن تكون كلمة المرور الجديدة مختلفة عن السابقة",
+    "new_password": "كلمة المرور الجديدة",
+    "phone_number": "رقم الهاتف",
+    "enter_new_password": "أدخل كلمة المرور الجديدة",
+    "country_code": "+20",
+    "enter_phone_number": "أدخل رقم الهاتف",
+    "timer": "1:00",
+    "resend_code": "إعادة إرسال الرمز",
+    "confirm_new_password": "تأكيد كلمة المرور الجديدة",
+    "enter_new_password_again": "أدخل كلمة المرور الجديدة مرة أخرى",
+    "confirm_code": "تأكيد الرمز",
+    "password_changed_success": "تم تغيير كلمة المرور بنجاح!",
+    "login_with_new_password": "يمكنك الآن استخدام كلمة المرور الجديدة لتسجيل الدخول بأمان",
+    "send_code": "إرسال الرمز",
+    "resend": "إعادة إرسال",
+    "did_not_receive_code": "لم تستلم الرمز؟",
+    "confirm": "تأكيد",
+
+    "password_reset_success": {
+        "title": "إعادة تعيين كلمة المرور",
+        "success_title": "تم تغيير كلمة المرور بنجاح!",
+        "success_description": "يمكنك الآن استخدام كلمة المرور الجديدة لتسجيل الدخول بأمان",
+        "login_button": "تسجيل الدخول"
+    }
 }
