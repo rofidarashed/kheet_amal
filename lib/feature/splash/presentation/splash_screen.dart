@@ -51,7 +51,6 @@ class _SplashScreenState extends State<SplashScreen>
         listener: (context, state) {
           if (state is SplashNavigateToHome) {
             Navigator.of(context).pushReplacementNamed(AppRoutes.home);
-
           }
         },
         child: Scaffold(
