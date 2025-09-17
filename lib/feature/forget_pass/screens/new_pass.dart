@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:kheet_amal/core/routing/app_router.dart';
 import 'package:kheet_amal/core/routing/app_routes.dart';
+import 'package:kheet_amal/feature/forget_pass/widgets/custom_appbar.dart';
 import '../../../core/utils/app_colors.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/custom_pass_feild.dart';
@@ -33,7 +33,7 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
 
   void _handlePasswordReset() {
     if (_formKey.currentState?.validate() ?? false) {
-    Navigator.of(context).pushNamed(AppRoutes.passSuccess);
+      Navigator.of(context).pushNamed(AppRoutes.passSuccess);
     }
   }
 
@@ -41,20 +41,12 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
-      appBar: AppBar(
-        backgroundColor: AppColors.backgroundColor,
-        elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: Colors.black, size: 20.sp),
-          onPressed: () => Navigator.pop(context),
-        ),
-      ),
+      appBar: CustomAppBar(),
       body: Padding(
         padding: EdgeInsets.all(24.w),
         child: Form(
           key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: ListView(
             children: [
               // Title
               Text(

@@ -10,23 +10,11 @@ class PasswordResetSuccessScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "password_reset_success.title".tr(),
-          style: TextStyle(fontSize: 20.sp),
-        ),
-        centerTitle: true,
-        backgroundColor: Colors.white,
-        elevation: 0,
-        foregroundColor: Colors.black,
-      ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Gap(100.h),
-
-            // Success Images
             Stack(
               children: [
                 Center(
@@ -92,7 +80,7 @@ class PasswordResetSuccessScreen extends StatelessWidget {
             CustomButton(
               text: "password_reset_success.login_button".tr(),
               onPressed: () {
-                // TODO: Navigate to login screen
+                // TODO: Navigate by remove until to login screen
               },
             ),
 
