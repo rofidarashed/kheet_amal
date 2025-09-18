@@ -7,6 +7,7 @@ import 'package:country_code_picker/country_code_picker.dart';
 import '../../../core/routing/app_routes.dart';
 import '../widgets/custom_appbar.dart';
 import '../widgets/custom_button.dart';
+import 'dart:ui' as ui;
 
 class ForgetPassScreen extends StatefulWidget {
   const ForgetPassScreen({super.key});
@@ -67,74 +68,93 @@ class _ForgetPassScreenState extends State<ForgetPassScreen> {
                 ),
               ),
               Gap(5.h),
-              TextFormField(
-                onTapOutside: ((event) {
-                  FocusScope.of(context).unfocus();
-                }),
-                controller: _phoneController,
-                keyboardType: TextInputType.phone,
-                decoration: InputDecoration(
-                  hint: Row(
-                    children: [
-                      Text(
-                        'enter_phone_number'.tr(),
-                        style: TextStyle(
-                          color: Colors.grey[900],
-                          fontSize: 14.sp,
+              Directionality(
+                textDirection: ui.TextDirection.ltr,
+                child: TextFormField(
+                  onTapOutside: ((event) {
+                    FocusScope.of(context).unfocus();
+                  }),
+                  controller: _phoneController,
+                  keyboardType: TextInputType.phone,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.r),
+                      borderSide: BorderSide(color: AppColors.primaryColor),
+                    ),
+                    hint: Row(
+                      children: [
+                        Text(
+                          'enter_phone_number'.tr(),
+                          style: TextStyle(
+                            color: Colors.grey[900],
+                            fontSize: 14.sp,
+                          ),
+                        ),
+                        Gap(8.w),
+                        Icon(
+                          Icons.phone_outlined,
+                          color: Colors.grey[600],
+                          size: 18.sp,
+                        ),
+                      ],
+                    ),
+                    prefixIcon: Container(
+                      margin: EdgeInsets.symmetric(
+                        horizontal: 10.w,
+                        vertical: 10.h,
+                      ),
+                      width: 100.w,
+                      height: 20.h,
+                      decoration: BoxDecoration(
+                        color: AppColors.secondaryColor,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Center(
+                        child: CountryCodePicker(
+                          onChanged: (code) {
+                            setState(() {
+                              _selectedCode = code.dialCode!;
+                            });
+                          },
+                          initialSelection: '+20',
+                          favorite: ['+20', '+966', '+971'],
+                          showCountryOnly: false,
+                          showOnlyCountryWhenClosed: false,
+                          alignLeft: false,
+                          textStyle: TextStyle(
+                            color: AppColors.backgroundColor,
+                            fontSize: 15.sp,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          padding: EdgeInsets.zero,
                         ),
                       ),
-                      Gap(8.w),
-                      Icon(Icons.phone, color: Colors.grey[600], size: 18.sp),
-                    ],
-                  ),
-                  prefixIcon: Container(
-                    decoration: BoxDecoration(
-                      color: AppColors.secondaryColor,
-                      borderRadius: BorderRadius.circular(20),
                     ),
-                    child: CountryCodePicker(
-                      onChanged: (code) {
-                        setState(() {
-                          _selectedCode = code.dialCode!;
-                        });
-                      },
-                      initialSelection: '+20',
-                      favorite: ['+20', '+966', '+971'],
-                      showCountryOnly: false,
-                      showOnlyCountryWhenClosed: false,
-                      alignLeft: false,
-                      textStyle: TextStyle(
-                        color: AppColors.backgroundColor,
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w500,
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.r),
+                      borderSide: BorderSide(color: AppColors.primaryColor),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.r),
+                      borderSide: const BorderSide(
+                        color: AppColors.secondaryColor,
+                        width: 2,
                       ),
-                      padding: EdgeInsets.zero,
+                    ),
+                    contentPadding: EdgeInsets.symmetric(
+                      horizontal: 12.w,
+                      vertical: 14.h,
                     ),
                   ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8.r),
-                    borderSide: BorderSide(color: AppColors.primaryColor),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8.r),
-                    borderSide: const BorderSide(
-                      color: AppColors.secondaryColor,
-                      width: 2,
-                    ),
-                  ),
-                  contentPadding: EdgeInsets.symmetric(
-                    horizontal: 12.w,
-                    vertical: 14.h,
-                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Phone number is required';
+                    } else if (!RegExp(r'^[0-9]{10}$').hasMatch(value)) {
+                      return 'Enter valid phone number';
+                    }
+                    return null;
+                  },
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Phone number is required';
-                  } else if (!RegExp(r'^[0-9]{10}$').hasMatch(value)) {
-                    return 'Enter valid phone number';
-                  }
-                  return null;
-                },
               ),
               Gap(40.h),
               Center(
