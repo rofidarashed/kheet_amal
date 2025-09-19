@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kheet_amal/core/routing/app_routes.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -64,18 +65,19 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             ],
           ),
 
+          // Indicators
           Positioned(
-            bottom: 40,
-            left: 20,
-            right: 20,
+            bottom: 40.h,
+            left: 20.w,
+            right: 20.w,
             child: Row(
               children: List.generate(totalPages, (index) {
                 return Expanded(
                   child: Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 4),
-                    height: 6,
+                    margin: EdgeInsets.symmetric(horizontal: 4.w),
+                    height: 6.h,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
+                      borderRadius: BorderRadius.circular(5.r),
                       color: index == currentPage
                           ? Colors.blue
                           : Colors.grey[300],
@@ -99,7 +101,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     bool skip = false,
   }) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 60),
+      padding: EdgeInsets.only(bottom: 60.h),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -110,28 +112,26 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               fit: BoxFit.cover,
             ),
           ),
-
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0),
+            padding: EdgeInsets.symmetric(horizontal: 24.w),
             child: Column(
               children: [
-                const SizedBox(height: 30),
+                SizedBox(height: 30.h),
                 Text(
                   title,
-                  style: const TextStyle(
-                    fontSize: 32,
+                  style: TextStyle(
+                    fontSize: 32.sp,
                     fontWeight: FontWeight.bold,
                   ),
                   textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: 12),
+                SizedBox(height: 12.h),
                 Text(
                   subtitle,
-                  style: const TextStyle(fontSize: 28),
+                  style: TextStyle(fontSize: 28.sp),
                   textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: 40),
-
+                SizedBox(height: 40.h),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -144,29 +144,26 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               'skip'.tr(),
                               style: TextStyle(
                                 color: Colors.grey,
-                                fontSize: 25,
+                                fontSize: 25.sp,
                               ),
                             ),
                           )
-                        : const SizedBox(width: 70),
+                        : SizedBox(width: 70.w),
                     ElevatedButton(
                       onPressed: onPressed,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.orange,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
+                          borderRadius: BorderRadius.circular(30.r),
                         ),
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 30,
-                          vertical: 12,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 30.w,
+                          vertical: 12.h,
                         ),
                       ),
                       child: Text(
                         buttonText,
-                        style: const TextStyle(
-                          fontSize: 25,
-                          color: Colors.white,
-                        ),
+                        style: TextStyle(fontSize: 25.sp, color: Colors.white),
                       ),
                     ),
                   ],
