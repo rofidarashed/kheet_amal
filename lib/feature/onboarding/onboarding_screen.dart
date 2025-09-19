@@ -65,7 +65,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             ],
           ),
 
-          // Indicators
           Positioned(
             bottom: 40.h,
             left: 20.w,
