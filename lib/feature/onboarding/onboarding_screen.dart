@@ -58,7 +58,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 subtitle: 'together_subtitle'.tr(),
                 buttonText: 'get_started_button'.tr(),
                 onPressed: () {
-                  Navigator.of(context).pushReplacementNamed(AppRoutes.home);
+                  Navigator.of(
+                    context,
+                  ).pushReplacementNamed(AppRoutes.register);
                 },
               ),
             ],
