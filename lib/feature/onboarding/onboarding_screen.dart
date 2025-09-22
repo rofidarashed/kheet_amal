@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kheet_amal/core/routing/app_routes.dart';
+import 'package:kheet_amal/core/utils/app_colors.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -58,7 +59,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 subtitle: 'together_subtitle'.tr(),
                 buttonText: 'get_started_button'.tr(),
                 onPressed: () {
-                  Navigator.of(context).pushReplacementNamed(AppRoutes.home);
+                  Navigator.of(
+                    context,
+                  ).pushReplacementNamed(AppRoutes.register);
                 },
               ),
             ],
@@ -77,7 +80,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5.r),
                       color: index == currentPage
-                          ? Color(0xFF92C1EB)
+                          ? AppColors.primaryColor
                           : Colors.grey[300],
                     ),
                   ),
@@ -103,7 +106,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          // الصورة بحجم معقول
           Container(
             width: 500.w,
             height: 500.h,
@@ -112,7 +114,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
           SizedBox(height: 40.h),
 
-          // العنوان
           Text(
             title,
             style: TextStyle(fontSize: 32.sp, fontWeight: FontWeight.bold),
@@ -121,7 +122,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
           SizedBox(height: 20.h),
 
-          // النص الفرعي
           Text(
             subtitle,
             style: TextStyle(fontSize: 28.sp, color: Colors.grey[600]),
@@ -130,7 +130,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
           SizedBox(height: 40.h),
 
-          // الزر ومؤشر التخطي
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 24.w),
             child: Row(
@@ -151,7 +150,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 ElevatedButton(
                   onPressed: onPressed,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFD7E00),
+                    backgroundColor: AppColors.secondaryColor,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30.r),
                     ),
@@ -215,7 +214,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             child: ElevatedButton(
               onPressed: onPressed,
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFD7E00),
+                backgroundColor: AppColors.secondaryColor,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30.r),
                 ),
