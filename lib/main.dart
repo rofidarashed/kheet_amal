@@ -19,7 +19,7 @@ void main() async {
       path: 'assets/translate',
       saveLocale: true,
       fallbackLocale: Locale('ar'),
-    //  startLocale: Locale('ar'),
+      startLocale: Locale('ar'),
       child: MyApp(),
     ),
   );

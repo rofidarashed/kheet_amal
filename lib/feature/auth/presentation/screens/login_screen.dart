@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kheet_amal/core/routing/app_routes.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -120,7 +121,8 @@ class LoginScreen extends StatelessWidget {
                   child: Align(
                     alignment: Alignment.topLeft,
                     child: TextButton(
-                      onPressed: () {},
+                      onPressed: () =>
+                          Navigator.pushNamed(context, AppRoutes.forgetPass),
                       child: Text(
                         "نسيت كلمة المرور؟",
                         style: TextStyle(
@@ -137,7 +139,8 @@ class LoginScreen extends StatelessWidget {
                   child: Padding(
                     padding: EdgeInsets.fromLTRB(0, 40.h, 0, 0),
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () =>
+                          Navigator.pushNamed(context, AppRoutes.homeLayout),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.orange,
                         minimumSize: Size(307.w, 45.h),
@@ -157,12 +160,16 @@ class LoginScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      "أنشئ حساب جديد",
-                      style: TextStyle(
-                        fontSize: 21.sp,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.orange,
+                    TextButton(
+                      onPressed: () =>
+                          Navigator.pushNamed(context, AppRoutes.register),
+                      child: Text(
+                        "أنشئ حساب جديد",
+                        style: TextStyle(
+                          fontSize: 21.sp,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.orange,
+                        ),
                       ),
                     ),
                     Padding(

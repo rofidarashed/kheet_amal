@@ -35,6 +35,13 @@ class BottomNavBar extends StatelessWidget {
         controller.index = state.index;
 
         return PersistentTabView(
+          animationSettings: NavBarAnimationSettings(
+            screenTransitionAnimation: ScreenTransitionAnimationSettings(
+              animateTabTransition: true,
+              curve: Curves.easeInOut,
+              duration: Duration(microseconds: 1500),
+            ),
+          ),
           context,
           controller: controller,
           screens: _screens(),

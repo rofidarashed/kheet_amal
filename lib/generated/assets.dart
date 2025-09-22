@@ -15,7 +15,7 @@ class Assets {
   static const String imagesPassSign = 'assets/images/pass_sign.png';
   static const String imagesPhoneSign = 'assets/images/phone_sign.png';
   static const String imagesUserCircle = 'assets/images/user-circle.png';
-  static const String imagesVector(1) = 'assets/images/Vector(1).png';
+  static const String imagesVector = 'assets/images/Vector(1).png';
   static const String svgsAddIcon = 'assets/svgs/add_icon.svg';
   static const String svgsArrowBack = 'assets/svgs/arrow_back.svg';
   static const String svgsHomeIcon = 'assets/svgs/home_icon.svg';

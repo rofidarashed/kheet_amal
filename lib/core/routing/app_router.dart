@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kheet_amal/core/routing/app_routes.dart';
+import 'package:kheet_amal/feature/auth/presentation/screens/login_screen.dart';
+import 'package:kheet_amal/feature/auth/presentation/screens/register_screen.dart';
 import 'package:kheet_amal/feature/forget_pass/screens/new_pass.dart';
 import 'package:kheet_amal/feature/home/home_screen.dart';
 import 'package:kheet_amal/feature/home_layout/presentation/pages/home_layout_page.dart';
@@ -17,8 +19,12 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const SplashScreen());
       case AppRoutes.onboarding:
         return MaterialPageRoute(builder: (_) => const OnboardingScreen());
+      case AppRoutes.login:
+        return MaterialPageRoute(builder: (_) => const LoginScreen());
+      case AppRoutes.register:
+        return MaterialPageRoute(builder: (_) => const RegisterScreen());
       case AppRoutes.homeLayout:
-        return MaterialPageRoute(builder: (_) =>  HomeLayoutPage());
+        return MaterialPageRoute(builder: (_) => HomeLayoutPage());
       case AppRoutes.home:
         return MaterialPageRoute(builder: (_) => const HomeScreen());
       case AppRoutes.forgetPass:
