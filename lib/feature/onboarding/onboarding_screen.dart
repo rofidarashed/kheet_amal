@@ -52,17 +52,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 },
                 skip: true,
               ),
-              buildPage(
+              buildLastPage(
                 image: "assets/images/onboarding3.png",
                 title: 'together_title'.tr(),
                 subtitle: 'together_subtitle'.tr(),
                 buttonText: 'get_started_button'.tr(),
                 onPressed: () {
-                  Navigator.of(
-                    context,
-                  ).pushReplacementNamed(AppRoutes.register);
+                  Navigator.of(context).pushReplacementNamed(AppRoutes.home);
                 },
-                skip: true,
               ),
             ],
           ),
@@ -80,7 +77,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5.r),
                       color: index == currentPage
-                          ? Colors.blue
+                          ? Color(0xFF92C1EB)
                           : Colors.grey[300],
                     ),
                   ),
@@ -102,74 +99,133 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     bool skip = false,
   }) {
     return Padding(
-      padding: EdgeInsets.only(bottom: 60.h),
+      padding: EdgeInsets.all(0.w),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Expanded(
-            child: Image.asset(
-              image,
-              width: double.infinity,
-              fit: BoxFit.cover,
-            ),
+          // الصورة بحجم معقول
+          Container(
+            width: 500.w,
+            height: 500.h,
+            child: Image.asset(image, fit: BoxFit.contain),
           ),
+
+          SizedBox(height: 40.h),
+
+          // العنوان
+          Text(
+            title,
+            style: TextStyle(fontSize: 32.sp, fontWeight: FontWeight.bold),
+            textAlign: TextAlign.center,
+          ),
+
+          SizedBox(height: 20.h),
+
+          // النص الفرعي
+          Text(
+            subtitle,
+            style: TextStyle(fontSize: 28.sp, color: Colors.grey[600]),
+            textAlign: TextAlign.center,
+          ),
+
+          SizedBox(height: 40.h),
+
+          // الزر ومؤشر التخطي
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 24.w),
-            child: Column(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                SizedBox(height: 30.h),
-                Text(
-                  title,
-                  style: TextStyle(
-                    fontSize: 32.sp,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(height: 12.h),
-                Text(
-                  subtitle,
-                  style: TextStyle(fontSize: 28.sp),
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(height: 40.h),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    skip
-                        ? TextButton(
-                            onPressed: () {
-                              _controller.jumpToPage(2);
-                            },
-                            child: Text(
-                              'skip'.tr(),
-                              style: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 25.sp,
-                              ),
-                            ),
-                          )
-                        : SizedBox(width: 70.w),
-                    ElevatedButton(
-                      onPressed: onPressed,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.orange,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.r),
+                skip
+                    ? TextButton(
+                        onPressed: () {
+                          _controller.jumpToPage(2);
+                        },
+                        child: Text(
+                          'skip'.tr(),
+                          style: TextStyle(color: Colors.grey, fontSize: 25.sp),
                         ),
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 30.w,
-                          vertical: 12.h,
-                        ),
-                      ),
-                      child: Text(
-                        buttonText,
-                        style: TextStyle(fontSize: 25.sp, color: Colors.white),
-                      ),
+                      )
+                    : SizedBox(width: 70.w),
+
+                ElevatedButton(
+                  onPressed: onPressed,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFD7E00),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.r),
                     ),
-                  ],
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 30.w,
+                      vertical: 12.h,
+                    ),
+                  ),
+                  child: Text(
+                    buttonText,
+                    style: TextStyle(fontSize: 25.sp, color: Colors.white),
+                  ),
                 ),
               ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget buildLastPage({
+    required String image,
+    required String title,
+    required String subtitle,
+    required String buttonText,
+    required VoidCallback onPressed,
+  }) {
+    return Padding(
+      padding: EdgeInsets.all(10.w),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            width: 500.w,
+            height: 400.h,
+            child: Image.asset(image, fit: BoxFit.contain),
+          ),
+
+          SizedBox(height: 40.h),
+
+          Text(
+            title,
+            style: TextStyle(fontSize: 32.sp, fontWeight: FontWeight.bold),
+            textAlign: TextAlign.center,
+          ),
+
+          SizedBox(height: 20.h),
+
+          Text(
+            subtitle,
+            style: TextStyle(fontSize: 28.sp, color: Colors.grey[600]),
+            textAlign: TextAlign.center,
+          ),
+
+          SizedBox(height: 40.h),
+
+          Container(
+            width: double.infinity,
+            padding: EdgeInsets.symmetric(horizontal: 40.w),
+            child: ElevatedButton(
+              onPressed: onPressed,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color(0xFD7E00),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30.r),
+                ),
+                padding: EdgeInsets.symmetric(horizontal: 40.w, vertical: 10.h),
+                minimumSize: Size(double.infinity, 50.h),
+              ),
+              child: Text(
+                buttonText,
+                style: TextStyle(fontSize: 28.sp, color: Colors.white),
+              ),
             ),
           ),
         ],
