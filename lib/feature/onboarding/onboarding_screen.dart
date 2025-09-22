@@ -60,7 +60,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 onPressed: () {
                   Navigator.of(
                     context,
-                  ).pushReplacementNamed(AppRoutes.forgetPass);
+                  ).pushReplacementNamed(AppRoutes.homeLayout);
                 },
                 skip: true,
               ),

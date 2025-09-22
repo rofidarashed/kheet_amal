@@ -28,5 +28,11 @@
         "success_title": "Password changed successfully!",
         "success_description": "You can now use the new password to log in securely",
         "login_button": "Login"
-    }
+    },
+
+        "home": "Home",
+        "search": "Search",
+        "add": "Add Report",
+        "profile": "Profile"
+
 }
