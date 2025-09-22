@@ -103,7 +103,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          // الصورة بحجم معقول
           Container(
             width: 500.w,
             height: 500.h,
@@ -112,7 +111,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
           SizedBox(height: 40.h),
 
-          // العنوان
           Text(
             title,
             style: TextStyle(fontSize: 32.sp, fontWeight: FontWeight.bold),
@@ -121,7 +119,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
           SizedBox(height: 20.h),
 
-          // النص الفرعي
           Text(
             subtitle,
             style: TextStyle(fontSize: 28.sp, color: Colors.grey[600]),
@@ -130,7 +127,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
           SizedBox(height: 40.h),
 
-          // الزر ومؤشر التخطي
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 24.w),
             child: Row(
