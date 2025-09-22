@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kheet_amal/core/routing/app_routes.dart';
+import 'package:kheet_amal/core/utils/app_colors.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -79,7 +80,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5.r),
                       color: index == currentPage
-                          ? Color(0xFF92C1EB)
+                          ? AppColors.primaryColor
                           : Colors.grey[300],
                     ),
                   ),
@@ -149,7 +150,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 ElevatedButton(
                   onPressed: onPressed,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFD7E00),
+                    backgroundColor: AppColors.secondaryColor,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30.r),
                     ),
@@ -213,7 +214,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             child: ElevatedButton(
               onPressed: onPressed,
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFD7E00),
+                backgroundColor: AppColors.secondaryColor,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30.r),
                 ),
