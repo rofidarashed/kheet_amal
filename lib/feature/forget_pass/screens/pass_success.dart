@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:kheet_amal/core/utils/app_images.dart';
 import 'package:kheet_amal/feature/forget_pass/widgets/custom_button.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -19,7 +20,7 @@ class PasswordResetSuccessScreen extends StatelessWidget {
               children: [
                 Center(
                   child: Image.asset(
-                    'assets/images/green1.png',
+                    AppImages.imagesGreen1,
                     width: 155.w,
                     height: 155.h,
                   ),
@@ -28,7 +29,7 @@ class PasswordResetSuccessScreen extends StatelessWidget {
                   child: Padding(
                     padding: EdgeInsets.symmetric(vertical: 20.h),
                     child: Image.asset(
-                      'assets/images/green2.png',
+                      AppImages.imagesGreen2,
                       width: 116.w,
                       height: 116.h,
                     ),

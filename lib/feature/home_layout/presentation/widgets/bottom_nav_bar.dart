@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kheet_amal/core/utils/app_icons.dart';
 import 'package:kheet_amal/feature/add_report/add_report_scerean.dart';
 import 'package:kheet_amal/feature/profile/profile_screan.dart';
 import 'package:kheet_amal/feature/search/search_screan.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 import '../../../../core/utils/app_colors.dart';
-import '../../../../core/utils/app_images.dart';
 import 'package:kheet_amal/feature/home/home_screen.dart';
 import '../cubit/bottom_nav_cubit.dart';
 import '../cubit/bottom_nav_state.dart';
@@ -48,7 +48,7 @@ class BottomNavBar extends StatelessWidget {
           items: [
             PersistentBottomNavBarItem(
               icon: SvgPicture.asset(
-                AppImages.homeIcon,
+                AppIcons.homeIcon,
                 width: 24.w,
                 height: 24.h,
                 color: state.index == 0
@@ -62,7 +62,7 @@ class BottomNavBar extends StatelessWidget {
             ),
             PersistentBottomNavBarItem(
               icon: SvgPicture.asset(
-                AppImages.searchIcon,
+                AppIcons.searchIcon,
                 width: 24.w,
                 height: 24.h,
                 color: state.index == 1
@@ -76,7 +76,7 @@ class BottomNavBar extends StatelessWidget {
             ),
             PersistentBottomNavBarItem(
               icon: SvgPicture.asset(
-                AppImages.addIcon,
+                AppIcons.addIcon,
                 width: 24.w,
                 height: 24.h,
                 color: state.index == 2
@@ -90,7 +90,7 @@ class BottomNavBar extends StatelessWidget {
             ),
             PersistentBottomNavBarItem(
               icon: SvgPicture.asset(
-                AppImages.profileIcon,
+                AppIcons.profileIcon,
                 width: 24.w,
                 height: 24.h,
                 color: state.index == 3

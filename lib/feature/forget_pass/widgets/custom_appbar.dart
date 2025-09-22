@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kheet_amal/core/utils/app_colors.dart';
-import 'package:kheet_amal/core/utils/app_images.dart';
+import 'package:kheet_amal/core/utils/app_icons.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({super.key});
@@ -16,18 +15,18 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       elevation: 0,
       leading: !isArabic
           ? IconButton(
-        onPressed: () => Navigator.pop(context),
-          icon:SvgPicture.asset(AppImages.backIcon),
-      )
-          :SizedBox.shrink(),
+              onPressed: () => Navigator.pop(context),
+              icon: SvgPicture.asset(AppIcons.backIcon),
+            )
+          : SizedBox.shrink(),
       actions: isArabic
           ? [
-        IconButton(
-          onPressed: () => Navigator.pop(context),
-          icon:SvgPicture.asset(AppImages.backIcon)
-          // Icon(Icons.arrow_back_ios, color: Colors.black, size: 20.sp),
-        ),
-      ]
+              IconButton(
+                onPressed: () => Navigator.pop(context),
+                icon: SvgPicture.asset(AppIcons.backIcon),
+                // Icon(Icons.arrow_back_ios, color: Colors.black, size: 20.sp),
+              ),
+            ]
           : null,
     );
   }
