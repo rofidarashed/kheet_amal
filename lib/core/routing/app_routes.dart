@@ -6,5 +6,6 @@ class AppRoutes {
   static const String newPass = '/newPass';
   static const String passSuccess = '/passSuccess';
   static const String onboarding = '/onboarding';
+  static const String homeLayout = '/homeLayout';
 
 }

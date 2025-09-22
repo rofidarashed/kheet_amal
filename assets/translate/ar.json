@@ -22,11 +22,15 @@
     "resend": "إعادة إرسال",
     "did_not_receive_code": "لم تستلم الرمز؟",
     "confirm": "تأكيد",
-
+        "home": "الرئيسية",
+        "search": "بحث",
+        "add": "إضافة بلاغ",
+        "profile": "الملف الشخصي",
     "password_reset_success": {
         "title": "إعادة تعيين كلمة المرور",
         "success_title": "تم تغيير كلمة المرور بنجاح!",
         "success_description": "يمكنك الآن استخدام كلمة المرور الجديدة لتسجيل الدخول بأمان",
         "login_button": "تسجيل الدخول"
     }
+
 }
