@@ -106,10 +106,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Container(
-            width: 500.w,
+          SizedBox(
+            width: double.infinity,
             height: 500.h,
-            child: Image.asset(image, fit: BoxFit.contain),
+            child: Image.asset(image, fit: BoxFit.cover),
           ),
 
           SizedBox(height: 40.h),
@@ -180,13 +180,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     required VoidCallback onPressed,
   }) {
     return Padding(
-      padding: EdgeInsets.all(10.w),
+      padding: EdgeInsets.all(0.w),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Container(
-            width: 500.w,
-            height: 400.h,
+          SizedBox(
+            width: double.infinity,
+            height: 500.h,
             child: Image.asset(image, fit: BoxFit.contain),
           ),
 
