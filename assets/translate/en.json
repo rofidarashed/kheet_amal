@@ -42,5 +42,19 @@
   "home": "Home",
   "search": "Search",
   "add": "Add Report",
-  "profile": "Profile"
+  "profile": "Profile",
+
+  "homeTitle": "Home",
+  "statistics": "Statistics",
+  "missingTab": "Missing",
+  "suspectsTab": "Suspects",
+  "missingBannerTitle": "Missing Children",
+  "missingBannerDesc": "List of children reported missing, share with us to help find them faster.",
+  "suspectsBannerTitle": "Children under suspicion",
+  "suspectsBannerDesc": "Children may be in unsafe conditions, any help or information can help.",
+  "name": "Name:",
+  "age": "Age:",
+  "place": "Place:",
+  "since": "Since 3 days",
+  "details": "Details"
 }
