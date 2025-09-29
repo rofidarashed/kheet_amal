@@ -204,7 +204,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   Positioned(
                     top: 4.h,
-                    right: 4.w,
+                    left: 4.w,
                     child: CircleAvatar(
                       radius: 14.r,
                       backgroundColor: Colors.white70,
@@ -217,6 +217,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ],
               ),
+
               SizedBox(width: 10.w),
               Expanded(
                 child: Column(
