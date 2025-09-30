@@ -5,7 +5,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:kheet_amal/core/routing/app_routes.dart';
 import 'package:kheet_amal/feature/forget_pass/widgets/custom_appbar.dart';
 import '../../../core/utils/app_colors.dart';
-import '../widgets/custom_button.dart';
+import '../../../core/widgets/custom_button.dart';
 import '../widgets/custom_pass_feild.dart';
 
 class NewPasswordPage extends StatefulWidget {

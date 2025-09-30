@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:kheet_amal/core/utils/app_images.dart';
-import 'package:kheet_amal/feature/forget_pass/widgets/custom_button.dart';
+import 'package:kheet_amal/core/widgets/custom_button.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
