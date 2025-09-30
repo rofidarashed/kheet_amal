@@ -6,7 +6,7 @@ import 'package:kheet_amal/core/utils/app_colors.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import '../../../core/routing/app_routes.dart';
 import '../widgets/custom_appbar.dart';
-import '../widgets/custom_button.dart';
+import '../../../core/widgets/custom_button.dart';
 import 'dart:ui' as ui;
 
 class ForgetPassScreen extends StatefulWidget {
@@ -103,10 +103,10 @@ class _ForgetPassScreenState extends State<ForgetPassScreen> {
                         horizontal: 10.w,
                         vertical: 10.h,
                       ),
-                      width: 100.w,
+                      width: 63.w,
                       height: 20.h,
                       decoration: BoxDecoration(
-                        color: AppColors.secondaryColor,
+                        color: AppColors.primaryColor,
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Center(
@@ -119,14 +119,16 @@ class _ForgetPassScreenState extends State<ForgetPassScreen> {
                           initialSelection: '+20',
                           favorite: ['+20', '+966', '+971'],
                           showCountryOnly: false,
+                          showFlag: false,
                           showOnlyCountryWhenClosed: false,
                           alignLeft: false,
                           textStyle: TextStyle(
                             color: AppColors.backgroundColor,
-                            fontSize: 15.sp,
-                            fontWeight: FontWeight.w500,
+                            fontSize: 17.sp,
+                            fontWeight: FontWeight.w700,
                           ),
-                          padding: EdgeInsets.zero,
+                          
+                          padding: EdgeInsets.all(0),
                         ),
                       ),
                     ),

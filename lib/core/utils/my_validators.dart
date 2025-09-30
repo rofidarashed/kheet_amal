@@ -1,6 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
-class MyValidators {
+class AppValidators {
   static String? displayNamevalidator(String? displayName) {
     if (displayName == null || displayName.isEmpty) {
       return 'Display name cannot be empty';
@@ -9,6 +10,16 @@ class MyValidators {
       return 'Display name must be between 3 and 20 characters';
     }
 
+    return null;
+  }
+
+  static String? fieldValidator(String? desc) {
+    if (desc == null || desc.isEmpty) {
+      return 'required'.tr();
+    }
+    if (desc.length < 20) {
+      return 'The Text is too short';
+    }
     return null;
   }
 
