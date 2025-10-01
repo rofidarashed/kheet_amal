@@ -1,281 +1,114 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kheet_amal/core/routing/app_routes.dart';
+import 'package:kheet_amal/core/utils/my_validators.dart';
+
+import '../widgets/custom_check_box.dart';
+import '../widgets/custom_field_label.dart';
+import '../widgets/custom_register_button.dart';
+import '../widgets/custom_text_button.dart';
+import '../widgets/custom_text_field.dart';
 
 class RegisterScreen extends StatelessWidget {
-  const RegisterScreen({super.key});
+  RegisterScreen({super.key});
+  final usernameController = TextEditingController();
+  final nationalIdController = TextEditingController();
+  final phoneController = TextEditingController();
+  final passwordController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      designSize: const Size(375, 812),
-      minTextAdapt: true,
-      splitScreenMode: true,
-      builder: (context, child) {
-        return Scaffold(
-          body: SingleChildScrollView(
-            child: Column(
-              children: [
-                Image.asset("assets/images/logo.png"),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(0, 0, 22.w, 0),
-                  child: Align(
-                    alignment: Alignment.topRight,
-                    child: Text(
-                      "انشاء اسم المستخدم",
-                      style: TextStyle(
-                        fontSize: 32.sp,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
+    return Scaffold(
+      body: Form(
+        key: _formKey,
+        child: SafeArea(
+          child: Column(
+            children: [
+              Image.asset("assets/images/logo.png", height: 180.h, width: 180.w),
+              Padding(
+                padding: EdgeInsets.fromLTRB(0, 0, 22.w, 0),
+                child: Align(
+                  alignment: Alignment.topRight,
+                  child: Text(
+                    "create_new_account".tr(),
+                    style: TextStyle(fontSize: 32.sp, fontWeight: FontWeight.w400),
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(0, 5.h, 33.w, 0),
-                  child: Align(
-                    alignment: Alignment.topRight,
-                    child: Text(
-                      "اسم المستخدم",
-                      style: TextStyle(
-                        fontSize: 21.sp,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ),
+              ),
+              FieldLabel("username".tr()),
+              CustomTextField(
+                validator: (_) => MyValidators.displayNamevalidator(usernameController.text),
+                hint: "enter_username".tr(),
+                controller: usernameController,
+                suffixIcon: Padding(
+                  padding: EdgeInsets.all(7.w),
+                  child: Image.asset("assets/images/user-circle.png", height: 24.h, width: 24.w),
                 ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(27.w, 6.h, 33.w, 0),
-                  child: SizedBox(
-                    width: 380.w,
-                    height: 45.h,
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        hintText: "ادخل اسم المستخدم",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12.r),
-                          borderSide: const BorderSide(color: Colors.blue),
-                        ),
-                        suffixIcon: Padding(
-                          padding: EdgeInsets.all(7.w),
-                          child: Image.asset(
-                            "assets/images/user-circle.png",
-                            height: 24.h,
-                            width: 24.w,
-                          ),
-                        ),
-                        hintTextDirection: TextDirection.rtl,
-                      ),
-                      textDirection: TextDirection.rtl,
-                    ),
-                  ),
+              ),
+              FieldLabel("national_id".tr()),
+              CustomTextField(
+                validator: (p0) => MyValidators.nationalIdValidator(nationalIdController.text),
+                hint: "enter_national_id".tr(),
+                controller: nationalIdController,
+                suffixIcon: Padding(
+                  padding: EdgeInsets.all(7.w),
+                  child: Image.asset("assets/images/identification-card.png", height: 24.h, width: 24.w),
                 ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(0, 10.h, 33.w, 0),
-                  child: Align(
-                    alignment: Alignment.topRight,
-                    child: Text(
-                      "الرقم القومي",
-                      style: TextStyle(
-                        fontSize: 21.sp,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ),
+              ),
+              FieldLabel("mobile_number".tr()),
+              CustomTextField(
+                validator: (p0) => MyValidators.phoneValidator(phoneController.text, context),
+                hint: "enter_mobile_number".tr(),
+                controller: phoneController,
+                suffixIcon: Padding(
+                  padding: EdgeInsets.all(9.w),
+                  child: Image.asset("assets/images/phone_sign.png", height: 24.h, width: 24.w),
                 ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(27.w, 6.h, 33.w, 0),
-                  child: SizedBox(
-                    width: 380.w,
-                    height: 45.h,
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        hintText: "ادخل الرقم القومي ",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12.r),
-                          borderSide: const BorderSide(color: Colors.blue),
-                        ),
-                        suffixIcon: Padding(
-                          padding: EdgeInsets.all(7.w),
-                          child: Image.asset(
-                            "assets/images/identification-card.png",
-                            height: 24.h,
-                            width: 24.w,
-                          ),
-                        ),
-                        hintTextDirection: TextDirection.rtl,
-                      ),
-                      textDirection: TextDirection.rtl,
-                    ),
-                  ),
+              ),
+              FieldLabel("password".tr()),
+              CustomTextField(
+                validator: (p0) => MyValidators.passwordValidator(passwordController.text),
+                hint: "enter_password".tr(),
+                controller: passwordController,
+                isPassword: true,
+                suffixIcon: Padding(
+                  padding: EdgeInsets.all(10.w),
+                  child: Image.asset("assets/images/pass_sign.png", height: 24.h, width: 24.w),
                 ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(0, 10.h, 33.w, 0),
-                  child: Align(
-                    alignment: Alignment.topRight,
-                    child: Text(
-                      "رقم الموبايل",
-                      style: TextStyle(
-                        fontSize: 21.sp,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(27.w, 6.h, 33.w, 0),
-                  child: SizedBox(
-                    width: 380.w,
-                    height: 45.h,
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        hintText: "ادخل رقم الموبايل  ",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12.r),
-                          borderSide: const BorderSide(color: Colors.blue),
-                        ),
-                        suffixIcon: Padding(
-                          padding: EdgeInsets.all(7.w),
-                          child: Image.asset(
-                            "assets/images/phone_sign.png",
-                            height: 24.h,
-                            width: 24.w,
-                          ),
-                        ),
-                        hintTextDirection: TextDirection.rtl,
-                      ),
-                      textDirection: TextDirection.rtl,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(0, 10.h, 33.w, 0),
-                  child: Align(
-                    alignment: Alignment.topRight,
-                    child: Text(
-                      "الرقم السري",
-                      style: TextStyle(
-                        fontSize: 21.sp,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(27.w, 6.h, 33.w, 0),
-                  child: SizedBox(
-                    width: 380.w,
-                    height: 45.h,
-                    child: TextFormField(
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        hintText: "ادخل الرقم السري  ",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12.r),
-                          borderSide: const BorderSide(color: Colors.blue),
-                        ),
-                        suffixIcon: Padding(
-                          padding: EdgeInsets.all(7.w),
-                          child: Image.asset(
-                            "assets/images/pass_sign.png",
-                            height: 24.h,
-                            width: 24.w,
-                          ),
-                        ),
-                        hintTextDirection: TextDirection.rtl,
-                      ),
-                      textDirection: TextDirection.rtl,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(0, 10.h, 35.w, 32.h),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Directionality(
-                          textDirection: TextDirection.rtl,
-                          child: Row(
-                            children: [
-                              Text(
-                                "أوافق على ",
-                                style: TextStyle(
-                                  fontSize: 16.sp,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                              Text(
-                                "الشروط و الاحكام و سياسة الخصوصية",
-                                style: TextStyle(
-                                  fontSize: 16.sp,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.orange,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Checkbox(
-                        value: false,
-                        onChanged: (value) {},
-                        activeColor: Colors.orange,
-                      ),
-                    ],
-                  ),
-                ),
-                Center(
-                  child: ElevatedButton(
-                    onPressed: () =>
-                        Navigator.pushNamed(context, AppRoutes.homeLayout),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.orange,
-                      minimumSize: Size(307.w, 45.h),
-                    ),
-                    child: Text(
-                      "تسجيل",
-                      style: TextStyle(
-                        fontSize: 24.sp,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.white,
-                      ),
-                      textDirection: TextDirection.rtl,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(8.w),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      TextButton(
-                        onPressed: () =>
-                            Navigator.pushNamed(context, AppRoutes.login),
-                        child: Text(
-                          "سجل دخول",
-                          style: TextStyle(
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.orange,
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 8.w),
-                      Text(
-                        "لديك حساب بالفعل؟",
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+              ),
+              TermsAgreement(),
+              RegisterButton(
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    final model = RegisterModel(
+                      username: usernameController.text,
+                      nationalId: nationalIdController.text,
+                      phone: phoneController.text,
+                      password: passwordController.text,
+                    );
+                    print(model.username);
+                    Navigator.pushNamed(context, AppRoutes.homeLayout);
+                  }
+                },
+                textButton: 'register'.tr(),
+              ),
+              AlreadyHaveAccount(
+                actionText: "login".tr(),
+                questionText: "already_have_account".tr(),
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    AppRoutes.login,
+                  );
+                },
+              ),
+            ],
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 }

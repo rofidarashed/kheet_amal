@@ -1,195 +1,121 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kheet_amal/core/routing/app_routes.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kheet_amal/core/utils/my_validators.dart';
+import '../../../../core/utils/app_colors.dart';
+import '../widgets/custom_field_label.dart';
+import '../widgets/custom_register_button.dart';
+import '../widgets/custom_text_button.dart';
+import '../widgets/custom_text_field.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+  LoginScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      designSize: const Size(375, 812),
-      minTextAdapt: true,
-      splitScreenMode: true,
-      builder: (context, child) {
-        return Scaffold(
-          body: SafeArea(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Center(
+    final usernameController = TextEditingController();
+    final passwordController = TextEditingController();
+    final _formKey = GlobalKey<FormState>();
+
+    return Scaffold(
+      body: Form(
+        key: _formKey,
+        child: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Center(
+                child: Image.asset(
+                  "assets/images/logo.png",
+                  height: 180.h,
+                  width: 180.w,
+                ),
+              ),
+              SizedBox(height: 10.h),
+              Padding(
+                padding: EdgeInsets.fromLTRB(0, 0, 23.w, 0),
+                child: Align(
+                  alignment: Alignment.topRight,
+                  child: Text(
+                    "login".tr(),
+                    style: TextStyle(
+                      fontSize: 32.sp,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ),
+              ),
+              FieldLabel("username".tr()),
+              CustomTextField(
+                validator: (p0) =>
+                    MyValidators.displayNamevalidator(usernameController.text),
+                hint: "enter_username".tr(),
+                controller: usernameController,
+                suffixIcon: Padding(
+                  padding: EdgeInsets.all(7.w),
                   child: Image.asset(
-                    "assets/images/logo.png",
-                    height: 230.h,
-                    width: 230.w,
+                    "assets/images/user-circle.png",
+                    height: 24.h,
+                    width: 24.w,
                   ),
                 ),
-                SizedBox(height: 10.h),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(0, 0, 23.w, 0),
-                  child: Align(
-                    alignment: Alignment.topRight,
+              ),
+              FieldLabel("password".tr()),
+              CustomTextField(
+                validator: (p0) =>
+                    MyValidators.passwordValidator(passwordController.text),
+                hint: "enter_password".tr(),
+                controller: passwordController,
+                isPassword: true,
+                suffixIcon: Padding(
+                  padding: EdgeInsets.all(10.w),
+                  child: Image.asset(
+                    "assets/images/pass_sign.png",
+                    height: 24.h,
+                    width: 24.w,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.all(8.w),
+                child: Align(
+                  alignment: Alignment.topLeft,
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, AppRoutes.forgetPass);
+                    },
                     child: Text(
-                      "تسجيل الدخول",
+                      "forgot_password".tr(),
                       style: TextStyle(
-                        fontSize: 32.sp,
+                        fontSize: 18.sp,
                         fontWeight: FontWeight.w400,
-                      ),
-                      textDirection: TextDirection.rtl,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(0, 5.h, 33.w, 0),
-                  child: Align(
-                    alignment: Alignment.topRight,
-                    child: Text(
-                      "اسم المستخدم",
-                      style: TextStyle(
-                        fontSize: 21.sp,
-                        fontWeight: FontWeight.w400,
+                        color: AppColors.secondaryColor,
                       ),
                     ),
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(20.w, 6.h, 33.w, 0),
-                  child: SizedBox(
-                    width: 380.w,
-                    height: 45.h,
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        hintText: "ادخل اسم المستخدم",
-                        hintTextDirection: TextDirection.rtl,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15.r),
-                          borderSide: const BorderSide(color: Colors.blue),
-                        ),
-                        suffixIcon: Padding(
-                          padding: EdgeInsets.all(7.w),
-                          child: Image.asset(
-                            "assets/images/user-circle.png",
-                            height: 15.h,
-                            width: 15.w,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(20.w, 10.h, 33.w, 0),
-                  child: Align(
-                    alignment: Alignment.topRight,
-                    child: Text(
-                      "كلمة المرور",
-                      style: TextStyle(
-                        fontSize: 21.sp,
-                        fontWeight: FontWeight.w400,
-                      ),
-                      textDirection: TextDirection.rtl,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(20.w, 6.h, 33.w, 0),
-                  child: SizedBox(
-                    width: 380.w,
-                    height: 45.h,
-                    child: TextFormField(
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        hintText: "ادخل كلمة المرور",
-                        hintTextDirection: TextDirection.rtl,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15.r),
-                          borderSide: const BorderSide(color: Colors.blue),
-                        ),
-                        suffixIcon: Padding(
-                          padding: EdgeInsets.all(7.w),
-                          child: Image.asset(
-                            "assets/images/pass_sign.png",
-                            height: 5.h,
-                            width: 5.w,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(8.w),
-                  child: Align(
-                    alignment: Alignment.topLeft,
-                    child: TextButton(
-                      onPressed: () =>
-                          Navigator.pushNamed(context, AppRoutes.forgetPass),
-                      child: Text(
-                        "نسيت كلمة المرور؟",
-                        style: TextStyle(
-                          fontSize: 18.sp,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.orange,
-                        ),
-                        textDirection: TextDirection.rtl,
-                      ),
-                    ),
-                  ),
-                ),
-                Center(
-                  child: Padding(
-                    padding: EdgeInsets.fromLTRB(0, 40.h, 0, 0),
-                    child: ElevatedButton(
-                      onPressed: () =>
-                          Navigator.pushNamed(context, AppRoutes.homeLayout),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.orange,
-                        minimumSize: Size(307.w, 45.h),
-                      ),
-                      child: Text(
-                        "تسجيل",
-                        style: TextStyle(
-                          fontSize: 24.sp,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.white,
-                        ),
-                        textDirection: TextDirection.rtl,
-                      ),
-                    ),
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    TextButton(
-                      onPressed: () =>
-                          Navigator.pushNamed(context, AppRoutes.register),
-                      child: Text(
-                        "أنشئ حساب جديد",
-                        style: TextStyle(
-                          fontSize: 21.sp,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.orange,
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(8.w),
-                      child: Text(
-                        "ليس لديك حساب؟",
-                        style: TextStyle(
-                          fontSize: 21.sp,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+              ),
+              SizedBox(height: 40.h),
+              RegisterButton(
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    Navigator.pushNamed(context, AppRoutes.homeLayout);
+                  }
+                },
+                textButton: "login".tr(),
+              ),
+              AlreadyHaveAccount(
+                actionText: "create_new_account".tr(),
+                questionText: "dont_have_account".tr(),
+                onTap: () {
+                  Navigator.pushNamed(context, AppRoutes.register);
+                },
+              ),
+            ],
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 }
