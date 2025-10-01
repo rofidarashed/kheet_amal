@@ -5,14 +5,15 @@ import 'package:easy_localization/easy_localization.dart';
 
 class CustomButton extends StatelessWidget {
   final String text;
+  final double? width;
   final VoidCallback? onPressed;
 
-  const CustomButton({super.key, required this.text, required this.onPressed});
+  const CustomButton({super.key, required this.text, required this.onPressed, this.width});
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 307.w,
+      width:width?? 307.w,
       height: 45.h,
       child: ElevatedButton(
         onPressed: onPressed,
@@ -27,8 +28,8 @@ class CustomButton extends StatelessWidget {
         child: Text(
           text.tr(),
           style: TextStyle(
-            fontSize: 25.sp,
-            fontWeight: FontWeight.w600,
+            fontSize: 24.sp,
+            // fontWeight: FontWeight.w600,
             color: Colors.white,
           ),
         ),

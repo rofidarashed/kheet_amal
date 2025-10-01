@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kheet_amal/core/routing/app_routes.dart';
-import 'package:kheet_amal/core/utils/my_validators.dart';
+import 'package:kheet_amal/core/utils/app_validators.dart';
 
 import '../widgets/custom_check_box.dart';
 import '../widgets/custom_field_label.dart';
@@ -27,56 +27,84 @@ class RegisterScreen extends StatelessWidget {
         child: SafeArea(
           child: Column(
             children: [
-              Image.asset("assets/images/logo.png", height: 180.h, width: 180.w),
+              Image.asset(
+                "assets/images/logo.png",
+                height: 180.h,
+                width: 180.w,
+              ),
               Padding(
                 padding: EdgeInsets.fromLTRB(0, 0, 22.w, 0),
                 child: Align(
                   alignment: Alignment.topRight,
                   child: Text(
                     "create_new_account".tr(),
-                    style: TextStyle(fontSize: 32.sp, fontWeight: FontWeight.w400),
+                    style: TextStyle(
+                      fontSize: 32.sp,
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
                 ),
               ),
               FieldLabel("username".tr()),
               CustomTextField(
-                validator: (_) => MyValidators.displayNamevalidator(usernameController.text),
+                validator: (_) =>
+                    AppValidators.displayNamevalidator(usernameController.text),
                 hint: "enter_username".tr(),
                 controller: usernameController,
                 suffixIcon: Padding(
                   padding: EdgeInsets.all(7.w),
-                  child: Image.asset("assets/images/user-circle.png", height: 24.h, width: 24.w),
+                  child: Image.asset(
+                    "assets/images/user-circle.png",
+                    height: 24.h,
+                    width: 24.w,
+                  ),
                 ),
               ),
               FieldLabel("national_id".tr()),
               CustomTextField(
-                validator: (p0) => MyValidators.nationalIdValidator(nationalIdController.text),
+                validator: (p0) => AppValidators.nationalIdValidator(
+                  nationalIdController.text,
+                ),
                 hint: "enter_national_id".tr(),
                 controller: nationalIdController,
                 suffixIcon: Padding(
                   padding: EdgeInsets.all(7.w),
-                  child: Image.asset("assets/images/identification-card.png", height: 24.h, width: 24.w),
+                  child: Image.asset(
+                    "assets/images/identification-card.png",
+                    height: 24.h,
+                    width: 24.w,
+                  ),
                 ),
               ),
               FieldLabel("mobile_number".tr()),
               CustomTextField(
-                validator: (p0) => MyValidators.phoneValidator(phoneController.text, context),
+                validator: (p0) =>
+                    AppValidators.phoneValidator(phoneController.text, context),
                 hint: "enter_mobile_number".tr(),
                 controller: phoneController,
                 suffixIcon: Padding(
                   padding: EdgeInsets.all(9.w),
-                  child: Image.asset("assets/images/phone_sign.png", height: 24.h, width: 24.w),
+                  child: Image.asset(
+                    "assets/images/phone_sign.png",
+                    height: 24.h,
+                    width: 24.w,
+                  ),
                 ),
               ),
               FieldLabel("password".tr()),
               CustomTextField(
-                validator: (p0) => MyValidators.passwordValidator(passwordController.text),
+                validator: (p0) =>
+                    AppValidators.passwordValidator(passwordController.text),
                 hint: "enter_password".tr(),
                 controller: passwordController,
                 isPassword: true,
                 suffixIcon: Padding(
                   padding: EdgeInsets.all(10.w),
-                  child: Image.asset("assets/images/pass_sign.png", height: 24.h, width: 24.w),
+                  child: Image.asset(
+                    "assets/images/pass_sign.png",
+                    height: 24.h,
+                    width: 24.w,
+                  ),
                 ),
               ),
               TermsAgreement(),
@@ -99,10 +127,7 @@ class RegisterScreen extends StatelessWidget {
                 actionText: "login".tr(),
                 questionText: "already_have_account".tr(),
                 onTap: () {
-                  Navigator.pushNamed(
-                    context,
-                    AppRoutes.login,
-                  );
+                  Navigator.pushNamed(context, AppRoutes.login);
                 },
               ),
             ],

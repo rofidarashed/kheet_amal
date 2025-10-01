@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kheet_amal/core/routing/app_routes.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:kheet_amal/core/utils/my_validators.dart';
+import 'package:kheet_amal/core/utils/app_validators.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../widgets/custom_field_label.dart';
 import '../widgets/custom_register_button.dart';
@@ -49,7 +49,7 @@ class LoginScreen extends StatelessWidget {
               FieldLabel("username".tr()),
               CustomTextField(
                 validator: (p0) =>
-                    MyValidators.displayNamevalidator(usernameController.text),
+                    AppValidators.displayNamevalidator(usernameController.text),
                 hint: "enter_username".tr(),
                 controller: usernameController,
                 suffixIcon: Padding(
@@ -64,7 +64,7 @@ class LoginScreen extends StatelessWidget {
               FieldLabel("password".tr()),
               CustomTextField(
                 validator: (p0) =>
-                    MyValidators.passwordValidator(passwordController.text),
+                    AppValidators.passwordValidator(passwordController.text),
                 hint: "enter_password".tr(),
                 controller: passwordController,
                 isPassword: true,

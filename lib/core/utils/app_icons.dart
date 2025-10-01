@@ -13,4 +13,6 @@ class AppIcons {
   static const String bellNotification = 'assets/svgs/bell_notification.svg';
   static const String lineChart = 'assets/svgs/line_chart.svg';
   static const String warning = 'assets/svgs/warning.svg';
+  static const String drpoDownIcon = 'assets/svgs/drop_down_icon.svg';
+  static const String addImageIcon = 'assets/svgs/camera-plus.svg';
 }
