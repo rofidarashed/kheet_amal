@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import '../../../core/utils/app_colors.dart';
 
@@ -27,24 +28,23 @@ class CustomPasswordField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          label,
+          label.tr(),
           style: TextStyle(
-            fontSize: 16,
+            fontSize: 16.sp,
             fontWeight: FontWeight.w500,
             color: Colors.black,
           ),
         ),
-        SizedBox(height: 8),
+        SizedBox(height: 8.h),
         TextFormField(
           onTapOutside: ((event) {
             FocusScope.of(context).unfocus();
           }),
           controller: controller,
           obscureText: !isPasswordVisible,
-          textDirection: TextDirection.ltr,
           decoration: InputDecoration(
-            hintText: hint,
-            hintStyle: TextStyle(color: Colors.grey[400], fontSize: 14),
+            hintText: hint.tr(),
+            hintStyle: TextStyle(color: Colors.grey[400], fontSize: 14.sp),
             suffixIcon: IconButton(
               icon: Icon(
                 isPasswordVisible ? Icons.visibility : Icons.visibility_off,
@@ -53,24 +53,27 @@ class CustomPasswordField extends StatelessWidget {
               onPressed: toggleVisibility,
             ),
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(8.r),
               borderSide: BorderSide(color: AppColors.primaryColor, width: 4),
             ),
             focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(8.r),
               borderSide: BorderSide(
                 color: AppColors.secondaryColor,
                 width: 1.6.w,
               ),
             ),
             enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(8.r),
               borderSide: BorderSide(
                 color: AppColors.primaryColor,
                 width: 1.6.w,
               ),
             ),
-            contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: 16.w,
+              vertical: 16.h,
+            ),
           ),
           validator: validator,
         ),

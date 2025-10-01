@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kheet_amal/core/utils/app_colors.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class CustomButton extends StatelessWidget {
   final String text;
@@ -25,7 +26,7 @@ class CustomButton extends StatelessWidget {
           ),
         ),
         child: Text(
-          text,
+          text.tr(),
           style: TextStyle(
             fontSize: 24.sp,
             // fontWeight: FontWeight.w600,
