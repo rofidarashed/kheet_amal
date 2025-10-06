@@ -31,7 +31,7 @@ class _ForgetPassScreenState extends State<ForgetPassScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(),
+      appBar: const CustomPassAppBar(),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 15.w),
         child: Form(

@@ -76,7 +76,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(),
+      appBar: const CustomPassAppBar(),
       body: SafeArea(
         child: Center(
           // 🔥 بيخلي كل المحتوى في النص

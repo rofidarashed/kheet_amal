@@ -41,7 +41,7 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
-      appBar: CustomAppBar(),
+      appBar: CustomPassAppBar(),
       body: Padding(
         padding: EdgeInsets.all(24.w),
         child: Form(

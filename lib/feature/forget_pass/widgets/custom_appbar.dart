@@ -3,8 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kheet_amal/core/utils/app_colors.dart';
 import 'package:kheet_amal/core/utils/app_icons.dart';
 
-class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const CustomAppBar({super.key});
+class CustomPassAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const CustomPassAppBar({super.key,});
 
   @override
   Widget build(BuildContext context) {
