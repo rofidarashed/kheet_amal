@@ -10,7 +10,7 @@
   "mobile_number": "رقم الموبايل",
   "enter_mobile_number": "ادخل رقم الموبايل",
   "agree_on": "أوافق على",
-  "agree_terms" : " الشروط و الاحكام و سياسة الخصوصية",
+  "agree_terms": " الشروط و الاحكام و سياسة الخصوصية",
   "register": "تسجيل",
   "already_have_account": "لديك حساب بالفعل؟",
   "dont_have_account": "ليس لديك حساب؟",
@@ -46,7 +46,7 @@
   "resend": "إعادة إرسال",
   "did_not_receive_code": "لم تستلم الرمز؟",
   "confirm": "تأكيد",
-  "required":"هذا الحقل مطلوب",
+  "required": "هذا الحقل مطلوب",
   "home": "الرئيسية",
   "search": "بحث",
   "add": "إضافة بلاغ",
@@ -57,6 +57,11 @@
     "success_description": "يمكنك الآن استخدام كلمة المرور الجديدة لتسجيل الدخول بأمان",
     "login_button": "تسجيل الدخول"
   },
+  "search_placeholder": "...ابحث باسم الطفل أو المكان",
+  "search_message": "❤️ اكتب اسم أو مكان، أو جرّب الفلاتر السريعة، كل بحث يقرب طفل من أهلُه",
+  "change_governorate": "يمكنك تغيير المحافظة أو تقليل التفاصيل للحصول على نتائج أدق",
+  "reset_filters": "إعادة تعيين الفلاتر",
+  "show_latest_cases": "عرض أحدث الحالات",
   "add_report": {
     "add_report": "أضف بلاغ",
     "report_type": "نوع البلاغ",
@@ -90,7 +95,7 @@
     "description": "الوصف",
     "enter_additional_details": "أدخل أي تفاصيل إضافية تساعد في التوضيح",
     "contact_number": "رقم هاتف للتواصل",
-    "first":"(الأول) ",
+    "first": "(الأول) ",
     "enter_phone_number": "أدخل رقم هاتف",
     "second": "(الثاني) ",
     "send_report": "إرسال البلاغ",
@@ -112,8 +117,6 @@
     "hair_color_gray": "رمادي",
     "hair_color_white": "أبيض"
   },
-
-
   "homeTitle": "الرئيسية",
   "statistics": "إحصائيات",
   "missingTab": "مفقودون",

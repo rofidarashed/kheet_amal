@@ -52,11 +52,16 @@
     "success_description": "You can now use the new password to log in securely",
     "login_button": "Login"
   },
-  "required":"This field is required",
+  "required": "This field is required",
   "home": "Home",
   "search": "Search",
   "add": "Add Report",
   "profile": "Profile",
+  "search_placeholder": "Search by child’s name or location...",
+  "search_message": "Type a name or location, or try quick filters — every search brings a child closer to their family ❤️",
+  "change_governorate": "You can change the governorate or reduce details for more accurate results",
+  "reset_filters": "Reset filters",
+  "show_latest_cases": "Show latest cases",
   "add_report": {
     "add_report": "Add Report",
     "report_type": "Report Type",
@@ -90,7 +95,7 @@
     "description": "Description",
     "enter_additional_details": "Enter any additional details to help clarify",
     "contact_number": "Contact Number",
-    "first":"(First)",
+    "first": "(First)",
     "enter_phone_number": "Enter Phone Number",
     "second": "(Second)",
     "send_report": "Send Report",
@@ -111,9 +116,7 @@
     "hair_color_red": "Red",
     "hair_color_gray": "Gray",
     "hair_color_white": "White"
-  }
-,
-
+  },
   "homeTitle": "Home",
   "statistics": "Statistics",
   "missingTab": "Missing",
