@@ -5,7 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:kheet_amal/core/utils/app_colors.dart';
 import 'package:kheet_amal/core/utils/app_icons.dart';
 
-Widget customSearchRow({required BuildContext context}) {
+Widget customSearchfailed({required BuildContext context}) {
   return Column(
     children: [
       Row(
@@ -69,51 +69,65 @@ Widget customSearchRow({required BuildContext context}) {
           ),
         ],
       ),
-      SizedBox(height: 30.h),
+      SizedBox(height: 68.h),
       Center(
         child: SvgPicture.asset(
-          "assets/svgs/search_image.svg",
-          height: 200.h,
-          width: 200.w,
+          "assets/svgs/not_foung.svg",
+          height: 205.h,
+          width: 180.w,
         ),
       ),
-      SizedBox(height: 20.h),
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
-            "search_message_intro".tr(),
-            style: TextStyle(
-              color: AppColors.black,
-              fontSize: 16.sp,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SvgPicture.asset("assets/svgs/heart.svg"),
-              Text(
-               "search_message_suffix".tr(),
-                style: TextStyle(
-                  color: AppColors.black,
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 64.h),
-          Align(
-            alignment: Alignment.topRight,
-            child: Text(
-              "latest_cases".tr(),
-              style: TextStyle(fontSize: 24.sp, fontWeight: FontWeight.w400),
-            ),
-          ),
-          SizedBox(height: 16.h),
-        ],
+      SizedBox(height: 67.h),
+      Text(
+        "search_message".tr(),
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          color: AppColors.black,
+          fontSize: 20.sp,
+          fontWeight: FontWeight.w400,
+        ),
       ),
+   
+      SizedBox(height: 72.h),
+      ElevatedButton(
+        onPressed: () {},
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.secondaryColor,
+          minimumSize: Size(307.w, 45.h),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(40.r),
+          ),
+        ),
+        child: Text(
+          "reset_filters".tr(),
+          style: TextStyle(
+            color: AppColors.white,
+            fontSize: 24.sp,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ),
+      SizedBox(height: 32.h),
+      ElevatedButton(
+        onPressed: () {},
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.backgroundColor,
+          minimumSize: Size(169.w, 24.h),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(40.r),
+          ),
+          elevation: 0,
+        ),
+        child: Text(
+         "show_latest_cases".tr(),
+          style: TextStyle(
+            color: AppColors.secondaryColor,
+            fontSize: 22.sp,
+            fontWeight: FontWeight.w400,
+          ),
+        ),
+      ),
+      
     ],
   );
 }
