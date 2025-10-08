@@ -71,15 +71,15 @@ Widget customSearchfailed({required BuildContext context}) {
       ),
       SizedBox(height: 68.h),
       Center(
-        child: SvgPicture.asset(
-          "assets/svgs/not_foung.svg",
+        child: Image.asset(
+          "assets/images/image.png",
           height: 205.h,
           width: 180.w,
         ),
       ),
       SizedBox(height: 67.h),
       Text(
-        "search_message".tr(),
+        "change_governorate".tr(),
         textAlign: TextAlign.center,
         style: TextStyle(
           color: AppColors.black,
@@ -87,7 +87,7 @@ Widget customSearchfailed({required BuildContext context}) {
           fontWeight: FontWeight.w400,
         ),
       ),
-   
+
       SizedBox(height: 72.h),
       ElevatedButton(
         onPressed: () {},
@@ -107,7 +107,7 @@ Widget customSearchfailed({required BuildContext context}) {
           ),
         ),
       ),
-      SizedBox(height: 32.h),
+      SizedBox(height: 22.h),
       ElevatedButton(
         onPressed: () {},
         style: ElevatedButton.styleFrom(
@@ -119,7 +119,7 @@ Widget customSearchfailed({required BuildContext context}) {
           elevation: 0,
         ),
         child: Text(
-         "show_latest_cases".tr(),
+          "show_latest_cases".tr(),
           style: TextStyle(
             color: AppColors.secondaryColor,
             fontSize: 22.sp,
@@ -127,7 +127,6 @@ Widget customSearchfailed({required BuildContext context}) {
           ),
         ),
       ),
-      
     ],
   );
 }
