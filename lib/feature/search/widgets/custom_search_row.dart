@@ -6,113 +6,64 @@ import 'package:kheet_amal/core/utils/app_colors.dart';
 import 'package:kheet_amal/core/utils/app_icons.dart';
 
 Widget customSearchRow({required BuildContext context}) {
-  return Column(
+  return Row(
     children: [
-      Row(
-        children: [
-          SizedBox(
-            width: 325.w,
-            height: 37.h,
-            child: TextFormField(
-              onTapOutside: (event) => FocusScope.of(context).unfocus(),
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(50.r),
-                  borderSide: BorderSide(color: AppColors.primaryColor),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(50.r),
-                  borderSide: BorderSide(color: AppColors.primaryColor),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(50.r),
-                  borderSide: BorderSide(
-                    color: AppColors.primaryColor,
-                    width: 2,
-                  ),
-                ),
-                prefixIcon: IconButton(
-                  icon: Icon(Icons.cancel_outlined, size: 21.sp),
-                  onPressed: () {
-                    FocusScope.of(context).unfocus();
-                  },
-                  color: AppColors.primaryColor,
-                ),
-                suffixIcon: IconButton(
-                  padding: EdgeInsets.only(right: 22.w),
-                  onPressed: () {},
-                  icon: SvgPicture.asset(
-                    AppIcons.searchIcon,
-                    height: 20.h,
-                    width: 20.w,
-                  ),
-                ),
-                hintText: 'search_placeholder'.tr(),
-                hintStyle: TextStyle(
-                  color: AppColors.hintTextColor,
-                  fontSize: 15.sp,
-                ),
+      SizedBox(
+        width: 325.w,
+        height: 37.h,
+        child: TextFormField(
+          onTapOutside: (event) => FocusScope.of(context).unfocus(),
+          decoration: InputDecoration(
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(50.r),
+              borderSide: BorderSide(color: AppColors.primaryColor),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(50.r),
+              borderSide: BorderSide(color: AppColors.primaryColor),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(50.r),
+              borderSide: BorderSide(
+                color: AppColors.primaryColor,
+                width: 2,
               ),
             ),
-          ),
-          SizedBox(width: 8.w),
-          GestureDetector(
-            child: Container(
-              height: 37.h,
-              width: 55.w,
-              decoration: BoxDecoration(
-                color: AppColors.secondaryColor,
-                borderRadius: BorderRadius.circular(13.r),
+            prefixIcon: IconButton(
+              icon: Icon(Icons.cancel_outlined, size: 21.sp),
+              onPressed: () {
+                FocusScope.of(context).unfocus();
+              },
+              color: AppColors.primaryColor,
+            ),
+            suffixIcon: IconButton(
+              padding: EdgeInsets.only(right: 22.w),
+              onPressed: () {},
+              icon: SvgPicture.asset(
+                AppIcons.searchIcon,
+                height: 20.h,
+                width: 20.w,
               ),
-              child: Icon(Icons.tune_rounded, color: AppColors.white),
+            ),
+            hintText: 'search_placeholder'.tr(),
+            hintStyle: TextStyle(
+              color: AppColors.hintTextColor,
+              fontSize: 15.sp,
             ),
           ),
-        ],
-      ),
-      SizedBox(height: 30.h),
-      Center(
-        child: SvgPicture.asset(
-          "assets/svgs/search_image.svg",
-          height: 200.h,
-          width: 200.w,
         ),
       ),
-      SizedBox(height: 20.h),
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
-            "search_message_intro".tr(),
-            style: TextStyle(
-              color: AppColors.black,
-              fontSize: 16.sp,
-              fontWeight: FontWeight.w500,
-            ),
+      SizedBox(width: 8.w),
+      GestureDetector(
+        child: Container(
+          height: 37.h,
+          width: 55.w,
+          decoration: BoxDecoration(
+            color: AppColors.secondaryColor,
+            borderRadius: BorderRadius.circular(13.r),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SvgPicture.asset("assets/svgs/heart.svg"),
-              Text(
-               "search_message_suffix".tr(),
-                style: TextStyle(
-                  color: AppColors.black,
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 64.h),
-          Align(
-            alignment: Alignment.topRight,
-            child: Text(
-              "latest_cases".tr(),
-              style: TextStyle(fontSize: 24.sp, fontWeight: FontWeight.w400),
-            ),
-          ),
-          SizedBox(height: 16.h),
-        ],
+          child: Icon(Icons.tune_rounded, color: AppColors.white),
+        ),
       ),
     ],
   );

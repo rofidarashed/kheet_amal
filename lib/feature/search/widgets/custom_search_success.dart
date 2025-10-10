@@ -20,24 +20,20 @@ Widget customSearchSuccess({required BuildContext context}) {
       Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(
-            "search_message_intro".tr(),
-            style: TextStyle(
-              color: AppColors.black,
-              fontSize: 16.sp,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
+
             children: [
-              SvgPicture.asset("assets/svgs/heart.svg"),
-              Text(
-                "search_message_suffix".tr(),
-                style: TextStyle(
-                  color: AppColors.black,
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.w500,
+              Expanded(
+                child: Text(
+                  "search_message".tr(),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: AppColors.black,
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
             ],
