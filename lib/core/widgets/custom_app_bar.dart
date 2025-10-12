@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:kheet_amal/feature/statistics/screens/statistics_screen.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({
@@ -49,7 +50,16 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   width: 20.w,
                   height: 20.w,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return StatisticsqwScreen();
+                      },
+                    ),
+                  );
+                },
               ),
             ],
           ),
