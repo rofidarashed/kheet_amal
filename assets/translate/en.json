@@ -132,7 +132,7 @@
   "place": "Place:",
   "since": "Since 3 days",
   "details": "Details",
-    "summary": "Summary",
+  "summary": "Summary",
   "performance": "Performance",
   "response_time": "Average Response Time",
   "h":"h",
@@ -153,5 +153,8 @@
   "imagine_requests": "Imagine Requests",
   "matching_accuracy": "Matching Accuracy",
   "analyzed_images": "Analyzed Images",
-  "face_recognition_success": "Face Recognition Success"
+  "face_recognition_success": "Face Recognition Success",
+  "notifications": "Notifications",
+  "no_notifications_title": "No notifications yet",
+  "no_notifications_subtitle": "Stay tuned for new comments and nearby reports."
 }

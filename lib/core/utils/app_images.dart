@@ -9,4 +9,5 @@ class AppImages {
   static const String imagesOnboarding3 = 'assets/images/onboarding3.png';
   static const String girl = 'assets/images/girl.png';
   static const String boy = 'assets/images/boy.png';
+  static const String noNotification = 'assets/images/no_notification.png';
 }

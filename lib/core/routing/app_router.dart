@@ -5,6 +5,7 @@ import 'package:kheet_amal/feature/auth/presentation/screens/register_screen.dar
 import 'package:kheet_amal/feature/forget_pass/screens/new_pass.dart';
 import 'package:kheet_amal/feature/home/home_screen.dart';
 import 'package:kheet_amal/feature/home_layout/presentation/pages/home_layout_page.dart';
+import 'package:kheet_amal/feature/notification/notification_screen.dart';
 import 'package:kheet_amal/feature/splash/presentation/splash_screen.dart';
 import 'package:kheet_amal/feature/onboarding/onboarding_screen.dart';
 import 'package:kheet_amal/feature/statistics/screens/statistics_screen.dart';
@@ -38,8 +39,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => NewPasswordPage());
       case AppRoutes.passSuccess:
         return MaterialPageRoute(builder: (_) => PasswordResetSuccessScreen());
-      case AppRoutes.soso:
-        return MaterialPageRoute(builder: (_) => StatisticsqwScreen());
+      case AppRoutes.notifications:
+        return MaterialPageRoute(builder: (_) => NotificationScreen());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(body: Center(child: Text('404 Not Found'))),
