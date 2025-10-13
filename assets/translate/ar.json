@@ -151,5 +151,8 @@
   "imagine_requests": "طلبات تخيل الشكل",
   "matching_accuracy": "دقة التطابق",
   "analyzed_images": "الصور المُحلَّلة",
-  "face_recognition_success": "نجاح التعرف على الوجوه"
+  "face_recognition_success": "نجاح التعرف على الوجوه",
+  "notifications": "الإشعارات",
+  "no_notifications_title": "لا توجد إشعارات حالياً",
+  "no_notifications_subtitle": "تابع هنا كل جديد عن التعليقات والبلاغات القريبة منك"
 }

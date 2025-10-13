@@ -9,5 +9,5 @@ class AppRoutes {
   static const String passSuccess = '/passSuccess';
   static const String onboarding = '/onboarding';
   static const String homeLayout = '/homeLayout';
-
+  static const String notifications = '/notifications';
 }
