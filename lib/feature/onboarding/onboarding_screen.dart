@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kheet_amal/core/routing/app_routes.dart';
 import 'package:kheet_amal/core/utils/app_colors.dart';
+import 'package:kheet_amal/feature/onboarding/widgets/onboarding_page.dart';
+import 'package:kheet_amal/feature/onboarding/widgets/onboarding_last_page.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -27,33 +29,39 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               setState(() => currentPage = index);
             },
             children: [
-              buildPage(
+              OnboardingPage(
                 image: "assets/images/onboarding1.png",
                 title: 'welcome_title'.tr(),
                 subtitle: 'welcome_subtitle'.tr(),
                 buttonText: 'next_button'.tr(),
+                skip: true,
                 onPressed: () {
                   _controller.nextPage(
                     duration: const Duration(milliseconds: 400),
                     curve: Curves.easeInOut,
                   );
                 },
-                skip: true,
+                onSkip: () {
+                  _controller.jumpToPage(2);
+                },
               ),
-              buildPage(
+              OnboardingPage(
                 image: "assets/images/onboarding2.png",
                 title: 'search_title'.tr(),
                 subtitle: 'search_subtitle'.tr(),
                 buttonText: 'next_button'.tr(),
+                skip: true,
                 onPressed: () {
                   _controller.nextPage(
                     duration: const Duration(milliseconds: 400),
                     curve: Curves.easeInOut,
                   );
                 },
-                skip: true,
+                onSkip: () {
+                  _controller.jumpToPage(2);
+                },
               ),
-              buildLastPage(
+              OnboardingLastPage(
                 image: "assets/images/onboarding3.png",
                 title: 'together_title'.tr(),
                 subtitle: 'together_subtitle'.tr(),
@@ -86,145 +94,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   ),
                 );
               }),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget buildPage({
-    required String image,
-    required String title,
-    required String subtitle,
-    required String buttonText,
-    required VoidCallback onPressed,
-    bool skip = false,
-  }) {
-    return Padding(
-      padding: EdgeInsets.all(0.w),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SizedBox(
-            width: double.infinity,
-            height: 500.h,
-            child: Image.asset(image, fit: BoxFit.cover),
-          ),
-
-          SizedBox(height: 40.h),
-
-          Text(
-            title,
-            style: TextStyle(fontSize: 32.sp, fontWeight: FontWeight.bold),
-            textAlign: TextAlign.center,
-          ),
-
-          SizedBox(height: 20.h),
-
-          Text(
-            subtitle,
-            style: TextStyle(fontSize: 28.sp, color: Colors.grey[600]),
-            textAlign: TextAlign.center,
-          ),
-
-          SizedBox(height: 40.h),
-
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 24.w),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                skip
-                    ? TextButton(
-                        onPressed: () {
-                          _controller.jumpToPage(2);
-                        },
-                        child: Text(
-                          'skip'.tr(),
-                          style: TextStyle(color: Colors.grey, fontSize: 25.sp),
-                        ),
-                      )
-                    : SizedBox(width: 70.w),
-
-                ElevatedButton(
-                  onPressed: onPressed,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.secondaryColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.r),
-                    ),
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 30.w,
-                      vertical: 12.h,
-                    ),
-                  ),
-                  child: Text(
-                    buttonText,
-                    style: TextStyle(fontSize: 25.sp, color: Colors.white),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget buildLastPage({
-    required String image,
-    required String title,
-    required String subtitle,
-    required String buttonText,
-    required VoidCallback onPressed,
-  }) {
-    return Padding(
-      padding: EdgeInsets.all(0.w),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SizedBox(
-            width: double.infinity,
-            height: 500.h,
-            child: Image.asset(image, fit: BoxFit.contain),
-          ),
-
-          SizedBox(height: 40.h),
-
-          Text(
-            title,
-            style: TextStyle(fontSize: 32.sp, fontWeight: FontWeight.bold),
-            textAlign: TextAlign.center,
-          ),
-
-          SizedBox(height: 20.h),
-
-          Text(
-            subtitle,
-            style: TextStyle(fontSize: 28.sp, color: Colors.grey[600]),
-            textAlign: TextAlign.center,
-          ),
-
-          SizedBox(height: 40.h),
-
-          Container(
-            width: double.infinity,
-            padding: EdgeInsets.symmetric(horizontal: 40.w),
-            child: ElevatedButton(
-              onPressed: onPressed,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.secondaryColor,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30.r),
-                ),
-                padding: EdgeInsets.symmetric(horizontal: 40.w, vertical: 10.h),
-                minimumSize: Size(double.infinity, 50.h),
-              ),
-              child: Text(
-                buttonText,
-                style: TextStyle(fontSize: 28.sp, color: Colors.white),
-              ),
             ),
           ),
         ],
