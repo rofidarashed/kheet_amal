@@ -4,9 +4,17 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:kheet_amal/core/utils/app_icons.dart';
 import 'package:kheet_amal/feature/statistics/widgets/custom_tabs_bar.dart';
+import 'package:kheet_amal/feature/statistics/widgets/performance_column.dart';
 
-class StatisticsqwScreen extends StatelessWidget {
+class StatisticsqwScreen extends StatefulWidget {
   const StatisticsqwScreen({super.key});
+
+  @override
+  State<StatisticsqwScreen> createState() => _StatisticsqwScreenState();
+}
+
+class _StatisticsqwScreenState extends State<StatisticsqwScreen> {
+  int selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +34,21 @@ class StatisticsqwScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
-        child: SafeArea(child: Column(children: [CustomTabsBar()])),
+        child: SafeArea(
+          child: Column(
+            children: [
+              CustomTabsBar(
+                onTabChanged: (index) {
+                  setState(() {
+                    selectedIndex = index;
+                  });
+                },
+              ),
+              SizedBox(height: 7.h),
+              selectedIndex == 0 ? PerformanceColumn() : SizedBox.shrink(),
+            ],
+          ),
+        ),
       ),
     );
   }
