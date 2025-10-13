@@ -8,6 +8,7 @@ import 'package:kheet_amal/feature/home_layout/presentation/pages/home_layout_pa
 import 'package:kheet_amal/feature/notification/notification_screen.dart';
 import 'package:kheet_amal/feature/splash/presentation/splash_screen.dart';
 import 'package:kheet_amal/feature/onboarding/onboarding_screen.dart';
+import 'package:kheet_amal/feature/statistics/screens/statistics_screen.dart';
 
 import '../../feature/forget_pass/screens/forget_pass_screen.dart';
 import '../../feature/forget_pass/screens/pass_success.dart';
