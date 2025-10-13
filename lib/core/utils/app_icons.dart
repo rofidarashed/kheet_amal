@@ -15,4 +15,7 @@ class AppIcons {
   static const String warning = 'assets/svgs/warning.svg';
   static const String drpoDownIcon = 'assets/svgs/drop_down_icon.svg';
   static const String addImageIcon = 'assets/svgs/camera-plus.svg';
+  static const String timeIcon = 'assets/svgs/clock-hour-4.svg';
+  static const String ratingIcon = 'assets/svgs/rating_icon.svg';
+  static const String volunteerIcon = 'assets/svgs/volunteer_icon.svg';
 }
