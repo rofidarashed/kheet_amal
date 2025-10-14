@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -105,7 +106,7 @@ class AddReportScreen extends StatelessWidget {
                               child: AbsorbPointer(
                                 child: CustomFormField(
                                   validator: (p0) =>
-                                      AppValidators.fieldValidator(
+                                      AppValidators.dateValidator(
                                         _dateController.text,
                                       ),
                                   hint: 'add_report.day_month_year'.tr(),
@@ -118,7 +119,7 @@ class AddReportScreen extends StatelessWidget {
                             CustomFormField(
                               maxLines: 3,
                               hint: 'add_report.enter_additional_details'.tr(),
-                              controller: TextEditingController(),
+                              controller: cubit.descriptionController,
                               title: 'add_report.description'.tr(),
                               subtitle: 'add_report.optional'.tr(),
                             ),
@@ -149,7 +150,32 @@ class AddReportScreen extends StatelessWidget {
                           width: 260.w,
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
-                              debugPrint('Yaaaay');
+                              cubit.submitReport(
+                                place: _placeController.text,
+                                clothes: _clothesController.text,
+                                phone1: _phoneController1.text,
+                                phone2: _phoneController2.text,
+                              );
+
+                              AwesomeDialog(
+                                context: context,
+                                animType: AnimType.scale,
+                                dialogType: DialogType.success,
+                                headerAnimationLoop: true,
+                                title: 'Success',
+                                desc: 'Your report created successfully!',
+                                btnOkOnPress: () {
+                                  _dateController.clear();
+                                  _placeController.clear();
+                                  _clothesController.clear();
+                                  _phoneController1.clear();
+                                  _phoneController2.clear();
+
+                                },
+                                btnOkColor: Colors.orange,
+                                btnOkText: 'OK',
+                                dismissOnTouchOutside: false,
+                              ).show();
                             }
                           },
                           text: 'add_report.send_report'.tr(),

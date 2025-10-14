@@ -27,38 +27,38 @@ final hairColor = <HairColor, String>{
   HairColor.white: 'add_report.hair_color_white'.tr(),
 };
 
-SkinColor? stringToSkinColor(String value) {
-  try {
-    return SkinColor.values.firstWhere(
-      (element) =>
-          element.toString() == 'SkinColor.$value' ||
-          element.toString() == value,
-    );
-  } catch (e) {
-    return null;
-  }
-}
-
-EyeColor? stringToEyeColor(String value) {
-  try {
-    return EyeColor.values.firstWhere(
-      (element) =>
-          element.toString() == 'EyeColor.$value' ||
-          element.toString() == value,
-    );
-  } catch (e) {
-    return null;
-  }
-}
-
-HairColor? stringToHairColor(String value) {
-  try {
-    return HairColor.values.firstWhere(
-      (element) =>
-          element.toString() == 'HairColor.$value' ||
-          element.toString() == value,
-    );
-  } catch (e) {
-    return null;
-  }
-}
+// // SkinColor? stringToSkinColor(String value) {
+// //   try {
+// //     return SkinColor.values.firstWhere(
+// //       (element) =>
+// //           element.toString() == 'SkinColor.$value' ||
+// //           element.toString() == value,
+// //     );
+// //   } catch (e) {
+// //     return null;
+// //   }
+// // }
+// //
+// // EyeColor? stringToEyeColor(String value) {
+// //   try {
+// //     return EyeColor.values.firstWhere(
+// //       (element) =>
+// //           element.toString() == 'EyeColor.$value' ||
+// //           element.toString() == value,
+// //     );
+// //   } catch (e) {
+// //     return null;
+// //   }
+// // }
+// //
+// // HairColor? stringToHairColor(String value) {
+// //   try {
+// //     return HairColor.values.firstWhere(
+// //       (element) =>
+// //           element.toString() == 'HairColor.$value' ||
+// //           element.toString() == value,
+// //     );
+// //   } catch (e) {
+// //     return null;
+// //   }
+// // }
