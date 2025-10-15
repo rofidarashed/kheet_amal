@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kheet_amal/core/utils/app_colors.dart';
 
 class CustomIconButton extends StatelessWidget {
   final String text;
@@ -47,7 +48,7 @@ class CustomIconButton extends StatelessWidget {
                   TextStyle(
                     fontSize: 22.sp,
                     fontWeight: FontWeight.w400,
-                    color: Colors.white,
+                    color: AppColors.backgroundColor,
                   ),
             ),
           ],

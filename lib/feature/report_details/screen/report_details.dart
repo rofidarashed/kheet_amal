@@ -22,7 +22,7 @@ class ReportDetails extends StatelessWidget {
               Container(
                 height: 64.sp,
                 width: double.infinity,
-                color: Color(0xFFBEEFC1),
+                color: AppColors.sGreen,
                 padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
                 child: Row(
                   children: [
@@ -71,7 +71,7 @@ class ReportDetails extends StatelessWidget {
                    Text(
                         'since'.tr(),
                         style: TextStyle(
-                          color: Colors.black54,
+                          color: AppColors.black,
                           fontSize: 13.sp,
                         ),),
                   Padding(
@@ -81,7 +81,7 @@ class ReportDetails extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 20.sp,
                         fontWeight: FontWeight.w600,
-                        color: Colors.black,
+                        color: AppColors.black,
                       ),
                     ),
                   ),
@@ -99,7 +99,7 @@ class ReportDetails extends StatelessWidget {
                   children: [
                     CustomIconButton(
                       text: 'contact'.tr(),
-                      backgroundColor: Colors.orange,
+                      backgroundColor: AppColors.secondaryColor,
                       onPressed: () {},
                     ),
                     SizedBox(width: 12.w),
