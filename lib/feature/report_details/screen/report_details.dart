@@ -2,8 +2,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kheet_amal/core/utils/app_colors.dart';
+import 'package:kheet_amal/feature/report_details/widgets/custom_report_action_bar.dart';
 import 'package:kheet_amal/feature/report_details/widgets/custom_icon_button.dart';
 import 'package:kheet_amal/feature/report_details/widgets/custom_info_row.dart';
+import 'package:kheet_amal/feature/report_details/widgets/custom_section_divider.dart';
 
 class ReportDetails extends StatelessWidget {
   const ReportDetails({super.key});
@@ -14,6 +16,16 @@ class ReportDetails extends StatelessWidget {
       appBar: AppBar(
         title: const Text('report_details').tr(),
         centerTitle: true,
+        actions: [
+          Padding(
+            padding: EdgeInsets.only(right: 26.w),
+            child: Image.asset(
+              'assets/images/saved_icon.png',
+              height: 23.sp,
+              width: 19.sp,
+            ),
+          ),
+        ],
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -68,14 +80,12 @@ class ReportDetails extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                   Text(
-                        'since'.tr(),
-                        style: TextStyle(
-                          color: AppColors.black,
-                          fontSize: 13.sp,
-                        ),),
+                  Text(
+                    'since'.tr(),
+                    style: TextStyle(color: AppColors.black, fontSize: 13.sp),
+                  ),
                   Padding(
-                    padding:  EdgeInsets.fromLTRB(99.w, 0, 2, 0),
+                    padding: EdgeInsets.fromLTRB(99.w, 0, 2, 0),
                     child: Text(
                       " احمد محمد",
                       style: TextStyle(
@@ -89,7 +99,6 @@ class ReportDetails extends StatelessWidget {
                     padding: EdgeInsets.only(right: 24.0.sp),
                     child: Text("posted_by").tr(),
                   ),
-                 
                 ],
               ),
               SizedBox(height: 16.h),
@@ -151,29 +160,11 @@ class ReportDetails extends StatelessWidget {
                         endIndent: 55.w,
                       ),
                       InfoRow(label: 'age'.tr(), value: '20'),
-                      Divider(
-                        color: AppColors.primaryColor,
-                        thickness: 1.h,
-                        height: 0,
-                        indent: 55.w,
-                        endIndent: 55.w,
-                      ),
+                      CustomSectionDivider(),
                       InfoRow(label: 'gender'.tr(), value: "ذكر"),
-                      Divider(
-                        color: AppColors.primaryColor,
-                        thickness: 1.h,
-                        height: 0,
-                        indent: 55.w,
-                        endIndent: 55.w,
-                      ),
+                      CustomSectionDivider(),
                       InfoRow(label: 'last_seen_place'.tr(), value: 'هنا'),
-                      Divider(
-                        color: AppColors.primaryColor,
-                        thickness: 1.h,
-                        height: 0,
-                        indent: 55.w,
-                        endIndent: 55.w,
-                      ),
+                      CustomSectionDivider(),
                       InfoRow(label: 'missing_date'.tr(), value: '20-20-2020'),
                     ],
                   ),
@@ -200,13 +191,7 @@ class ReportDetails extends StatelessWidget {
                         value:
                             'نينةرنمةسمنبنةنرنمرةنرةرةرةرةرنررنمرمرمرولاولامملاملاملانلانلاةلاةلاةلاىلاىلالاى',
                       ),
-                      Divider(
-                        color: AppColors.primaryColor,
-                        thickness: 1.h,
-                        height: 0,
-                        indent: 55.w,
-                        endIndent: 55.w,
-                      ),
+                      CustomSectionDivider(),
                       InfoRow(
                         label: 'clothing_at_disappearance'.tr(),
                         value:
@@ -235,77 +220,17 @@ class ReportDetails extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       InfoRow(label: 'eye_color'.tr(), value: 'احمد'),
-                      Divider(
-                        color: AppColors.primaryColor,
-                        thickness: 1.h,
-                        height: 0,
-                        indent: 55.w,
-                        endIndent: 55.w,
-                      ),
+                      CustomSectionDivider(),
                       InfoRow(label: 'skin_color'.tr(), value: '20'),
-                      Divider(
-                        color: AppColors.primaryColor,
-                        thickness: 1.h,
-                        height: 0,
-                        indent: 55.w,
-                        endIndent: 55.w,
-                      ),
+                      CustomSectionDivider(),
                       InfoRow(label: 'hair_color'.tr(), value: "ذكر"),
-                      Divider(
-                        color: AppColors.primaryColor,
-                        thickness: 1.h,
-                        height: 0,
-                        indent: 55.w,
-                        endIndent: 55.w,
-                      ),
+                      CustomSectionDivider(),
                       InfoRow(label: 'special_marks'.tr(), value: 'هنا'),
                     ],
                   ),
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          Icons.favorite_border,
-                          size: 20.sp,
-                        ),
-                      ),
-                      
-                      Text('20', style: TextStyle(fontSize: 16.sp)),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(Icons.chat_bubble_outline, size: 20.sp),
-                       
-                        
-                      ),
-                      
-                      Text('20', style: TextStyle(fontSize: 16.sp)),
-                    ],
-                  ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(40.w, 16.h, 25.w, 28.h),
-                    child: CustomIconButton(
-                      text: 'share'.tr(),
-                      backgroundColor: AppColors.secondaryColor,
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.share,
-                        color: AppColors.white,
-                        size: 20.sp,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+              ReportActionBar(),
             ],
           ),
         ),
