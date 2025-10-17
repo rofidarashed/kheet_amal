@@ -2,10 +2,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kheet_amal/core/utils/app_colors.dart';
+import 'package:kheet_amal/feature/report_details/widgets/custom_founder_info.dart';
 import 'package:kheet_amal/feature/report_details/widgets/custom_report_action_bar.dart';
-import 'package:kheet_amal/feature/report_details/widgets/custom_icon_button.dart';
-import 'package:kheet_amal/feature/report_details/widgets/custom_info_row.dart';
-import 'package:kheet_amal/feature/report_details/widgets/custom_section_divider.dart';
+import 'package:kheet_amal/feature/report_details/widgets/custom_report_details_cards.dart';
 
 class ReportDetails extends StatelessWidget {
   const ReportDetails({super.key});
@@ -76,160 +75,8 @@ class ReportDetails extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 20.h),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text(
-                    'since'.tr(),
-                    style: TextStyle(color: AppColors.black, fontSize: 13.sp),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(99.w, 0, 2, 0),
-                    child: Text(
-                      " احمد محمد",
-                      style: TextStyle(
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.black,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(right: 24.0.sp),
-                    child: Text("posted_by").tr(),
-                  ),
-                ],
-              ),
-              SizedBox(height: 16.h),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 22.0.sp),
-                child: Row(
-                  children: [
-                    CustomIconButton(
-                      text: 'contact'.tr(),
-                      backgroundColor: AppColors.secondaryColor,
-                      onPressed: () {},
-                    ),
-                    SizedBox(width: 12.w),
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30.r),
-                        gradient: LinearGradient(
-                          begin: Alignment.topRight,
-                          end: Alignment.bottomLeft,
-                          colors: [
-                            AppColors.magentaviolet,
-                            AppColors.royalblue,
-                          ],
-                        ),
-                      ),
-                      child: CustomIconButton(
-                        text: 'Ai ✦',
-                        backgroundColor: Colors.transparent,
-                        onPressed: () {},
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 16.h),
-              SizedBox(
-                width: 390.w,
-                height: 245.h,
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                    side: BorderSide(
-                      color: AppColors.primaryColor,
-                      width: .5.w,
-                    ),
-                    borderRadius: BorderRadius.circular(25.r),
-                  ),
-                  elevation: 0,
-                  margin: EdgeInsets.symmetric(horizontal: 12.w),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      InfoRow(label: 'name'.tr(), value: 'احمد'),
-                      Divider(
-                        color: AppColors.primaryColor,
-                        thickness: 1.h,
-                        height: 0,
-                        indent: 55.w,
-                        endIndent: 55.w,
-                      ),
-                      InfoRow(label: 'age'.tr(), value: '20'),
-                      CustomSectionDivider(),
-                      InfoRow(label: 'gender'.tr(), value: "ذكر"),
-                      CustomSectionDivider(),
-                      InfoRow(label: 'last_seen_place'.tr(), value: 'هنا'),
-                      CustomSectionDivider(),
-                      InfoRow(label: 'missing_date'.tr(), value: '20-20-2020'),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(height: 16.h),
-              SizedBox(
-                height: 194.h,
-                width: 390.w,
-                child: Card(
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                    side: BorderSide(
-                      color: AppColors.primaryColor,
-                      width: .5.w,
-                    ),
-                    borderRadius: BorderRadius.circular(25.r),
-                  ),
-                  margin: EdgeInsets.symmetric(horizontal: 12.w),
-                  child: Column(
-                    children: [
-                      InfoRow(
-                        label: 'description'.tr(),
-                        value:
-                            'نينةرنمةسمنبنةنرنمرةنرةرةرةرةرنررنمرمرمرولاولامملاملاملانلانلاةلاةلاةلاىلاىلالاى',
-                      ),
-                      CustomSectionDivider(),
-                      InfoRow(
-                        label: 'clothing_at_disappearance'.tr(),
-                        value:
-                            'نينةرنمةسمنبنةنرنمرةنرةرةرةرةرنررنمرمرمرولاولامملاملاملانلانلاةلاةلاةلاىلاىلالاى',
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(height: 16.h),
-              SizedBox(
-                width: 390.w,
-                height: 200.h,
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                    side: BorderSide(
-                      color: AppColors.primaryColor,
-                      width: .5.w,
-                    ),
-                    borderRadius: BorderRadius.circular(25.r),
-                  ),
-                  elevation: 0,
-                  margin: EdgeInsets.symmetric(horizontal: 12.w),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      InfoRow(label: 'eye_color'.tr(), value: 'احمد'),
-                      CustomSectionDivider(),
-                      InfoRow(label: 'skin_color'.tr(), value: '20'),
-                      CustomSectionDivider(),
-                      InfoRow(label: 'hair_color'.tr(), value: "ذكر"),
-                      CustomSectionDivider(),
-                      InfoRow(label: 'special_marks'.tr(), value: 'هنا'),
-                    ],
-                  ),
-                ),
-              ),
+              FounderInfo(),
+              ReportDetailsCardsColumn(),
               ReportActionBar(),
             ],
           ),
@@ -238,3 +85,4 @@ class ReportDetails extends StatelessWidget {
     );
   }
 }
+
