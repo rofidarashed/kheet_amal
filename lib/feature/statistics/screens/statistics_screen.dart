@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:kheet_amal/core/utils/app_icons.dart';
+import 'package:kheet_amal/feature/statistics/widgets/summary_screen.dart';
 import 'package:kheet_amal/feature/statistics/widgets/custom_tabs_bar.dart';
 import 'package:kheet_amal/feature/statistics/widgets/performance_column.dart';
 
@@ -45,7 +46,8 @@ class _StatisticsqwScreenState extends State<StatisticsqwScreen> {
                 },
               ),
               SizedBox(height: 7.h),
-              selectedIndex == 0 ? PerformanceColumn() : SizedBox.shrink(),
+
+              selectedIndex == 0 ? PerformanceColumn() : SummaryScreen1(),
             ],
           ),
         ),

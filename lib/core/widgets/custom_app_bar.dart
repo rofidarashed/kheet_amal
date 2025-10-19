@@ -49,9 +49,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   'assets/svgs/charts.svg',
                   width: 20.w,
                   height: 20.w,
+
                 ),
                 onPressed: () {
-                  Navigator.pushNamed(context, AppRoutes.notifications);
+                  Navigator.pushNamed(context, AppRoutes.StatisticsqwScreen);
                 },
               ),
             ],

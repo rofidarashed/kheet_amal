@@ -41,10 +41,13 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => PasswordResetSuccessScreen());
       case AppRoutes.notifications:
         return MaterialPageRoute(builder: (_) => NotificationScreen());
+      case AppRoutes.StatisticsqwScreen:
+        return MaterialPageRoute(builder: (_) => StatisticsqwScreen());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(body: Center(child: Text('404 Not Found'))),
         );
     }
+
   }
 }
