@@ -1,7 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:dio/dio.dart';
+
 import 'package:crypto/crypto.dart';
+import 'package:dio/dio.dart';
 
 class BackblazeService {
   final _dio = Dio();
