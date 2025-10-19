@@ -42,14 +42,14 @@ class MyApp extends StatelessWidget {
       splitScreenMode: true,
       builder: (_, child) {
         return MultiBlocProvider(
-          providers: [ BlocProvider(create: (context) => BottomNavCubit()),],
+          providers: [BlocProvider(create: (context) => BottomNavCubit())],
           child: MaterialApp(
             localizationsDelegates: context.localizationDelegates,
             supportedLocales: context.supportedLocales,
             locale: context.locale,
             debugShowCheckedModeBanner: false,
             theme: AppTheme.lightTheme,
-            initialRoute: AppRoutes.splash,
+            initialRoute: AppRoutes.homeLayout,
             onGenerateRoute: (settings) => AppRouter.generateRoute(settings),
           ),
         );

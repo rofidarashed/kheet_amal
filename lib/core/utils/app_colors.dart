@@ -8,4 +8,14 @@ class AppColors {
   static const Color white = Color(0xFFFFFFFF);
   static const Color black = Color(0xFF000000);
   static const Color inactiveTrackbarColor = Color(0xffB8B8B8);
+
+  static const Color magentaviolet = Color(0xFFF440BB);
+  static const Color royalblue = Color(0xFF1450B1);
+
+  static const Color sBlue = Color(0xff5A60E7);
+  static const Color sBrown = Color(0xff863800);
+  static const Color sGreen = Color(0xff6FCC74);
+  static const Color sPink = Color(0xffF17896);
+  static const Color sLightPrimary = Color(0xffEAF3FB);
 }
+

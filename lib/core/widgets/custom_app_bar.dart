@@ -1,8 +1,8 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:kheet_amal/feature/statistics/screens/statistics_screen.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:kheet_amal/core/routing/app_routes.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({
@@ -51,14 +51,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   height: 20.w,
                 ),
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return StatisticsqwScreen();
-                      },
-                    ),
-                  );
+                  Navigator.pushNamed(context, AppRoutes.notifications);
                 },
               ),
             ],
@@ -73,7 +66,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               size: 25.sp,
               color: Colors.black87,
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(
+                context,
+                rootNavigator: true,
+              ).pushNamed(AppRoutes.notifications);
+            },
           ),
           if (notificationsCount > 0)
             Positioned(
