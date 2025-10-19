@@ -24,8 +24,8 @@ Container childFeatures(
   AddReportState state,
   AddReportCubit cubit,
 ) {
-  TextEditingController nameController = TextEditingController();
-  TextEditingController marksController = TextEditingController();
+  final nameController = cubit.nameController;
+  final marksController = cubit.marksController;
 
   return customAddReportCard(
     context,
@@ -117,14 +117,45 @@ Container childFeatures(
         },
       ),
       SizedBox(height: 8.h),
-      CustomDropdown(
+      CustomDropdown<SkinColor>(
+        title: 'add_report.skin_color'.tr(),
+        options: skinColors,
+        onChanged: (selected) {
+          if (selected != null) {
+            cubit.selectSkinColor(selected);
+          }
+        },
+        hint: "add_report.select_skin_color".tr(),
+      ),
+      CustomDropdown<EyeColor>(
+        title: 'add_report.eye_color'.tr(),
+        options: eyeColors,
+        hint: 'add_report.select_eye_color'.tr(),
+        onChanged: (selected) {
+          if (selected != null) {
+            cubit.selectEyeColor(selected);
+          }
+        },
+      ),
+      CustomDropdown<HairColor>(
+        title: 'add_report.hair_color'.tr(),
+        options: hairColor,
+        hint: 'add_report.select_hair_color'.tr(),
+        onChanged: (selected) {
+          if (selected != null) {
+            cubit.selectHairColor(selected);
+          }
+        },
+      ),
+      /////////////////////////////////////
+      /*CustomDropdown(
         title: 'add_report.skin_color'.tr(),
         options: skinColors,
         onChanged: (selected) {
           if (selected != null) {
             SkinColor? skinColor = stringToSkinColor(selected);
             if (skinColor != null) {
-              cubit.selectSkinColor(skinColor);
+             cubit.selectSkinColor(skinColor);
             }
           }
         },
@@ -155,7 +186,7 @@ Container childFeatures(
             }
           }
         },
-      ),
+      ),*/
       SizedBox(height: 12.h),
       CustomFormField(
         maxLines: 2,

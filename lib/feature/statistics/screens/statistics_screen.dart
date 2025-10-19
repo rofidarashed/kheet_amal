@@ -6,14 +6,14 @@ import 'package:kheet_amal/core/utils/app_icons.dart';
 import 'package:kheet_amal/feature/statistics/widgets/custom_tabs_bar.dart';
 import 'package:kheet_amal/feature/statistics/widgets/performance_column.dart';
 
-class StatisticsqwScreen extends StatefulWidget {
-  const StatisticsqwScreen({super.key});
+class StatisticsScreen extends StatefulWidget {
+  const StatisticsScreen({super.key});
 
   @override
-  State<StatisticsqwScreen> createState() => _StatisticsqwScreenState();
+  State<StatisticsScreen> createState() => _StatisticsScreenState();
 }
 
-class _StatisticsqwScreenState extends State<StatisticsqwScreen> {
+class _StatisticsScreenState extends State<StatisticsScreen> {
   int selectedIndex = 0;
 
   @override
