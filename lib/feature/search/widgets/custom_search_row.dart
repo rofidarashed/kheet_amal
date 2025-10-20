@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:kheet_amal/core/utils/app_colors.dart';
 import 'package:kheet_amal/core/utils/app_icons.dart';
+import 'package:kheet_amal/feature/filter/filter_screen.dart';
 
 Widget customSearchRow({required BuildContext context}) {
   return Row(
@@ -24,10 +25,7 @@ Widget customSearchRow({required BuildContext context}) {
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(50.r),
-              borderSide: BorderSide(
-                color: AppColors.primaryColor,
-                width: 2,
-              ),
+              borderSide: BorderSide(color: AppColors.primaryColor, width: 2),
             ),
             prefixIcon: IconButton(
               icon: Icon(Icons.cancel_outlined, size: 21.sp),
@@ -62,7 +60,16 @@ Widget customSearchRow({required BuildContext context}) {
             color: AppColors.secondaryColor,
             borderRadius: BorderRadius.circular(13.r),
           ),
-          child: Icon(Icons.tune_rounded, color: AppColors.white),
+          child: InkWell(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const FilterScreen()),
+              );
+
+            },
+            child: Icon(Icons.tune_rounded, color: AppColors.white),
+          ),
         ),
       ),
     ],
