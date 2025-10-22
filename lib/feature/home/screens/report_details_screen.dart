@@ -2,9 +2,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kheet_amal/core/utils/app_colors.dart';
-import 'package:kheet_amal/feature/report_details/widgets/custom_founder_info.dart';
-import 'package:kheet_amal/feature/report_details/widgets/custom_report_action_bar.dart';
-import 'package:kheet_amal/feature/report_details/widgets/custom_report_details_cards.dart';
+import 'package:kheet_amal/feature/home/widgets/custom_founder_info.dart';
+import 'package:kheet_amal/feature/home/widgets/custom_report_action_bar.dart';
+import 'package:kheet_amal/feature/home/widgets/custom_report_details_cards.dart';
 
 class ReportDetails extends StatelessWidget {
   const ReportDetails({super.key});

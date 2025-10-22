@@ -2,8 +2,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kheet_amal/core/utils/app_colors.dart';
-import 'package:kheet_amal/feature/report_details/widgets/custom_info_row.dart';
-import 'package:kheet_amal/feature/report_details/widgets/custom_section_divider.dart';
+import 'package:kheet_amal/feature/home/widgets/custom_info_row.dart';
+import 'package:kheet_amal/feature/home/widgets/custom_section_divider.dart';
 
 class ReportDetailsCardsColumn extends StatelessWidget {
   const ReportDetailsCardsColumn({

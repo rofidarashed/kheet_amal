@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kheet_amal/core/utils/app_colors.dart';
-import 'package:kheet_amal/feature/report_details/widgets/custom_icon_button.dart';
+import 'package:kheet_amal/feature/home/widgets/custom_icon_button.dart';
 
 class ReportDetailsButton extends StatelessWidget {
   const ReportDetailsButton({super.key});

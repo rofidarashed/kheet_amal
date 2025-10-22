@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:kheet_amal/feature/report_details/screen/report_details.dart';
+import 'package:kheet_amal/feature/home/screens/report_details_screen.dart';
 import 'info_row.dart';
 
 class ChildCard extends StatelessWidget {
