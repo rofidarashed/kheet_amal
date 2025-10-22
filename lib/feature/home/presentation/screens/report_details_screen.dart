@@ -2,9 +2,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kheet_amal/core/utils/app_colors.dart';
-import 'package:kheet_amal/feature/home/widgets/custom_founder_info.dart';
-import 'package:kheet_amal/feature/home/widgets/custom_report_action_bar.dart';
-import 'package:kheet_amal/feature/home/widgets/custom_report_details_cards.dart';
+import 'package:kheet_amal/feature/home/presentation/widgets/custom_founder_info.dart';
+import 'package:kheet_amal/feature/home/presentation/widgets/custom_icon_button.dart';
+import 'package:kheet_amal/feature/home/presentation/widgets/custom_report_action_bar.dart';
+import 'package:kheet_amal/feature/home/presentation/widgets/custom_report_details_cards.dart';
 
 class ReportDetails extends StatelessWidget {
   const ReportDetails({super.key});
@@ -77,7 +78,17 @@ class ReportDetails extends StatelessWidget {
               SizedBox(height: 20.h),
               FounderInfo(),
               ReportDetailsCardsColumn(),
-              ReportActionBar(),
+              SizedBox(height: 16.h),
+              ReportActionBar(
+                space: 16.w,
+                onPressed: () {},
+                actionChild: CustomIconButton(
+                  text: 'share'.tr(),
+                  backgroundColor: AppColors.secondaryColor,
+                  onPressed: () {},
+                  icon: Icon(Icons.share, color: AppColors.white, size: 20.sp),
+                ),
+              ),
             ],
           ),
         ),
@@ -85,4 +96,3 @@ class ReportDetails extends StatelessWidget {
     );
   }
 }
-

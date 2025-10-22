@@ -2,9 +2,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kheet_amal/core/widgets/custom_app_bar.dart';
-import 'package:kheet_amal/feature/home/widgets/segment_tab.dart';
-import 'package:kheet_amal/feature/home/widgets/info_banner.dart';
-import 'package:kheet_amal/feature/home/widgets/child_card.dart';
+import 'package:kheet_amal/feature/home/presentation/widgets/segment_tab.dart';
+import 'package:kheet_amal/feature/home/presentation/widgets/info_banner.dart';
+import 'package:kheet_amal/feature/home/presentation/widgets/child_card.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

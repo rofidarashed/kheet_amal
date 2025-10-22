@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:kheet_amal/feature/home/screens/report_details_screen.dart';
+import 'package:kheet_amal/core/utils/app_colors.dart';
+import 'package:kheet_amal/feature/home/presentation/screens/report_details_screen.dart';
+import 'package:kheet_amal/feature/home/presentation/widgets/custom_icon_button.dart';
+import 'package:kheet_amal/feature/home/presentation/widgets/custom_report_action_bar.dart';
 import 'info_row.dart';
 
 class ChildCard extends StatelessWidget {
@@ -81,39 +84,13 @@ class ChildCard extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 10.h),
-            Row(
-              children: [
-                Text('20', style: TextStyle(fontSize: 12.sp)),
-                SizedBox(width: 3.w),
-                Icon(Icons.chat_bubble_outline, size: 16.sp),
-                SizedBox(width: 12.w),
-                Text('20', style: TextStyle(fontSize: 12.sp)),
-                SizedBox(width: 3.w),
-                Icon(Icons.favorite_border, size: 16.sp),
-                const Spacer(),
-                SizedBox(
-                  width: 180.w,
-                  height: 36.h,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFFF19A3E),
-                      foregroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.r),
-                      ),
-                    ),
-                    onPressed: () {},
-                    child: Text(
-                      'details'.tr(),
-                      style: TextStyle(
-                        fontSize: 18.sp,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+            ReportActionBar(
+              onPressed: () {},
+              actionChild: CustomIconButton(
+                text: 'details'.tr(),
+                backgroundColor: AppColors.secondaryColor,
+                onPressed: () {},
+              ),
             ),
           ],
         ),
