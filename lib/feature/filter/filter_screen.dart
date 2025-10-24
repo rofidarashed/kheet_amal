@@ -1,8 +1,13 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kheet_amal/core/utils/app_colors.dart';
+import 'package:kheet_amal/core/utils/app_images.dart';
 
 class FilterScreen extends StatefulWidget {
-  const FilterScreen({super.key});
+  FilterScreen({super.key});
   static const String routeName = "filter";
+
 
   @override
   State<FilterScreen> createState() => _FilterScreenState();
@@ -10,180 +15,248 @@ class FilterScreen extends StatefulWidget {
 
 class _FilterScreenState extends State<FilterScreen> {
   final RangeValues _currentRangeValues = const RangeValues(0, 18);
+  List<String> egyptGovernorates = [
+    "Cairo",
+    "Giza",
+    "Alexandria",
+    "Qalyubia",
+    "Port Said",
+    "Suez",
+    "Dakahlia",
+    "Sharqia",
+    "Gharbia",
+    "Menoufia",
+    "Beheira",
+    "Kafr El Sheikh",
+    "Fayoum",
+    "Beni Suef",
+    "Minya",
+    "Assiut",
+    "Sohag",
+    "Qena",
+    "Luxor",
+    "Aswan",
+    "Red Sea",
+    "New Valley",
+    "Matrouh",
+    "North Sinai",
+    "South Sinai",
+    "Ismailia",
+  ];
+  List<String> eyeColors = [
+    "Brown",
+    "Dark Brown",
+    "Light Brown",
+    "Hazel",
+    "Amber",
+    "Green",
+    "Blue",
+    "Gray",
+    "Black",
+    "Honey",
+    "Violet",
+  ];
+  List<String> hairColors = [
+    "Black",
+    "Dark Brown",
+    "Light Brown",
+    "Blonde",
+    "Platinum Blonde",
+    "Golden Blonde",
+    "Red",
+    "Auburn",
+    "Chestnut",
+    "Gray",
+    "Silver",
+    "White",
+    "Blue",
+    "Pink",
+    "Purple",
+    "Green",
+  ];
+  List<String> specialMarks = [
+    "Scar",                // ندبة
+    "Birthmark",           // وحمة
+    "Mole",                // شامة / خال
+    "Freckles",            // نمش
+    "Tattoo",              // وشم
+    "Piercing",            // ثقب (زي حلق الأنف أو الأذن)
+    "Burn mark",           // علامة حرق
+    "Surgery scar",        // أثر جراحة
+    "Missing finger",      // فقدان إصبع
+    "Missing tooth",       // فقدان سن
+    "Discolored skin patch", // بقعة لونها مختلف
+    "Dimple",              // غمازة
+    "Eyebrow cut",         // قطع في الحاجب
+    "Broken nose",         // أنف مكسور سابقًا
+    "Limp",                // عرج أثناء المشي
+    "Tattooed eyebrow",    // حاجب موشوم
+    "Braces",              // تقويم الأسنان
+    "None",                // لا يوجد علامات مميزة
+  ];
+
 
   @override
   Widget build(BuildContext context) {
     const TextStyle textStyle = TextStyle(fontWeight: FontWeight.w400);
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: Scaffold(
-        backgroundColor: Color(0xFFF4F5F6),
-        appBar: AppBar(
-          backgroundColor: Color(0xFFF4F5F6),
-          title: Text("فلتر"),
+    return Scaffold(
+      backgroundColor: AppColors.backgroundColor,
+      appBar: AppBar(
+        backgroundColor: AppColors.backgroundColor,
+        title: Text("Filter".tr()),
 
-        ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Container(
-                  decoration: buildBoxDecoration(),
-                  child: Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          "الحالة",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w400, fontSize: 26),
-                        ),
-                        RadioListTile(
-                          title: const Text("طفل مفقود", style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.w400),),
-                          value: "",
-                          shape: StadiumBorder(
-                            side: BorderSide(color: Color(0xff92C1EB)),
-                          ),
-                          fillColor:  MaterialStateProperty.all(Color(0xff92C1EB)),
-                          activeColor: Color(0xff92C1EB),
-                          tileColor: Color(0xff92C1EB),
-                          selectedTileColor: Color(0xff92C1EB),
-                          groupValue: null,
-                          onChanged: (_) {},
-                        ),
-                        RadioListTile(
-                          title: const Text("طفل بحاجة للتحقق", style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.w400)),
-                          value: "",
-                          shape: StadiumBorder(
-                            side: BorderSide(color: Color(0xff92C1EB)),
-                          ),
-                          fillColor:  MaterialStateProperty.all(Color(0xff92C1EB)),
-                          activeColor: Color(0xff92C1EB),
-                          tileColor: Color(0xff92C1EB),
-                          selectedTileColor: Color(0xff92C1EB),
-                          groupValue: null,
-                          onChanged: (_) {},
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 16, right: 16, left: 16),
-                child: Container(
-                  decoration: buildBoxDecoration(),
-                  child: Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text("العمر", style: TextStyle(
-                            fontWeight: FontWeight.w400, fontSize: 26)),
-                        RangeSlider(
-                          values: const RangeValues(0, 18),
-                          min: 0,
-                          max: 18,
-                          divisions: 18,
-                          activeColor: Color(0xFF92C1EB),
-                          inactiveColor: Color(0xFFB8B8B8),
-                          labels: RangeLabels("${_currentRangeValues.start
-                              .round()
-                              .toString()} سنوات", "${_currentRangeValues.end
-                              .round().toString()} سنوات"),
-                          onChanged: (_) {},
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 7),
-                          child: const Text("النوع", style: TextStyle(
-                              fontSize: 24, fontWeight: FontWeight.w400),),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            _GenderButton(color: Colors.pink,
-                              imagePath: "assets/images/Rectangle 4565.png",),
-                            SizedBox(width: 20),
-                            _GenderButton(color: Colors.blue,
-                              imagePath: "assets/images/Rectangle 4566 (1).png",),
-                          ],
-                        ),
-                        SizedBox(height: 5,),
-                        buildTextField("لون البشرة", "حدد لون البشرة"),
-                        SizedBox(height: 5,),
-                        buildDropdown("لون العيون", "اختر لون العيون"),
-                        SizedBox(height: 5,),
-                        buildDropdown("لون الشعر", "اختر لون الشعر"),
-                        SizedBox(height: 5,),
-                        buildDropdown("علامات مميزة (اختياري)", "مثال: ندبة صغيرة فوق الحاجب"),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 16, left: 16, bottom: 16),
-                child: Container(
-                  decoration: buildBoxDecoration(),
-                  child: Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        buildTextField("المحافظة", "مثال: القاهرة، الجيزة، الإسكندرية"),
-                        SizedBox(height:5 ,),
-                        buildDropdown("المنطقة", "مثال: مدينة نصر، المعادي، شبرا"),
-                      ],
-                ),
-                    ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 16, left: 16, bottom: 16),
-                child: Container(
-                  decoration: buildBoxDecoration(),
-                  child: Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        buildTextField("التاريخ (حدد تاريخ آخر مشاهدة)","يوم/شهر/سنة")
-             ],
-          ),
-        ),
-                ),
-              ),
-              SizedBox(height: 20,),
-              Padding(
-                padding: const EdgeInsets.only(right: 50,left: 50,bottom: 35),
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.orange,
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(40),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.all(16.0.w),
+              child: Container(
+                decoration: buildBoxDecoration(),
+                child: Padding(
+                  padding: EdgeInsets.all(10.w),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                       Text(
+                        "Status".tr(),
+                        style: TextStyle(
+                            fontWeight: FontWeight.w400, fontSize: 26.sp),
                       ),
-                    ),
-                    child: const Text(
-                      "إضافة",
-                      style: TextStyle(fontSize: 24, color: Colors.white),
-                    ),
+                      buildRadioListTile("Missing".tr()),
+                      buildRadioListTile("Needs Verification".tr()),
+                    ],
                   ),
                 ),
-              )
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(bottom: 16.h, right: 16.w, left: 16.w),
+              child: Container(
+                decoration: buildBoxDecoration(),
+                child: Padding(
+                  padding: EdgeInsets.all(10.w),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("Age".tr(), style: TextStyle(
+                          fontWeight: FontWeight.w400, fontSize: 26.sp)),
+                      RangeSlider(
+                        values: const RangeValues(0, 18),
+                        min: 0,
+                        max: 18,
+                        divisions: 18,
+                        activeColor: AppColors.primaryColor,
+                        inactiveColor: AppColors.inactiveTrackbarColor,
+                        labels: RangeLabels("${_currentRangeValues.start
+                            .round()
+                            .toString()} years".tr(), "${_currentRangeValues.end
+                            .round().toString()} years".tr()),
+                        onChanged: (_) {},
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(bottom: 7.h),
+                        child: Text("Gender", style: TextStyle(
+                            fontSize: 24.sp, fontWeight: FontWeight.w400),),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          _GenderButton(color: AppColors.girlIcon,
+                            imagePath: AppImages.girl,),
+                          SizedBox(width: 20.w),
+                          _GenderButton(color: AppColors.boyIcon,
+                            imagePath: AppImages.boy,),
+                        ],
+                      ),
+                      SizedBox(height: 5.h,),
+                      buildTextField("Skin tone".tr(), "Select Skin tone".tr()),
+                      SizedBox(height: 5.h,),
+                      buildDropdown("Eye Color".tr(), "Select Eye Color".tr(), eyeColors),
+                      SizedBox(height: 5.h,),
+                      buildDropdown("Hair Color".tr(), "Select Hair Color".tr(), hairColors),
+                      SizedBox(height: 5.h,),
+                      buildDropdown("Special Marks (Optional)".tr(), "e.g. a small scar above the eyebrow".tr(), specialMarks),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding:  EdgeInsets.only(right: 16.w, left: 16.w, bottom: 16.h),
+              child: Container(
+                decoration: buildBoxDecoration(),
+                child: Padding(
+                  padding: EdgeInsets.all(10.w),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      buildDropdown( "Governorate".tr(), "example: Cairo, Giza, Alexandria".tr(),egyptGovernorates ),
+                      SizedBox(height:5.h ,),
+                      buildTextField("Area".tr(), "example: Nasr city, Maadi, Shopra".tr()),
+                    ],
+              ),
+                  ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(right: 16.w, left: 16.w, bottom: 16.h),
+              child: Container(
+                decoration: buildBoxDecoration(),
+                child: Padding(
+                  padding: EdgeInsets.all(10.w),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      buildTextField("Date (Select the date of last viewing)".tr(),"Day/Month/Year".tr())
+           ],
+        ),
+      ),
+              ),
+            ),
+            SizedBox(height: 20.h,),
+            Padding(
+              padding: EdgeInsets.only(right: 50.w,left: 50.w,bottom: 35.h),
+              child: SizedBox(
+                width: double.infinity.w,
+                child: ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.secondaryColor,
+                    padding: EdgeInsets.symmetric(vertical: 14.h),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(40.r),
+                    ),
+                  ),
+                  child: Text(
+                    "Add".tr(),
+                    style: TextStyle(fontSize: 24.sp, color: AppColors.white),
+                  ),
+                ),
+              ),
+            )
 
-            ]
-      ),
-      ),
-      ),
+          ]
+    ),
+    ),
     );
+  }
+
+  RadioListTile<String?> buildRadioListTile(String text) {
+    return RadioListTile(
+                        title: Text( text , style: TextStyle(
+                            fontSize: 20.sp, fontWeight: FontWeight.w400),),
+                        value: "",
+                        shape: StadiumBorder(
+                          side: BorderSide(color: AppColors.primaryColor),
+                        ),
+                        fillColor:  MaterialStateProperty.all(AppColors.primaryColor),
+                        activeColor: AppColors.primaryColor,
+                        tileColor: AppColors.primaryColor,
+                        selectedTileColor: AppColors.primaryColor,
+                        groupValue: null,
+                        onChanged: (_) {},
+                      );
   }
 
   Column buildTextField(String text, String hint) {
@@ -191,21 +264,21 @@ class _FilterScreenState extends State<FilterScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          text, style: TextStyle(fontWeight: FontWeight.w400, fontSize: 24),),
+          text, style: TextStyle(fontWeight: FontWeight.w400, fontSize: 24.sp),),
         TextField(
           decoration: InputDecoration(
             hintText: hint,
-            hintStyle: TextStyle(color: Colors.grey.shade400),
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(15),
-                borderSide: BorderSide(color: Color(0xff92C1EB))
+            hintStyle: TextStyle(color: AppColors.inactiveTrackbarColor),
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(15.r),
+                borderSide: BorderSide(color: AppColors.primaryColor)
             ),
             enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(15),
-                borderSide: BorderSide(color: Color(0xff92C1EB))
+                borderRadius: BorderRadius.circular(15.r),
+                borderSide: BorderSide(color: AppColors.primaryColor)
             ),
             focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(15),
-                borderSide: BorderSide(color: Color(0xff92C1EB))
+                borderRadius: BorderRadius.circular(15.r),
+                borderSide: BorderSide(color: AppColors.primaryColor)
             ),
           ),
         ),
@@ -213,39 +286,44 @@ class _FilterScreenState extends State<FilterScreen> {
     );
   }
 
-  Column buildDropdown(String text , String hint){
+  Column buildDropdown(String text , String hint ,List<String>items){
     return Column(
   crossAxisAlignment: CrossAxisAlignment.start,
   children: [
   Text(text, style: TextStyle(
-  fontSize: 24, fontWeight: FontWeight.w400),),
+  fontSize: 24.sp, fontWeight: FontWeight.w400),),
   DropdownButtonFormField<String>(
   decoration: InputDecoration(
   hintText: hint,
   hintStyle: TextStyle(
-  color: Color(0xff92989B), fontSize: 16),
+  color: AppColors.hintTextColor, fontSize: 16.sp),
   border: OutlineInputBorder(
-  borderRadius: BorderRadius.circular(15),
+  borderRadius: BorderRadius.circular(15.r),
   borderSide: BorderSide(
-  color: Color(0xff92C1EB))),
+  color: AppColors.primaryColor)),
   focusedBorder: OutlineInputBorder(
-  borderRadius: BorderRadius.circular(15),
+  borderRadius: BorderRadius.circular(15.r),
   borderSide: BorderSide(
-  color: Color(0xff92C1EB))),
+  color: AppColors.primaryColor)),
   enabledBorder: OutlineInputBorder(
-  borderRadius: BorderRadius.circular(15),
+  borderRadius: BorderRadius.circular(15.r),
   borderSide: BorderSide(
-  color: Color(0xff92C1EB))),
+  color: AppColors.primaryColor)),
   ),
-  items: [], onChanged: (_) {}),
+  items: items.map((item) =>DropdownMenuItem(
+      value: item,
+      child: Text(item.tr() ,style: TextStyle(fontSize: 16.sp),)) ).toList(),
+      onChanged: (item) {
+    setState(() {});
+      }),
   ],
   );
 }
 
   BoxDecoration buildBoxDecoration() {
     return BoxDecoration(
-                borderRadius: BorderRadius.circular(25),
-                color: Colors.white,
+                borderRadius: BorderRadius.circular(25.r),
+                color: AppColors.white,
               );
   }
 }
@@ -268,19 +346,19 @@ class _GenderButtonState extends State<_GenderButton> {
   Widget build(BuildContext context) {
     return InkWell(
       child: Container(
-        width: 90,
-        padding: const EdgeInsets.all(10),
+        width: 90.w,
+        padding: EdgeInsets.all(10.w),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.white,
           border: Border.all(color: widget.color),
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(12.r),
         ),
         child: Column(
           children: [
             Image.asset(
               widget.imagePath,
-              width: 60,
-              height: 60,
+              width: 60.w,
+              height: 60.h,
               fit: BoxFit.contain,
             ),
           ],
