@@ -8,11 +8,17 @@ import 'package:kheet_amal/core/routing/app_routes.dart';
 import 'package:kheet_amal/core/theme/app_theme.dart';
 
 import 'feature/home_layout/presentation/cubit/bottom_nav_cubit.dart';
+import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   await Firebase.initializeApp();
+  await Firebase.initializeApp(
+
+    options: DefaultFirebaseOptions.currentPlatform,
+
+  );
   runApp(
     EasyLocalization(
       supportedLocales: [Locale('en'), Locale('en')],

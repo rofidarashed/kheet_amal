@@ -2,13 +2,28 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kheet_amal/feature/add_report/cubit/add_report_state.dart';
 import 'package:kheet_amal/feature/add_report/enums/enums.dart';
 
+import '../data/backblaze_service.dart';
+
 class AddReportCubit extends Cubit<AddReportState> {
   AddReportCubit() : super(AddReportState.initial());
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController marksController = TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
+  final ImagePicker _picker = ImagePicker();
+  final BackblazeService _backblazeService = BackblazeService();
+  @override
+  Future<void> close() {
+    nameController.dispose();
+    marksController.dispose();
+    descriptionController.dispose();
+    return super.close();
+  }
 
   void selectReportType(ReportType reportType) {
     emit(state.copyWith(reportType: reportType));
@@ -38,7 +53,6 @@ class AddReportCubit extends Cubit<AddReportState> {
     emit(state.copyWith(contactCode: contactCode));
   }
 
-  final ImagePicker _picker = ImagePicker();
   void selectImage() async {
     final XFile? pickedFile = await _picker.pickImage(
       source: ImageSource.gallery,
@@ -72,6 +86,48 @@ class AddReportCubit extends Cubit<AddReportState> {
       emit(state.copyWith(lastSeenDate: results[0]));
       dateController.text =
           '${state.lastSeenDate!.day}/${state.lastSeenDate!.month}/${state.lastSeenDate!.year}';
+    }
+  }
+
+  Future<void> submitReport({
+    required String place,
+    required String clothes,
+    required String phone1,
+    required String phone2,
+    String? description,
+  }) async {
+    try {
+      String imageUrl = 'static/images/default_image.png';
+      if (state.image != null) {
+        final uploadedUrl = await _backblazeService.uploadImage(state.image!);
+        if (uploadedUrl != null) {
+          imageUrl = uploadedUrl;
+        } else {
+          debugPrint('Failed to upload image, using default one.');
+        }
+      }
+      await FirebaseFirestore.instance.collection('reports').add({
+        'reportType': state.reportType.name,
+        'gender': state.gender.name,
+        'skinColor': state.skinColor.name,
+        'eyeColor': state.eyeColor.name,
+        'hairColor': state.hairColor.name,
+        'startAge': state.startAge,
+        'endAge': state.endAge,
+        'childName': nameController.text.trim(),
+        'distinctiveMarks': marksController.text.trim(),
+        'description': descriptionController.text.trim(),
+        'place': place,
+        'clothes': clothes,
+        'date': state.lastSeenDate?.toIso8601String(),
+        'contactCode': state.contactCode,
+        'phone1': phone1,
+        'phone2': phone2,
+        'imageUrl': imageUrl,
+        'createdAt': FieldValue.serverTimestamp(),
+      });
+    } catch (e) {
+      debugPrint(e.toString());
     }
   }
 }

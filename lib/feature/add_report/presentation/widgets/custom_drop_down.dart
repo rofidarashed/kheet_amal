@@ -6,7 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:kheet_amal/core/utils/app_colors.dart';
 import 'package:kheet_amal/core/utils/app_icons.dart';
 
-class CustomDropdown extends StatelessWidget {
+class CustomDropdown<T> extends StatelessWidget {
   const CustomDropdown({
     super.key,
     required this.options,
@@ -15,8 +15,8 @@ class CustomDropdown extends StatelessWidget {
     required this.title,
   });
 
-  final Map<dynamic, String> options;
-  final ValueChanged<String?> onChanged;
+  final Map<T, String> options;
+  final ValueChanged<T?> onChanged;
   final String hint;
   final String title;
 
@@ -32,7 +32,7 @@ class CustomDropdown extends StatelessWidget {
         SizedBox(height: 8.h),
         SizedBox(
           height: 45.h,
-          child: DropdownButtonFormField2<String>(
+          child: DropdownButtonFormField2<T>(
             decoration: InputDecoration(
               contentPadding: EdgeInsets.symmetric(horizontal: 0),
               filled: true,
@@ -65,11 +65,11 @@ class CustomDropdown extends StatelessWidget {
             ),
             style: TextStyle(color: AppColors.black, fontSize: 18.sp),
             items: options.entries.map((entry) {
-              return DropdownMenuItem<String>(
+              return DropdownMenuItem<T>(
                 alignment: context.locale.languageCode == 'ar'
                     ? AlignmentDirectional.centerEnd
                     : AlignmentDirectional.centerStart,
-                value: entry.value,
+                value: entry.key,
                 child: Text(entry.value),
               );
             }).toList(),
