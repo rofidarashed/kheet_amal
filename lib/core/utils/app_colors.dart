@@ -17,5 +17,12 @@ class AppColors {
   static const Color sGreen = Color(0xff6FCC74);
   static const Color sPink = Color(0xffF17896);
   static const Color sLightPrimary = Color(0xffEAF3FB);
+
+  static const Color girlIcon = Color.fromRGBO(233, 30, 99, 100);
+  static const Color boyIcon = Color.fromRGBO(33, 150, 243, 100);
+  static const Color circleAvatar = Color(0xff1976D2);
+  static const Color pgreeen = Color(0xff4CAF50);
+  static const Color black54 = Color.fromRGBO(0, 0, 0, 54);
+  static const Color red = Color.fromRGBO(244, 67, 54, 100);
 }
 

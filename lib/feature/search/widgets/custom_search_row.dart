@@ -64,7 +64,7 @@ Widget customSearchRow({required BuildContext context}) {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const FilterScreen()),
+                MaterialPageRoute(builder: (context) => FilterScreen()),
               );
 
             },
