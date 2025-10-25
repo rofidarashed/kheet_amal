@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_svg/svg.dart';
@@ -7,6 +8,9 @@ import 'package:kheet_amal/feature/home/data/models/report_model.dart';
 import 'package:kheet_amal/feature/home/presentation/screens/report_details_screen.dart';
 import 'package:kheet_amal/feature/home/presentation/widgets/custom_icon_button.dart';
 import 'package:kheet_amal/feature/home/presentation/widgets/custom_report_action_bar.dart';
+import 'package:kheet_amal/feature/saved_reports/cubits/saved_reports_cubit/saved_reports_cubit.dart';
+import '../../../../support_reports/cubits/sup_reports_cubit/supprot_reports_cubit.dart';
+import '../../../saved_reports/cubits/saved_reports_cubit/saved_reports_state.dart';
 import 'info_row.dart';
 
 class ChildCard extends StatelessWidget {
@@ -17,12 +21,25 @@ class ChildCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<SavedReportsCubit>().checkIfSaved(report.id);
+    });
     return InkWell(
       onTap: () {
+        // reuse existing cubit instances and pass them to the new route
+        final savedCubit = context.read<SavedReportsCubit>();
+        final supportCubit = context.read<SupportReportsCubit>();
+
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ReportDetails(report: report),
+            builder: (context) => MultiBlocProvider(
+              providers: [
+                BlocProvider.value(value: savedCubit),
+                BlocProvider.value(value: supportCubit),
+              ],
+              child: ReportDetails(report: report),
+            ),
           ),
         );
       },
@@ -64,11 +81,23 @@ class ChildCard extends StatelessWidget {
                       child: CircleAvatar(
                         radius: 14.r,
                         backgroundColor: Colors.white70,
-                        child: Icon(
-                          Icons.bookmark_border,
-                          color: Colors.black87,
-                          size: 16.sp,
-                        ),
+                        child:
+                            BlocBuilder<SavedReportsCubit, SavedReportsState>(
+                              builder: (context, state) {
+                                bool isSaved = false;
+                                if (state is SavedReportsToggled &&
+                                    state.reportId == report.id) {
+                                  isSaved = state.isSaved;
+                                }
+                                return SvgPicture.asset(
+                                  isSaved
+                                      ? 'assets/svgs/isSaved_svg.svg'
+                                      : 'assets/svgs/save_icon_svg.svg',
+                                  width: 14.w,
+                                  height: 14.h,
+                                );
+                              },
+                            ),
                       ),
                     ),
                   ],
@@ -110,6 +139,7 @@ class ChildCard extends StatelessWidget {
                 backgroundColor: AppColors.secondaryColor,
                 onPressed: () {},
               ),
+              report: report,
             ),
           ],
         ),

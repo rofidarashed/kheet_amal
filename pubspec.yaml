@@ -52,7 +52,7 @@ dependencies:
   dotted_border: ^3.1.0
   image_picker: ^1.2.0
   calendar_date_picker2: ^2.0.1
-  fl_chart: ^1.1.1
+  fl_chart: ^0.63.0
   freezed_annotation: ^3.1.0
   dio: ^5.9.0
   awesome_dialog: ^3.3.0
