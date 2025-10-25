@@ -1,13 +1,17 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:kheet_amal/core/utils/app_colors.dart';
-import 'package:kheet_amal/feature/report_details/widgets/custom_founder_info.dart';
-import 'package:kheet_amal/feature/report_details/widgets/custom_report_action_bar.dart';
-import 'package:kheet_amal/feature/report_details/widgets/custom_report_details_cards.dart';
+import 'package:kheet_amal/feature/home/data/models/report_model.dart';
+import 'package:kheet_amal/feature/home/presentation/widgets/custom_founder_info.dart';
+import 'package:kheet_amal/feature/home/presentation/widgets/custom_icon_button.dart';
+import 'package:kheet_amal/feature/home/presentation/widgets/custom_report_action_bar.dart';
+import 'package:kheet_amal/feature/home/presentation/widgets/custom_report_details_cards.dart';
 
 class ReportDetails extends StatelessWidget {
-  const ReportDetails({super.key});
+  const ReportDetails({super.key, required this.report});
+  final ReportModel report;
 
   @override
   Widget build(BuildContext context) {
@@ -66,18 +70,36 @@ class ReportDetails extends StatelessWidget {
                 alignment: Alignment.center,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(15.sp),
-                  child: Image.asset(
-                    "assets/images/boy_photo.png",
-                    height: 271.sp,
-                    width: 264.sp,
-                    fit: BoxFit.cover,
-                  ),
+                  child: report.imageUrl.isNotEmpty
+                      ? Image.network(
+                          report.imageUrl,
+                          height: 187.h,
+                          width: 158.w,
+                          fit: BoxFit.cover,
+                          errorBuilder: (_, __, ___) => SvgPicture.asset(
+                            'assets/svgs/profile_icon.svg',
+                            height: 187.h,
+                            width: 158.w,
+                            fit: BoxFit.cover,
+                          ),
+                        )
+                      : Container(),
                 ),
               ),
               SizedBox(height: 20.h),
               FounderInfo(),
-              ReportDetailsCardsColumn(),
-              ReportActionBar(),
+              ReportDetailsCardsColumn(report: report,),
+              SizedBox(height: 16.h),
+              ReportActionBar(
+                space: 16.w,
+                onPressed: () {},
+                actionChild: CustomIconButton(
+                  text: 'share'.tr(),
+                  backgroundColor: AppColors.secondaryColor,
+                  onPressed: () {},
+                  icon: Icon(Icons.share, color: AppColors.white, size: 20.sp),
+                ),
+              ),
             ],
           ),
         ),
@@ -85,4 +107,3 @@ class ReportDetails extends StatelessWidget {
     );
   }
 }
-
