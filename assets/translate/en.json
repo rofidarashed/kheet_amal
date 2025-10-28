@@ -64,7 +64,13 @@
     "title": "Password Reset",
     "success_title": "Password changed successfully!",
     "success_description": "You can now use the new password to log in securely",
-    "login_button": "Login"
+    "login_button": "Login",
+     "user-not-found": "User not found",
+  "wrong-password": "Incorrect password",
+  "email-already-in-use": "This email is already in use",
+  "weak-password": "Weak password",
+  "invalid-email": "Invalid email format"
+  
   },
   "required": "This field is required",
   "home": "Home",
