@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
             locale: context.locale,
             debugShowCheckedModeBanner: false,
             theme: AppTheme.lightTheme,
-            initialRoute: AppRoutes.homeLayout,
+            initialRoute: AppRoutes.register,
             onGenerateRoute: (settings) => AppRouter.generateRoute(settings),
           ),
         );
