@@ -4,6 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kheet_amal/core/routing/app_routes.dart';
+import 'package:kheet_amal/core/utils/app_colors.dart';
 import 'package:kheet_amal/core/utils/app_validators.dart';
 import 'package:kheet_amal/feature/auth/cubit/auth_cubit.dart';
 import 'package:kheet_amal/feature/auth/cubit/auth_state.dart';
@@ -21,6 +22,7 @@ class RegisterScreen extends StatelessWidget {
   final phoneController = TextEditingController();
   final passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  final _checkboxKey = GlobalKey<FormFieldState<bool>>();
 
   @override
   Widget build(BuildContext context) {
@@ -61,6 +63,7 @@ class RegisterScreen extends StatelessWidget {
               key: _formKey,
               child: SafeArea(
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Image.asset(
                       "assets/images/logo.png",
@@ -97,20 +100,19 @@ class RegisterScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    FieldLabel("national_id".tr()),
+                    FieldLabel("email".tr()),
                     CustomTextField(
-                      validator: (p0) => AppValidators.nationalIdValidator(
-                        emailController.text,
-                      ),
-                      hint: "enter_national_id".tr(),
+                      validator: (p0) =>
+                          AppValidators.emailValidator(emailController.text),
+                      hint: "enter_email".tr(),
                       controller: emailController,
                       errorText: emailError,
                       suffixIcon: Padding(
                         padding: EdgeInsets.all(7.w),
-                        child: Image.asset(
-                          "assets/images/identification-card.png",
-                          height: 24.h,
-                          width: 24.w,
+                        child: Icon(
+                          Icons.email_outlined,
+                          size: 25.h,
+                          color: AppColors.hintTextColor,
                         ),
                       ),
                     ),
@@ -150,10 +152,24 @@ class RegisterScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    TermsAgreement(),
+                    TermsAgreement(
+                      value: context.watch<AuthCubit>().value,
+                      onChanged: (bool? newValue) {
+                        context.read<AuthCubit>().toggleValue();
+                        _checkboxKey.currentState?.validate();
+                      },
+                      checkboxValidator: (val) =>
+                          AppValidators.checkboxValidator(val),
+                    ),
+
                     RegisterButton(
                       onPressed: () {
-                        if (_formKey.currentState!.validate()) {
+                        final isFormValid =
+                            _formKey.currentState?.validate() ?? false;
+                        final isCheckboxChecked = context
+                            .read<AuthCubit>()
+                            .value;
+                        if (isFormValid && isCheckboxChecked) {
                           final cubit = context.read<AuthCubit>();
                           cubit.registerUser(
                             email: emailController.text.trim(),

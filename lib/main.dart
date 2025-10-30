@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kheet_amal/core/routing/app_router.dart';
 import 'package:kheet_amal/core/routing/app_routes.dart';
 import 'package:kheet_amal/core/theme/app_theme.dart';
+import 'package:kheet_amal/feature/auth/cubit/auth_cubit.dart';
 import 'package:kheet_amal/feature/home/cubit/home_cubit.dart';
 import 'package:kheet_amal/feature/home/data/repositories/report_repository.dart';
 
@@ -45,6 +46,7 @@ class MyApp extends StatelessWidget {
             BlocProvider(
               create: (_) => HomeCubit(ReportRepository())..loadReports(),
             ),
+            BlocProvider(create: (_) => AuthCubit()),
           ],
           child: MaterialApp(
             localizationsDelegates: context.localizationDelegates,
@@ -52,7 +54,7 @@ class MyApp extends StatelessWidget {
             locale: context.locale,
             debugShowCheckedModeBanner: false,
             theme: AppTheme.lightTheme,
-            initialRoute: AppRoutes.register,
+            initialRoute: AppRoutes.splash,
             onGenerateRoute: (settings) => AppRouter.generateRoute(settings),
           ),
         );

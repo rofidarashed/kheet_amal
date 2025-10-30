@@ -5,7 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kheet_amal/core/utils/app_icons.dart';
 import 'package:kheet_amal/feature/add_report/presentation/screen/add_report_screen.dart';
-import 'package:kheet_amal/feature/profile/profile_screan.dart';
+import 'package:kheet_amal/feature/profile/profile_screen.dart';
 import 'package:kheet_amal/feature/search/search_screen.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 import '../../../../core/utils/app_colors.dart';
@@ -19,7 +19,12 @@ class BottomNavBar extends StatelessWidget {
   const BottomNavBar({super.key, required this.controller});
 
   List<Widget> _screens() {
-    return [HomeScreen(), SearchScreen(), AddReportScreen(), ProfileScrean()];
+    return [
+      HomeScreen(),
+      SearchScreen(),
+      AddReportScreen(),
+      ProfileScreen(),
+    ];
   }
 
   @override

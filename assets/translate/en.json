@@ -3,8 +3,6 @@
   "login": "Login",
   "username": "Username",
   "enter_username": "Enter username",
-  "national_id": "National ID",
-  "enter_national_id": "Enter national ID",
   "password": "Password",
   "enter_password": "Enter password",
   "mobile_number": "Mobile Number",
@@ -195,5 +193,6 @@
   "enter_email": "Please enter your email",
   "enter_phone": "Please enter your phone number",
   "updating": "Updating your information...",
-  "bookmarks": "Bookmarks"
+  "bookmarks": "Bookmarks",
+  "check": "You must accept the Terms and Conditions"
 }
