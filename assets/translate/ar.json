@@ -237,7 +237,7 @@
     "بنفسجي",
     "أخضر"
   ],
-  "special_marks": [
+  "special_marks_list": [
     "ندبة",
     "شامة",
     "وحمة",
@@ -268,7 +268,7 @@
   "Archives" : "المحفوظات",
   "My reports" : "بلاغاتي",
   "no_added_reports": "لا توجد بلاغات مضافة حتى الآن",
-  "add_report_button": "إضافة بلاغ"
+  "add_report_button": "إضافة بلاغ",
   "my_account": "حسابي",
   "saved": "المحفوظات",
   "reports": "بلاغاتي",

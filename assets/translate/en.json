@@ -65,11 +65,11 @@
     "login_button": "Login",
      "user-not-found": "User not found",
   "wrong-password": "Incorrect password",
-  "email-already-in-use": "This email is already in use",
-  "weak-password": "Weak password",
-  "invalid-email": "Invalid email format"
-  
+  "email-already-in-use": "This email is already in use"
   },
+  "weak-password": "Weak password",
+  "invalid-email": "Invalid email format",
+
   "required": "This field is required",
   "home": "Home",
   "search": "Search",
@@ -237,7 +237,7 @@
     "Purple",
     "Green"
   ],
-  "special_marks": [
+  "special_marks_list": [
     "Scar",
     "Birthmark",
     "Mole",
@@ -268,7 +268,7 @@
   "Archives" : "Archives",
   "My reports" : "My reports",
   "no_added_reports": "No added reports until now",
-  "add_report_button": "Add Report"
+  "add_report_button": "Add Report",
   "my_account": "My Account",
   "saved": "Saved",
   "reports": "My Reports",
