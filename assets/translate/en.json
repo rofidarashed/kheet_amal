@@ -194,5 +194,12 @@
   "enter_phone": "Please enter your phone number",
   "updating": "Updating your information...",
   "bookmarks": "Bookmarks",
-  "check": "You must accept the Terms and Conditions"
+  "check": "You must accept the Terms and Conditions",
+  "select_language": "Select Language",
+  "english": "English",
+  "arabic": "Arabic",
+  "profile_updated": "Your personal information has been updated",
+  "changes_saved": "Changes have been saved successfully"
+
+
 }

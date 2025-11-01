@@ -24,7 +24,13 @@ class LoginScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) => AuthCubit(),
       child: Scaffold(
-        body: BlocBuilder<AuthCubit, AuthState>(
+        body: BlocConsumer<AuthCubit, AuthState>(
+          listener: (context, state) {
+            if (state is AuthSuccess) {
+              Navigator.pushReplacementNamed(context, AppRoutes.homeLayout);
+            }
+          },
+
           builder: (context, state) {
             String? emailError;
             String? passwordError;

@@ -10,6 +10,7 @@ import 'package:kheet_amal/feature/search/search_screen.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 import '../../../../core/utils/app_colors.dart';
 import 'package:kheet_amal/feature/home/presentation/screens/home_screen.dart';
+import '../../../auth/cubit/auth_cubit.dart';
 import '../cubit/bottom_nav_cubit.dart';
 import '../cubit/bottom_nav_state.dart';
 
@@ -23,7 +24,10 @@ class BottomNavBar extends StatelessWidget {
       HomeScreen(),
       SearchScreen(),
       AddReportScreen(),
-      ProfileScreen(),
+      BlocProvider(
+        create: (context) => AuthCubit()..fetchUserData(),
+        child: ProfileScreen(),
+      ),
     ];
   }
 

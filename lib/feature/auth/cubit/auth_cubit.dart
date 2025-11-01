@@ -71,7 +71,6 @@ class AuthCubit extends Cubit<AuthState> {
     emit(AuthLoading());
     try {
       await _auth.sendPasswordResetEmail(email: email);
-      // لو حابة ممكن ترسلي رسالة نجاح خاصة
       emit(AuthInitial());
     } on FirebaseAuthException catch (e) {
       emit(AuthFailure(_handleError(e)));
@@ -81,20 +80,33 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> logout() async {
-    await _auth.signOut();
-    await SharedPrefsHelper.clearUserLocally();
-    emit(AuthLoggedOut());
+    try {
+      await _auth.signOut();
+      await SharedPrefsHelper.clearUserLocally();
+      emit(AuthLoggedOut());
+
+    } catch (_) {
+    }
   }
 
   Future<UserModel?> fetchUserData() async {
+    emit(AuthLoading());
     try {
       final uid = _auth.currentUser?.uid;
-      if (uid == null) return null;
+      if (uid == null) {
+        emit(AuthFailure('No authenticated user'.toString()));
+        return null;
+      }
 
       final doc = await _firestore.collection('users').doc(uid).get();
-      if (!doc.exists) return null;
+      if (!doc.exists) {
+        emit(AuthFailure('User document not found'));
+        return null;
+      }
 
-      return UserModel.fromMap(doc.id, doc.data()!);
+      final userModel = UserModel.fromMap(doc.id, doc.data()!);
+      emit(AuthUserLoaded(userModel));
+      return userModel;
     } catch (e) {
       emit(AuthFailure(e.toString()));
       return null;
