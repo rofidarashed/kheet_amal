@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kheet_amal/core/routing/app_routes.dart';
 import 'package:kheet_amal/feature/auth/presentation/screens/login_screen.dart';
 import 'package:kheet_amal/feature/auth/presentation/screens/register_screen.dart';
+import 'package:kheet_amal/feature/comments/comments_screen.dart';
 import 'package:kheet_amal/feature/forget_pass/screens/new_pass.dart';
 import 'package:kheet_amal/feature/home/home_screen.dart';
 import 'package:kheet_amal/feature/home_layout/presentation/pages/home_layout_page.dart';
@@ -40,6 +41,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => PasswordResetSuccessScreen());
       case AppRoutes.notifications:
         return MaterialPageRoute(builder: (_) => NotificationScreen());
+      case AppRoutes.comments:
+        return MaterialPageRoute(builder: (_) => const CommentsPage());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(body: Center(child: Text('404 Not Found'))),

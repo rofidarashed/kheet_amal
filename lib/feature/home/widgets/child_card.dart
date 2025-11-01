@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:kheet_amal/core/routing/app_routes.dart';
 import 'info_row.dart';
 
 class ChildCard extends StatelessWidget {
@@ -14,6 +15,9 @@ class ChildCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12.r),
+        boxShadow: [
+          BoxShadow(color: Colors.black12, blurRadius: 4, offset: Offset(0, 2)),
+        ],
       ),
       padding: EdgeInsets.all(10.w),
       child: Column(
@@ -73,13 +77,29 @@ class ChildCard extends StatelessWidget {
           SizedBox(height: 10.h),
           Row(
             children: [
-              Text('20', style: TextStyle(fontSize: 12.sp)),
-              SizedBox(width: 3.w),
-              Icon(Icons.chat_bubble_outline, size: 16.sp),
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(
+                    context,
+                    rootNavigator: true,
+                  ).pushNamed(AppRoutes.comments);
+                },
+                child: Row(
+                  children: [
+                    Text('20', style: TextStyle(fontSize: 12.sp)),
+                    SizedBox(width: 3.w),
+                    Icon(Icons.chat_bubble_outline, size: 16.sp),
+                  ],
+                ),
+              ),
               SizedBox(width: 12.w),
-              Text('20', style: TextStyle(fontSize: 12.sp)),
-              SizedBox(width: 3.w),
-              Icon(Icons.favorite_border, size: 16.sp),
+              Row(
+                children: [
+                  Text('20', style: TextStyle(fontSize: 12.sp)),
+                  SizedBox(width: 3.w),
+                  Icon(Icons.favorite_border, size: 16.sp),
+                ],
+              ),
               const Spacer(),
               SizedBox(
                 width: 180.w,

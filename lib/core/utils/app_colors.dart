@@ -7,5 +7,7 @@ class AppColors {
   static const Color hintTextColor = Color(0xff92989B);
   static const Color white = Color(0xFFFFFFFF);
   static const Color black = Color(0xFF000000);
+  static const Color red = Color(0xFFFF0C0C);
+  static const Color green = Color(0xFF55B832);
   static const Color inactiveTrackbarColor = Color(0xffB8B8B8);
 }

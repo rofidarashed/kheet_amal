@@ -10,4 +10,5 @@ class AppRoutes {
   static const String onboarding = '/onboarding';
   static const String homeLayout = '/homeLayout';
   static const String notifications = '/notifications';
+  static const String comments = '/comments';
 }

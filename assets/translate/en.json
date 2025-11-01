@@ -173,5 +173,23 @@
   "enter_email": "Please enter your email",
   "enter_phone": "Please enter your phone number",
   "updating": "Updating your information...",
-  "bookmarks": "Bookmarks"
+  "bookmarks": "Bookmarks",
+  "comments": "Comments",
+  "write_comment": "Write a comment...",
+  "report": "Report",
+  "add_reply": "Add reply",
+  "report_success": "Report submitted successfully",
+  "report_received": "Your report has been received and will be reviewed shortly. Thank you for your cooperation.",
+  "report_comment": "Report Comment",
+  "help_us_keep_safe": "Help us keep a safe environment by reporting inappropriate comments.",
+  "add_more_details": "You can add more details (optional)",
+  "extra_details_hint": "You can write additional details here...",
+  "send_report": "Send Report",
+  "please_explain_reason": "Please explain the reason here...",
+
+  "contains_offensive": "Contains offensive words",
+  "misleading_info": "Misleading or incorrect information",
+  "inappropriate_content": "Inappropriate or violent content",
+  "fraud_or_ads": "Fraud or advertisement",
+  "other": "Other"
 }
