@@ -25,13 +25,15 @@ class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
   final Widget? suffixIcon;
   final String? Function(String?) validator ;
+  final String? errorText;
 
   CustomTextField({
     super.key,
     required this.hint,
     required this.controller,
     this.isPassword = false,
-    this.suffixIcon, required this.validator,
+    this.suffixIcon, required this.validator, this.errorText
+
 
   });
 
@@ -46,6 +48,7 @@ class CustomTextField extends StatelessWidget {
           controller: controller,
           obscureText: isPassword,
           decoration: InputDecoration(
+            errorText: errorText,
             hintText: hint.tr(),
             hintStyle: TextStyle(color: AppColors.hintTextColor),
             border: OutlineInputBorder(
