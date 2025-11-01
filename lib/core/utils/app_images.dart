@@ -10,4 +10,6 @@ class AppImages {
   static const String girl = 'assets/images/girl.png';
   static const String boy = 'assets/images/boy.png';
   static const String noNotification = 'assets/images/no_notification.png';
+  static const String reportImage = "assets/images/Rectangle 4560.png";
+  static const String emptyReport = "assets/images/Concept of Unknown things.png";
 }
