@@ -24,5 +24,6 @@ class AppColors {
   static const Color pgreeen = Color(0xff4CAF50);
   static const Color black54 = Color.fromRGBO(0, 0, 0, 54);
   static const Color red = Color.fromRGBO(244, 67, 54, 100);
+  static const Color divider = Color(0xFFDDE3E9);
 }
 
