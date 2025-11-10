@@ -14,86 +14,16 @@ class FilterScreen extends StatefulWidget {
 }
 
 class _FilterScreenState extends State<FilterScreen> {
+  String? selectedItem;
   final RangeValues _currentRangeValues = const RangeValues(0, 18);
-  List<String> egyptGovernorates = [
-    "Cairo",
-    "Giza",
-    "Alexandria",
-    "Qalyubia",
-    "Port Said",
-    "Suez",
-    "Dakahlia",
-    "Sharqia",
-    "Gharbia",
-    "Menoufia",
-    "Beheira",
-    "Kafr El Sheikh",
-    "Fayoum",
-    "Beni Suef",
-    "Minya",
-    "Assiut",
-    "Sohag",
-    "Qena",
-    "Luxor",
-    "Aswan",
-    "Red Sea",
-    "New Valley",
-    "Matrouh",
-    "North Sinai",
-    "South Sinai",
-    "Ismailia",
-  ];
-  List<String> eyeColors = [
-    "Brown",
-    "Dark Brown",
-    "Light Brown",
-    "Hazel",
-    "Amber",
-    "Green",
-    "Blue",
-    "Gray",
-    "Black",
-    "Honey",
-    "Violet",
-  ];
-  List<String> hairColors = [
-    "Black",
-    "Dark Brown",
-    "Light Brown",
-    "Blonde",
-    "Platinum Blonde",
-    "Golden Blonde",
-    "Red",
-    "Auburn",
-    "Chestnut",
-    "Gray",
-    "Silver",
-    "White",
-    "Blue",
-    "Pink",
-    "Purple",
-    "Green",
-  ];
-  List<String> specialMarks = [
-    "Scar",                // ندبة
-    "Birthmark",           // وحمة
-    "Mole",                // شامة / خال
-    "Freckles",            // نمش
-    "Tattoo",              // وشم
-    "Piercing",            // ثقب (زي حلق الأنف أو الأذن)
-    "Burn mark",           // علامة حرق
-    "Surgery scar",        // أثر جراحة
-    "Missing finger",      // فقدان إصبع
-    "Missing tooth",       // فقدان سن
-    "Discolored skin patch", // بقعة لونها مختلف
-    "Dimple",              // غمازة
-    "Eyebrow cut",         // قطع في الحاجب
-    "Broken nose",         // أنف مكسور سابقًا
-    "Limp",                // عرج أثناء المشي
-    "Tattooed eyebrow",    // حاجب موشوم
-    "Braces",              // تقويم الأسنان
-    "None",                // لا يوجد علامات مميزة
-  ];
+  List<String> egyptGovernorates = List<String>.from(tr('governorates') as Iterable);
+
+  List<String> eyeColors = List<String>.from('eye_colors'.tr() as Iterable);
+
+  List<String> hairColors = List<String>.from(tr('hair_colors') as Iterable);
+
+  List<String> specialMarks = List<String>.from(tr('special_marks') as Iterable);
+
 
 
   @override
@@ -286,39 +216,56 @@ class _FilterScreenState extends State<FilterScreen> {
     );
   }
 
-  Column buildDropdown(String text , String hint ,List<String>items){
+  Column buildDropdown(String text, String hint, List<String> items) {
     return Column(
-  crossAxisAlignment: CrossAxisAlignment.start,
-  children: [
-  Text(text, style: TextStyle(
-  fontSize: 24.sp, fontWeight: FontWeight.w400),),
-  DropdownButtonFormField<String>(
-  decoration: InputDecoration(
-  hintText: hint,
-  hintStyle: TextStyle(
-  color: AppColors.hintTextColor, fontSize: 16.sp),
-  border: OutlineInputBorder(
-  borderRadius: BorderRadius.circular(15.r),
-  borderSide: BorderSide(
-  color: AppColors.primaryColor)),
-  focusedBorder: OutlineInputBorder(
-  borderRadius: BorderRadius.circular(15.r),
-  borderSide: BorderSide(
-  color: AppColors.primaryColor)),
-  enabledBorder: OutlineInputBorder(
-  borderRadius: BorderRadius.circular(15.r),
-  borderSide: BorderSide(
-  color: AppColors.primaryColor)),
-  ),
-  items: items.map((item) =>DropdownMenuItem(
-      value: item,
-      child: Text(item.tr() ,style: TextStyle(fontSize: 16.sp),)) ).toList(),
-      onChanged: (item) {
-    setState(() {});
-      }),
-  ],
-  );
-}
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          text,
+          style: TextStyle(fontSize: 24.sp, fontWeight: FontWeight.w400),
+        ),
+        SizedBox(height: 4.h),
+        DropdownButtonFormField<String>(
+          decoration: InputDecoration(
+            hintText: hint,
+            hintStyle: TextStyle(color: AppColors.hintTextColor, fontSize: 16.sp),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15.r),
+              borderSide: BorderSide(color: AppColors.primaryColor),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15.r),
+              borderSide: BorderSide(color: AppColors.primaryColor, width: 2),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15.r),
+              borderSide: BorderSide(color: AppColors.primaryColor),
+            ),
+            contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+          ),
+          value: selectedItem,
+          hint: Text(hint, style: TextStyle(fontSize: 16.sp)),
+          items: items.map((item) {
+            return DropdownMenuItem<String>(
+              value: item,
+              child: Text(item.tr(), style: TextStyle(fontSize: 16.sp)),
+            );
+          }).toList(),
+          onChanged: (String? newValue) {
+            setState(() {
+              selectedItem = newValue;
+            });
+          },
+          validator: (value) {
+            if (value == null) {
+              return 'هذا الحقل مطلوب';
+            }
+            return null;
+          },
+        ),
+      ],
+    );
+  }
 
   BoxDecoration buildBoxDecoration() {
     return BoxDecoration(
