@@ -6,6 +6,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kheet_amal/core/routing/app_router.dart';
 import 'package:kheet_amal/core/routing/app_routes.dart';
 import 'package:kheet_amal/core/theme/app_theme.dart';
+import 'package:kheet_amal/feature/auth/cubit/auth_cubit.dart';
+import 'package:kheet_amal/feature/home/cubit/home_cubit.dart';
+import 'package:kheet_amal/feature/home/data/repositories/report_repository.dart';
 
 import 'feature/home_layout/presentation/cubit/bottom_nav_cubit.dart';
 import 'firebase_options.dart';
@@ -14,11 +17,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   await Firebase.initializeApp();
-  await Firebase.initializeApp(
-
-    options: DefaultFirebaseOptions.currentPlatform,
-
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(
     EasyLocalization(
       supportedLocales: [Locale('en'), Locale('en')],
@@ -42,14 +41,20 @@ class MyApp extends StatelessWidget {
       splitScreenMode: true,
       builder: (_, child) {
         return MultiBlocProvider(
-          providers: [BlocProvider(create: (context) => BottomNavCubit())],
+          providers: [
+            BlocProvider(create: (context) => BottomNavCubit()),
+            BlocProvider(
+              create: (_) => HomeCubit(ReportRepository())..loadReports(),
+            ),
+            BlocProvider(create: (_) => AuthCubit()),
+          ],
           child: MaterialApp(
             localizationsDelegates: context.localizationDelegates,
             supportedLocales: context.supportedLocales,
             locale: context.locale,
             debugShowCheckedModeBanner: false,
             theme: AppTheme.lightTheme,
-            initialRoute: AppRoutes.homeLayout,
+            initialRoute: AppRoutes.splash,
             onGenerateRoute: (settings) => AppRouter.generateRoute(settings),
           ),
         );

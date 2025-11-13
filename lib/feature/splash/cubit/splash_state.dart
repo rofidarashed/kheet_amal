@@ -14,4 +14,7 @@ class SplashExpanding extends SplashState {
   SplashExpanding({required this.expandAnimation});
 }
 
-class SplashNavigateToHome extends SplashState {}
+class SplashNavigateToHome extends SplashState {
+  final bool isLoggedIn;
+  SplashNavigateToHome({required this.isLoggedIn});
+}

@@ -65,4 +65,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'kheet-amal.firebasestorage.app',
     iosBundleId: 'com.example.kheetAmal',
   );
+
 }

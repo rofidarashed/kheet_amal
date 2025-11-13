@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/animation.dart';
+import 'package:kheet_amal/core/utils/shared_prefs_helper.dart';
 import 'package:kheet_amal/feature/splash/cubit/splash_state.dart';
 
 class SplashCubit extends Cubit<SplashState> {
@@ -37,9 +38,17 @@ class SplashCubit extends Cubit<SplashState> {
     emit(SplashExpanding(expandAnimation: expandAnimation));
     expandController.forward();
 
-    expandController.addStatusListener((status) {
+    expandController.addStatusListener((status) async {
       if (status == AnimationStatus.completed) {
-        emit(SplashNavigateToHome());
+        await SharedPrefsHelper.init();
+        final savedUid = SharedPrefsHelper.userId;
+
+        // ✅ Emit navigation with login status
+        emit(
+          SplashNavigateToHome(
+            isLoggedIn: savedUid != null && savedUid.isNotEmpty,
+          ),
+        );
       }
     });
   }
