@@ -237,7 +237,7 @@
     "Purple",
     "Green"
   ],
-  "special_marks": [
+  "special_mark": [
     "Scar",
     "Birthmark",
     "Mole",
@@ -268,6 +268,20 @@
   "Archives" : "Archives",
   "My reports" : "My reports",
   "no_added_reports": "No added reports until now",
+  "Number of reported and recovered cases per monthً": "Number of reported and recovered cases per month",
+  "Missing": "Missing",
+  "Suspected": "Suspected",
+  "Found": "Found",
+  "Status": "Status",
+  "Age distribution": "Age distribution",
+  "0-3": "0-3",
+  "4-7": "4-7",
+  "8-12": "8-12",
+  "13-17": "13-17",
+  "Conclusion": "Conclusion",
+  "-Most exposed groups: ": "-Most exposed groups: ",
+  "8-12 year": "8–12 years",
+  "\n- Decrease in cases among ages 0–3 years": "Decrease in cases among ages 0–3 years"
   "add_report_button": "Add Report"
   "my_account": "My Account",
   "saved": "Saved",
