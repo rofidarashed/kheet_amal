@@ -11,5 +11,6 @@ class AppRoutes {
   static const String homeLayout = '/homeLayout';
   static const String notifications = '/notifications';
   static const String StatisticsqwScreen = "statistics_screen";
-
+  static const String savedItems = '/saved_items';
+  static const String myReports = '/my_reports';
 }

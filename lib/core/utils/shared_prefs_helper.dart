@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPrefsHelper {
-   static SharedPreferences? sharedPreferences;
+  static SharedPreferences? sharedPreferences;
 
   static init() async {
     sharedPreferences = await SharedPreferences.getInstance();
@@ -13,6 +13,7 @@ class SharedPrefsHelper {
     if (user != null) {
       await prefs.setString('uid', user.uid);
       await prefs.setString('email', user.email ?? '');
+      print('User saved locally: UID=${user.uid}, Email=${user.email}');
     }
   }
 
@@ -21,6 +22,7 @@ class SharedPrefsHelper {
     await prefs.remove('uid');
     await prefs.remove('email');
   }
+
   static String? get userId => sharedPreferences?.getString('uid');
   static String? get userEmail => sharedPreferences?.getString('email');
 }

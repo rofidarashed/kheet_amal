@@ -265,7 +265,7 @@
   "card_days_ago": "3 days ago",
   "no_saved_items": "No saved items yet",
   "main_button": "Main",
-  "Archives" : "Archives",
+  "saved" : "saved",
   "My reports" : "My reports",
   "no_added_reports": "No added reports until now",
   "Number of reported and recovered cases per monthً": "Number of reported and recovered cases per month",
@@ -281,10 +281,9 @@
   "Conclusion": "Conclusion",
   "-Most exposed groups: ": "-Most exposed groups: ",
   "8-12 year": "8–12 years",
-  "\n- Decrease in cases among ages 0–3 years": "Decrease in cases among ages 0–3 years"
-  "add_report_button": "Add Report"
+  "\n- Decrease in cases among ages 0–3 years": "Decrease in cases among ages 0–3 years",
+  "add_report_button": "Add Report",
   "my_account": "My Account",
-  "saved": "Saved",
   "reports": "My Reports",
   "language": "Language",
   "settings": "Settings",

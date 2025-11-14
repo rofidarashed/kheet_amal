@@ -5,7 +5,7 @@ import 'package:kheet_amal/core/utils/app_images.dart';
 
 import '../../../core/utils/app_colors.dart';
 
-class EmptyArchives extends StatelessWidget {
+class Emptysaved extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -15,11 +15,14 @@ class EmptyArchives extends StatelessWidget {
         child: Column(
           children: [
             Image.asset(AppImages.emptyReport),
-            SizedBox(height: 15.h,),
-            Text("No Saved items yet".tr(),style: TextStyle(color: AppColors.black,fontSize: 24.sp),),
-            SizedBox(height: 25.h,),
+            SizedBox(height: 15.h),
+            Text(
+              "no_saved_items".tr(),
+              style: TextStyle(color: AppColors.black, fontSize: 24.sp),
+            ),
+            SizedBox(height: 25.h),
             TextButton(
-              onPressed: (){},
+              onPressed: () => Navigator.pop(context),
               style: TextButton.styleFrom(
                 backgroundColor: AppColors.secondaryColor,
                 shape: RoundedRectangleBorder(
@@ -28,11 +31,14 @@ class EmptyArchives extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 12.h, vertical: 8.w),
                 fixedSize: Size(160.w, 32.h),
               ),
-              child: Text("Main".tr(), style: TextStyle(color: AppColors.white,fontSize: 16.sp),),),
+              child: Text(
+                "main_button".tr(),
+                style: TextStyle(color: AppColors.white, fontSize: 16.sp),
+              ),
+            ),
           ],
         ),
       ),
     );
   }
-
 }

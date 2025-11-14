@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:kheet_amal/core/routing/app_routes.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kheet_amal/core/utils/app_icons.dart';
 import 'package:kheet_amal/core/utils/app_validators.dart';
 import 'package:kheet_amal/feature/auth/cubit/auth_cubit.dart';
 import 'package:kheet_amal/feature/auth/cubit/auth_state.dart';
@@ -84,14 +86,7 @@ class LoginScreen extends StatelessWidget {
                         hint: "enter_email".tr(),
                         controller: emailController,
                         errorText: emailError,
-                        suffixIcon: Padding(
-                          padding: EdgeInsets.all(7.w),
-                          child: Icon(
-                            Icons.email_outlined,
-                            size: 24.h,
-                            color: AppColors.hintTextColor,
-                          ),
-                        ),
+                        prefixIcon: SvgPicture.asset(AppIcons.emailIcon),
                       ),
                       FieldLabel("password".tr()),
                       CustomTextField(
@@ -102,14 +97,7 @@ class LoginScreen extends StatelessWidget {
                         controller: passwordController,
                         isPassword: true,
                         errorText: passwordError,
-                        suffixIcon: Padding(
-                          padding: EdgeInsets.all(10.w),
-                          child: Image.asset(
-                            "assets/images/pass_sign.png",
-                            height: 24.h,
-                            width: 24.w,
-                          ),
-                        ),
+                        prefixIcon: SvgPicture.asset(AppIcons.lockIcon),
                       ),
                       Padding(
                         padding: EdgeInsets.all(8.w),

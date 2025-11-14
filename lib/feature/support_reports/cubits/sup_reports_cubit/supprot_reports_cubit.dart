@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kheet_amal/support_reports/cubits/sup_reports_cubit/supprot_reports_state.dart';
+import 'package:kheet_amal/feature/support_reports/cubits/sup_reports_cubit/supprot_reports_state.dart';
 
 class SupportReportsCubit extends Cubit<SupportReportsState> {
   SupportReportsCubit() : super(SupportReportsInitial());

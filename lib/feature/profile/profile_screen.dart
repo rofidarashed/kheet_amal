@@ -132,7 +132,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:kheet_amal/core/routing/app_routes.dart';
 import 'package:kheet_amal/feature/auth/cubit/auth_cubit.dart';
+import 'package:kheet_amal/feature/my_reports_screen/my_reports_screen.dart';
+import 'package:kheet_amal/feature/saved/saved_screen.dart';
 import 'edit_screen.dart';
 import 'widgets/menu_item.dart';
 
@@ -141,6 +144,14 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    void changeLanguage() {
+      if (context.locale == Locale('en')) {
+        context.setLocale(Locale('ar'));
+      } else {
+        context.setLocale(Locale('en'));
+      }
+    }
+
     final authCubit = context.read<AuthCubit>();
 
     return Scaffold(
@@ -148,14 +159,23 @@ class ProfileScreen extends StatelessWidget {
         child: FutureBuilder(
           future: authCubit.fetchUserData(),
           builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              print('Connection state: ${snapshot.connectionState}');
+              print('Error: ${snapshot.error}');
+              return Center(child: Text('Error: ${snapshot.error}'));
+            }
+
             if (snapshot.connectionState == ConnectionState.waiting) {
+              print('Connection state: ${snapshot.connectionState}');
               return const Center(child: CircularProgressIndicator());
             }
 
             if (!snapshot.hasData) {
+              print('Connection state: ${snapshot.connectionState}');
               return Center(child: Text('No user data found'));
             }
-
+            print(snapshot.data);
+            print('Connection state: ${snapshot.connectionState}');
             final user = snapshot.data!;
             return Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.w),
@@ -203,7 +223,7 @@ class ProfileScreen extends StatelessWidget {
                           Row(
                             children: [
                               Text(
-                                user.address ?? 'Not specified', 
+                                user.address ?? 'Not specified',
                                 style: TextStyle(
                                   fontSize: 18.sp,
                                   color: Colors.grey,
@@ -250,28 +270,46 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   Divider(height: 40.h),
                   MenuItem(
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return SavedScreen();
+                        },
+                      ),
+                    ),
                     title: 'saved'.tr(),
                     icon: Icons.bookmark_border,
                     count: 3,
                   ),
                   MenuItem(
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return MyReports();
+                        },
+                      ),
+                    ),
                     title: 'reports'.tr(),
                     icon: Icons.edit_outlined,
                     count: 1,
                   ),
-                  MenuItem(title: 'language'.tr(), icon: Icons.language),
+                  MenuItem(
+                    onTap: changeLanguage,
+                    title: 'language'.tr(),
+                    icon: Icons.language,
+                  ),
                   MenuItem(title: 'settings'.tr(), icon: Icons.settings),
-                  GestureDetector(
+                  MenuItem(
                     onTap: () async {
                       await authCubit.logout();
-                      Navigator.pushReplacementNamed(context, '/login');
+                      Navigator.pushReplacementNamed(context, AppRoutes.login);
                     },
-                    child: MenuItem(
-                      title: 'logout'.tr(),
-                      icon: Icons.power_settings_new,
-                      iconColor: Colors.red,
-                      textColor: Colors.red,
-                    ),
+                    title: 'logout'.tr(),
+                    icon: Icons.power_settings_new,
+                    iconColor: Colors.red,
+                    textColor: Colors.red,
                   ),
                   const Spacer(),
                 ],

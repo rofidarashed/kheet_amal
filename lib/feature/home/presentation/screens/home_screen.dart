@@ -9,8 +9,8 @@ import 'package:kheet_amal/feature/home/presentation/widgets/segment_tab.dart';
 import 'package:kheet_amal/feature/home/presentation/widgets/info_banner.dart';
 import 'package:kheet_amal/feature/home/presentation/widgets/child_card.dart';
 
-import '../../../saved_reports/cubits/saved_reports_cubit/saved_reports_cubit.dart';
-import '../../../../support_reports/cubits/sup_reports_cubit/supprot_reports_cubit.dart';
+import '../../../saved/cubits/saved_reports_cubit/saved_reports_cubit.dart';
+import '../../../support_reports/cubits/sup_reports_cubit/supprot_reports_cubit.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

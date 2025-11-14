@@ -1,10 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:kheet_amal/core/routing/app_routes.dart';
-import 'package:kheet_amal/core/utils/app_colors.dart';
+import 'package:kheet_amal/core/utils/app_icons.dart';
 import 'package:kheet_amal/core/utils/app_validators.dart';
 import 'package:kheet_amal/feature/auth/cubit/auth_cubit.dart';
 import 'package:kheet_amal/feature/auth/cubit/auth_state.dart';
@@ -61,134 +61,117 @@ class RegisterScreen extends StatelessWidget {
 
             return Form(
               key: _formKey,
-              child: SafeArea(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      "assets/images/logo.png",
-                      height: 180.h,
-                      width: 180.w,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(0, 0, 22.w, 0),
-                      child: Align(
-                        alignment: Alignment.topRight,
-                        child: Text(
-                          "create_new_account".tr(),
-                          style: TextStyle(
-                            fontSize: 32.sp,
-                            fontWeight: FontWeight.w400,
+              child: SingleChildScrollView(
+                child: SafeArea(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        "assets/images/logo.png",
+                        height: 180.h,
+                        width: 180.w,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(0, 0, 22.w, 0),
+                        child: Align(
+                          alignment: Alignment.topRight,
+                          child: Text(
+                            "create_new_account".tr(),
+                            style: TextStyle(
+                              fontSize: 32.sp,
+                              fontWeight: FontWeight.w400,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    FieldLabel("username".tr()),
-                    CustomTextField(
-                      validator: (_) => AppValidators.displayNamevalidator(
-                        usernameController.text,
+                      FieldLabel("username".tr()),
+                      CustomTextField(
+                        validator: (_) => AppValidators.displayNamevalidator(
+                          usernameController.text,
+                        ),
+                        hint: "enter_username".tr(),
+                        controller: usernameController,
+                        errorText: nameError,
+                        prefixIcon: SvgPicture.asset(AppIcons.userIcon),
                       ),
-                      hint: "enter_username".tr(),
-                      controller: usernameController,
-                      errorText: nameError,
-                      suffixIcon: Padding(
-                        padding: EdgeInsets.all(7.w),
-                        child: Image.asset(
-                          "assets/images/user-circle.png",
-                          height: 24.h,
-                          width: 24.w,
+                      FieldLabel("email".tr()),
+                      CustomTextField(
+                        validator: (p0) =>
+                            AppValidators.emailValidator(emailController.text),
+                        hint: "enter_email".tr(),
+                        controller: emailController,
+                        errorText: emailError,
+                        prefixIcon: SvgPicture.asset(
+                          AppIcons.emailIcon,
+                          
                         ),
                       ),
-                    ),
-                    FieldLabel("email".tr()),
-                    CustomTextField(
-                      validator: (p0) =>
-                          AppValidators.emailValidator(emailController.text),
-                      hint: "enter_email".tr(),
-                      controller: emailController,
-                      errorText: emailError,
-                      suffixIcon: Padding(
-                        padding: EdgeInsets.all(7.w),
-                        child: Icon(
-                          Icons.email_outlined,
-                          size: 25.h,
-                          color: AppColors.hintTextColor,
+                      FieldLabel("mobile_number".tr()),
+                      CustomTextField(
+                        validator: (p0) => AppValidators.phoneValidator(
+                          phoneController.text,
+                          context,
+                        ),
+                        hint: "enter_mobile_number".tr(),
+                        controller: phoneController,
+                        errorText: phoneError,
+                        prefixIcon: SvgPicture.asset(
+                          AppIcons.phoneIcon,
+                         
                         ),
                       ),
-                    ),
-                    FieldLabel("mobile_number".tr()),
-                    CustomTextField(
-                      validator: (p0) => AppValidators.phoneValidator(
-                        phoneController.text,
-                        context,
-                      ),
-                      hint: "enter_mobile_number".tr(),
-                      controller: phoneController,
-                      errorText: phoneError,
-                      suffixIcon: Padding(
-                        padding: EdgeInsets.all(9.w),
-                        child: Image.asset(
-                          "assets/images/phone_sign.png",
-                          height: 24.h,
-                          width: 24.w,
+                      FieldLabel("password".tr()),
+                      CustomTextField(
+                        validator: (p0) => AppValidators.passwordValidator(
+                          passwordController.text,
+                        ),
+                        hint: "enter_password".tr(),
+                        controller: passwordController,
+                        errorText: passwordError,
+                        isPassword: true,
+                        prefixIcon: SvgPicture.asset(
+                          AppIcons.lockIcon,
+                         
                         ),
                       ),
-                    ),
-                    FieldLabel("password".tr()),
-                    CustomTextField(
-                      validator: (p0) => AppValidators.passwordValidator(
-                        passwordController.text,
+                      TermsAgreement(
+                        value: context.watch<AuthCubit>().value,
+                        onChanged: (bool? newValue) {
+                          context.read<AuthCubit>().toggleValue();
+                          _checkboxKey.currentState?.validate();
+                        },
+                        checkboxValidator: (val) =>
+                            AppValidators.checkboxValidator(val),
                       ),
-                      hint: "enter_password".tr(),
-                      controller: passwordController,
-                      errorText: passwordError,
-                      isPassword: true,
-                      suffixIcon: Padding(
-                        padding: EdgeInsets.all(10.w),
-                        child: Image.asset(
-                          "assets/images/pass_sign.png",
-                          height: 24.h,
-                          width: 24.w,
-                        ),
-                      ),
-                    ),
-                    TermsAgreement(
-                      value: context.watch<AuthCubit>().value,
-                      onChanged: (bool? newValue) {
-                        context.read<AuthCubit>().toggleValue();
-                        _checkboxKey.currentState?.validate();
-                      },
-                      checkboxValidator: (val) =>
-                          AppValidators.checkboxValidator(val),
-                    ),
 
-                    RegisterButton(
-                      onPressed: () {
-                        final isFormValid =
-                            _formKey.currentState?.validate() ?? false;
-                        final isCheckboxChecked = context
-                            .read<AuthCubit>()
-                            .value;
-                        if (isFormValid && isCheckboxChecked) {
-                          final cubit = context.read<AuthCubit>();
-                          cubit.registerUser(
-                            email: emailController.text.trim(),
-                            password: passwordController.text.trim(),
-                            name: usernameController.text.trim(),
-                            phone: phoneController.text.trim(),
-                          );
-                        }
-                      },
-                      textButton: 'register'.tr(),
-                    ),
-                    AlreadyHaveAccount(
-                      actionText: "login".tr(),
-                      questionText: "already_have_account".tr(),
-                      onTap: () {
-                        Navigator.pushNamed(context, AppRoutes.login);
-                      },
-                    ),
-                  ],
+                      RegisterButton(
+                        onPressed: () {
+                          final isFormValid =
+                              _formKey.currentState?.validate() ?? false;
+                          final isCheckboxChecked = context
+                              .read<AuthCubit>()
+                              .value;
+                          if (isFormValid && isCheckboxChecked) {
+                            final cubit = context.read<AuthCubit>();
+                            cubit.registerUser(
+                              email: emailController.text.trim(),
+                              password: passwordController.text.trim(),
+                              name: usernameController.text.trim(),
+                              phone: phoneController.text.trim(),
+                            );
+                          }
+                        },
+                        textButton: 'register'.tr(),
+                      ),
+                      AlreadyHaveAccount(
+                        actionText: "login".tr(),
+                        questionText: "already_have_account".tr(),
+                        onTap: () {
+                          Navigator.pushNamed(context, AppRoutes.login);
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ),
             );

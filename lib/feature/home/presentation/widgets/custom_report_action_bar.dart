@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../../../support_reports/cubits/sup_reports_cubit/supprot_reports_cubit.dart';
-import '../../../../support_reports/cubits/sup_reports_cubit/supprot_reports_state.dart';
+import '../../../support_reports/cubits/sup_reports_cubit/supprot_reports_cubit.dart';
+import '../../../support_reports/cubits/sup_reports_cubit/supprot_reports_state.dart';
 import '../../data/models/report_model.dart';
 
 class ReportActionBar extends StatelessWidget {

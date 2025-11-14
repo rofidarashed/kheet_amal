@@ -4,9 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:kheet_amal/core/utils/app_colors.dart';
 import 'package:country_code_picker/country_code_picker.dart';
-import '../../../core/routing/app_routes.dart';
+import '../../../../core/routing/app_routes.dart';
 import '../widgets/custom_appbar.dart';
-import '../../../core/widgets/custom_button.dart';
+import '../../../../core/widgets/custom_button.dart';
 import 'dart:ui' as ui;
 
 class ForgetPassScreen extends StatefulWidget {

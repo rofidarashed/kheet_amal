@@ -5,7 +5,7 @@ import 'package:kheet_amal/core/utils/app_images.dart';
 
 import '../../../core/utils/app_colors.dart';
 
-class ArchivesCard extends StatelessWidget {
+class ReportCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -22,33 +22,7 @@ class ArchivesCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                Stack(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(10.r),
-                      child: Image.asset(
-                        AppImages.reportImage,
-                      ),
-                    ),
-                    Positioned(
-                      top: 5.h,
-                      left: 5.h,
-                      child: Container(
-                        width: 25.w,
-                        height: 25.w,
-                        decoration: BoxDecoration(
-                          color: AppColors.white,
-                          shape: BoxShape.circle,
-                        ),
-                        child: Icon(
-                          Icons.bookmark,
-                          color: AppColors.secondaryColor,
-                          size: 22,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                Image.asset(AppImages.reportImage),
                 SizedBox(width: 20.w,),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

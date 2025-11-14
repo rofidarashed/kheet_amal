@@ -11,8 +11,8 @@ import 'package:kheet_amal/feature/home/presentation/widgets/custom_icon_button.
 import 'package:kheet_amal/feature/home/presentation/widgets/custom_report_action_bar.dart';
 import 'package:kheet_amal/feature/home/presentation/widgets/custom_report_details_cards.dart';
 import 'package:kheet_amal/feature/home/presentation/widgets/screenshot_contect.dart';
-import 'package:kheet_amal/feature/saved_reports/cubits/saved_reports_cubit/saved_reports_cubit.dart';
-import 'package:kheet_amal/feature/saved_reports/cubits/saved_reports_cubit/saved_reports_state.dart';
+import 'package:kheet_amal/feature/saved/cubits/saved_reports_cubit/saved_reports_cubit.dart';
+import 'package:kheet_amal/feature/saved/cubits/saved_reports_cubit/saved_reports_state.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:share_plus/share_plus.dart';
@@ -104,7 +104,7 @@ class ReportDetails extends StatelessWidget {
               Container(
                 height: 64.sp,
                 width: double.infinity,
-                color: AppColors.sGreen,
+                color: AppColors.lightGreen,
                 padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
                 child: Row(
                   children: [

@@ -16,6 +16,7 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> registerUser({
+    // required String uid,
     required String email,
     required String password,
     required String name,
@@ -32,6 +33,7 @@ class AuthCubit extends Cubit<AuthState> {
       final uid = userCredential.user!.uid;
 
       await _firestore.collection('users').doc(uid).set({
+        'uid': uid,
         'name': name,
         'phone': phone,
         'email': email,
@@ -87,19 +89,32 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<UserModel?> fetchUserData() async {
-    try {
-      final uid = _auth.currentUser?.uid;
-      if (uid == null) return null;
-
-      final doc = await _firestore.collection('users').doc(uid).get();
-      if (!doc.exists) return null;
-
-      return UserModel.fromMap(doc.id, doc.data()!);
-    } catch (e) {
-      emit(AuthFailure(e.toString()));
+  try {
+    final user = _auth.currentUser;
+    if (user == null) {
+      print('⚠️ No current user found.');
       return null;
     }
+
+    final uid = user.uid;
+    final docRef = _firestore.collection('users').doc(uid);
+    final doc = await docRef.get();
+
+    if (!doc.exists) {
+      print('⚠️ Firestore document not found for UID: $uid');
+      return null;
+    }
+
+    final data = doc.data();
+    print('✅ User data fetched: $data');
+
+    return UserModel.fromMap(uid, data!);
+  } catch (e) {
+    print('❌ Error fetching user data: $e');
+    emit(AuthFailure(e.toString()));
+    return null;
   }
+}
 
   String _handleError(FirebaseAuthException e) {
     switch (e.code) {
