@@ -42,6 +42,7 @@ class SplashCubit extends Cubit<SplashState> {
       if (status == AnimationStatus.completed) {
         await SharedPrefsHelper.init();
         final savedUid = SharedPrefsHelper.userId;
+        print('Saved UID: $savedUid');
 
         // ✅ Emit navigation with login status
         emit(

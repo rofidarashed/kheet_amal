@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -23,18 +22,18 @@ class CustomTextField extends StatelessWidget {
   final String hint;
   final bool isPassword;
   final TextEditingController controller;
-  final Widget? suffixIcon;
-  final String? Function(String?) validator ;
+  final Widget? prefixIcon;
+  final String? Function(String?) validator;
   final String? errorText;
 
-  CustomTextField({
+  const CustomTextField({
     super.key,
     required this.hint,
     required this.controller,
     this.isPassword = false,
-    this.suffixIcon, required this.validator, this.errorText
-
-
+    this.prefixIcon,
+    required this.validator,
+    this.errorText,
   });
 
   @override
@@ -43,8 +42,8 @@ class CustomTextField extends StatelessWidget {
       padding: EdgeInsets.fromLTRB(27.w, 6.h, 33.w, 0),
       child: SizedBox(
         width: 380.w,
-        height: 45.h,
         child: TextFormField(
+          style: TextStyle(fontSize: 16.sp),
           controller: controller,
           obscureText: isPassword,
           decoration: InputDecoration(
@@ -58,9 +57,26 @@ class CustomTextField extends StatelessWidget {
               borderRadius: BorderRadius.circular(12.r),
               borderSide: BorderSide(color: AppColors.primaryColor),
             ),
-            suffixIcon: suffixIcon,
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12.r),
+              borderSide: BorderSide(color: AppColors.primaryColor, width: 3.w),
+            ),
+            contentPadding: EdgeInsets.symmetric(
+              vertical: 10.h,
+              horizontal: 15.w,
+            ),
+            prefixIconConstraints: BoxConstraints(
+              minWidth: 18.w,
+              minHeight: 18.h,
+            ),
+            prefixIcon: Padding(
+              padding: EdgeInsets.only(left: 8.w, right: 14.w),
+              child: prefixIcon,
+            ),
+            fillColor: Colors.white,
+            filled: true,
           ),
-          validator: validator ,
+          validator: validator,
         ),
       ),
     );

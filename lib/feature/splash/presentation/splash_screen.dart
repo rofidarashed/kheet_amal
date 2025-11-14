@@ -51,6 +51,7 @@ class _SplashScreenState extends State<SplashScreen>
         listener: (context, state) {
           if (state is SplashNavigateToHome) {
             if (state.isLoggedIn) {
+              print('Navigating to Home Layout Screen');
               Navigator.of(context).pushReplacementNamed(AppRoutes.homeLayout);
             } else {
               Navigator.of(context).pushReplacementNamed(AppRoutes.onboarding);

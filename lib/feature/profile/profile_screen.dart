@@ -10,6 +10,8 @@ import 'package:kheet_amal/feature/auth/cubit/auth_cubit.dart';
 import 'package:kheet_amal/feature/auth/cubit/auth_state.dart';
 import 'package:kheet_amal/feature/profile/widgets/change_lang.dart';
 import 'package:kheet_amal/feature/profile/widgets/profile_menue_section.dart';
+import 'package:kheet_amal/feature/my_reports_screen/my_reports_screen.dart';
+import 'package:kheet_amal/feature/saved/saved_screen.dart';
 import 'edit_screen.dart';
 import 'widgets/menu_item.dart';
 
@@ -18,6 +20,14 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    void changeLanguage() {
+      if (context.locale == Locale('en')) {
+        context.setLocale(Locale('ar'));
+      } else {
+        context.setLocale(Locale('en'));
+      }
+    }
+
     final authCubit = context.read<AuthCubit>();
 
     return Scaffold(

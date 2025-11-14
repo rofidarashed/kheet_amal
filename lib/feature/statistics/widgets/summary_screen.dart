@@ -16,7 +16,7 @@ class _SummaryScreen1State extends State<SummaryScreen1> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Padding(
-        padding: EdgeInsets.only(right: 16.w, left: 16.w, top: 10.h),
+        padding: EdgeInsets.only(right: 12.w, left: 12.w, top: 7.h),
         child: Column(
           children: [
             Container(
@@ -27,18 +27,18 @@ class _SummaryScreen1State extends State<SummaryScreen1> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Number of reported and recovered cases per monthً".tr(),
+                      "Number of reported and recovered cases per month".tr(),
                       style: TextStyle(
                         fontWeight: FontWeight.w400,
-                        fontSize: 20.sp,
+                        fontSize: 18.sp,
                       ),
                     ),
-                    SizedBox(height: 14.h),
+                    SizedBox(height: 8.h),
                     Padding(
                       padding: EdgeInsets.only(
-                        right: 8.w,
-                        left: 8.w,
-                        bottom: 10.h,
+                        right: 2.w,
+                        left: 3.w,
+                        bottom: 8.h,
                       ),
                       child: Row(
                         children: [
@@ -56,7 +56,7 @@ class _SummaryScreen1State extends State<SummaryScreen1> {
                                     style: TextStyle(fontSize: 16.sp),
                                   ),
                                   Text(
-                                    " Missing".tr(),
+                                    "Missing".tr(),
                                     style: TextStyle(fontSize: 16.sp),
                                   ),
                                 ],
@@ -72,7 +72,7 @@ class _SummaryScreen1State extends State<SummaryScreen1> {
                                     style: TextStyle(fontSize: 16.sp),
                                   ),
                                   Text(
-                                    " Suspected".tr(),
+                                    "Suspected".tr(),
                                     style: TextStyle(fontSize: 16.sp),
                                   ),
                                 ],
@@ -96,61 +96,64 @@ class _SummaryScreen1State extends State<SummaryScreen1> {
                             ],
                           ),
                           Spacer(),
-                          Stack(
-                            children: [
-                              SizedBox(
-                                height: 190.h,
-                                width: 190.w,
-                                child: PieChart(
-                                  PieChartData(
-                                    sections: [
-                                      PieChartSectionData(
-                                        value: 70,
-                                        color: AppColors.secondaryColor,
-                                        showTitle: false,
-                                      ),
-                                      PieChartSectionData(
-                                        value: 80,
-                                        color: AppColors.circleAvatar,
-                                        showTitle: false,
-                                      ),
-                                      PieChartSectionData(
-                                        value: 50,
-                                        color: AppColors.pgreeen,
-                                        showTitle: false,
-                                      ),
-                                    ],
+                          Padding(
+                            padding: EdgeInsets.only(left: 8.w),
+                            child: Stack(
+                              children: [
+                                SizedBox(
+                                  height: 190.h,
+                                  width: 190.w,
+                                  child: PieChart(
+                                    PieChartData(
+                                      sections: [
+                                        PieChartSectionData(
+                                          value: 70,
+                                          color: AppColors.secondaryColor,
+                                          showTitle: false,
+                                        ),
+                                        PieChartSectionData(
+                                          value: 80,
+                                          color: AppColors.circleAvatar,
+                                          showTitle: false,
+                                        ),
+                                        PieChartSectionData(
+                                          value: 50,
+                                          color: AppColors.pgreeen,
+                                          showTitle: false,
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  top: 60.h,
-                                  right: 60.w,
-                                  left: 54.w,
-                                  bottom: 50.h,
-                                ),
-                                child: Text(
-                                  "200+ ".tr(),
-                                  style: TextStyle(fontSize: 30.sp),
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  left: 79.w,
-                                  top: 95.h,
-                                  bottom: 50.h,
-                                  right: 75.w,
-                                ),
-                                child: Text(
-                                  "Status".tr(),
-                                  style: TextStyle(
-                                    fontSize: 20.sp,
-                                    color: AppColors.hintTextColor,
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                    top: 60.h,
+                                    right: 60.w,
+                                    left: 56.w,
+                                    bottom: 50.h,
+                                  ),
+                                  child: Text(
+                                    "200+ ".tr(),
+                                    style: TextStyle(fontSize: 30.sp),
                                   ),
                                 ),
-                              ),
-                            ],
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                    left: 65.w,
+                                    top: 95.h,
+                                    bottom: 50.h,
+                                    right: 70.w,
+                                  ),
+                                  child: Text(
+                                    "Status".tr(),
+                                    style: TextStyle(
+                                      fontSize: 20.sp,
+                                      color: AppColors.hintTextColor,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),
@@ -159,18 +162,18 @@ class _SummaryScreen1State extends State<SummaryScreen1> {
                 ),
               ),
             ),
-            SizedBox(height: 15.h),
+            SizedBox(height: 10.h),
             Container(
               decoration: buildBoxDecoration(),
               child: Padding(
-                padding: EdgeInsets.only(right: 10.w, left: 10.w),
+                padding: EdgeInsets.only(right: 10.w, left: 10.w, top: 4.h, bottom: 4.h),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text("Age distribution".tr(), style: TextStyle(fontSize: 20.sp)),
-                    SizedBox(height: 15.h),
+                    SizedBox(height: 11.h),
                     SizedBox(
-                      height: 270.h,
+                      height: 228.h,
                       width: 375.w,
                       child: AspectRatio(
                         aspectRatio: 1.7,
@@ -240,7 +243,7 @@ class _SummaryScreen1State extends State<SummaryScreen1> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 10.h),
+                    SizedBox(height: 8.h),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -251,13 +254,13 @@ class _SummaryScreen1State extends State<SummaryScreen1> {
                         SizedBox(width: 12.w),
                         LegendItem(
                           color: AppColors.pgreeen,
-                          text: 'Found',
+                          text: 'Found'.tr(),
                         ),
                         SizedBox(width: 12.w),
                         LegendItem(color: AppColors.circleAvatar, text: 'Missing'.tr()),
                       ],
                     ),
-                    SizedBox(height: 10.h),
+                    SizedBox(height: 7.h),
                     Text(
                       "Conclusion".tr(),
                       style: TextStyle(
@@ -271,7 +274,7 @@ class _SummaryScreen1State extends State<SummaryScreen1> {
                         style: TextStyle(fontSize: 13.sp, color: AppColors.black),
                         children: [
                           TextSpan(
-                            text: "-Most exposed groups: ",
+                            text: "-Most exposed groups: ".tr(),
                             style: TextStyle(
                               color: AppColors.red,
                               fontWeight: FontWeight.bold,

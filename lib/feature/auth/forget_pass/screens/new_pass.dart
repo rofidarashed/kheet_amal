@@ -3,9 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:kheet_amal/core/routing/app_routes.dart';
-import 'package:kheet_amal/feature/forget_pass/widgets/custom_appbar.dart';
-import '../../../core/utils/app_colors.dart';
-import '../../../core/widgets/custom_button.dart';
+import 'package:kheet_amal/feature/auth/forget_pass/widgets/custom_appbar.dart';
+import '../../../../core/utils/app_colors.dart';
+import '../../../../core/widgets/custom_button.dart';
 import '../widgets/custom_pass_feild.dart';
 
 class NewPasswordPage extends StatefulWidget {

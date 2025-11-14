@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'dart:async';
 import 'package:flutter/services.dart';
-import 'package:kheet_amal/feature/forget_pass/widgets/custom_appbar.dart';
+import 'package:kheet_amal/feature/auth/forget_pass/widgets/custom_appbar.dart';
 import 'package:pinput/pinput.dart';
-import '../../../core/routing/app_routes.dart';
-import '../../../core/utils/app_colors.dart';
-import '../../../core/widgets/custom_button.dart';
+import '../../../../core/routing/app_routes.dart';
+import '../../../../core/utils/app_colors.dart';
+import '../../../../core/widgets/custom_button.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class VerificationScreen extends StatefulWidget {

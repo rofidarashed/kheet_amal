@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kheet_amal/feature/saved_reports/cubits/saved_reports_cubit/saved_reports_state.dart';
+import 'package:kheet_amal/feature/saved/cubits/saved_reports_cubit/saved_reports_state.dart';
 
 class SavedReportsCubit extends Cubit<SavedReportsState> {
   SavedReportsCubit() : super(SavedReportsInitial());

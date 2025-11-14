@@ -16,14 +16,14 @@ import 'firebase_options.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
-  await Firebase.initializeApp();
+  // await Firebase.initializeApp();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(
     EasyLocalization(
       supportedLocales: [Locale('en'), Locale('ar')],
       path: 'assets/translate',
       saveLocale: true,
-      fallbackLocale: Locale('ar'),
+      fallbackLocale: Locale('en'),
       startLocale: Locale('ar'),
       child: MyApp(),
     ),
