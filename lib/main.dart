@@ -9,7 +9,7 @@ import 'package:kheet_amal/core/theme/app_theme.dart';
 import 'package:kheet_amal/feature/auth/cubit/auth_cubit.dart';
 import 'package:kheet_amal/feature/home/cubit/home_cubit.dart';
 import 'package:kheet_amal/feature/home/data/repositories/report_repository.dart';
-
+import 'dart:ui' as ui;
 import 'feature/home_layout/presentation/cubit/bottom_nav_cubit.dart';
 import 'firebase_options.dart';
 
@@ -56,6 +56,12 @@ class MyApp extends StatelessWidget {
             theme: AppTheme.lightTheme,
             initialRoute: AppRoutes.splash,
             onGenerateRoute: (settings) => AppRouter.generateRoute(settings),
+            builder: (buildContext, widget) {
+              return Directionality(
+                textDirection: ui.TextDirection.ltr,
+                child: widget!,
+              );
+            },
           ),
         );
       },
