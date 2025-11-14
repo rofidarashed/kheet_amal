@@ -304,5 +304,23 @@
   "english": "الإنجليزية",
   "arabic": "العربية",
   "profile_updated": "تم تحديث بياناتك الشخصية",
-  "changes_saved": "تم حفظ التعديلات بنجاح"
+  "changes_saved": "تم حفظ التعديلات بنجاح",
+  "comments": "التعليقات",
+  "write_comment": "اكتب تعليق...",
+  "report": "إبلاغ",
+  "add_reply": "إضافة رد",
+  "report_success": "تم الإبلاغ بنجاح",
+  "report_received": "تم استلام البلاغ، سيتم مراجعته خلال وقت قصير. شكرًا لتعاونك",
+  "report_comment": "الإبلاغ عن التعليق",
+  "help_us_keep_safe": "ساعدنا في الحفاظ على بيئة آمنة للجميع من خلال الإبلاغ عن التعليقات غير اللائقة",
+  "add_more_details": "يمكنك إضافة تفاصيل أخرى (اختياري)",
+  "extra_details_hint": "يمكنك كتابة تفاصيل إضافية هنا...",
+  "send_report": "إرسال البلاغ",
+  "please_explain_reason": "من فضلك وضح السبب هنا...",
+
+  "contains_offensive": "يحتوي على ألفاظ مسيئة",
+  "misleading_info": "معلومات مضللة أو غير صحيحة",
+  "inappropriate_content": "محتوى غير مناسب أو عنيف",
+  "fraud_or_ads": "احتيال أو إعلان",
+  "other": "أخرى"
 }

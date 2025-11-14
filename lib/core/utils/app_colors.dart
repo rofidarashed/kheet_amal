@@ -7,6 +7,8 @@ class AppColors {
   static const Color hintTextColor = Color(0xff92989B);
   static const Color white = Color(0xFFFFFFFF);
   static const Color black = Color(0xFF000000);
+  static const Color red = Color(0xFFFF0C0C);
+  static const Color green = Color(0xFF55B832);
   static const Color inactiveTrackbarColor = Color(0xffB8B8B8);
 
   static const Color magentaviolet = Color(0xFFF440BB);
@@ -24,7 +26,6 @@ class AppColors {
   static const Color circleAvatar = Color(0xff1976D2);
   static const Color pgreeen = Color(0xff4CAF50);
   static const Color black54 = Color.fromRGBO(0, 0, 0, 54);
-  static const Color red = Color.fromRGBO(244, 67, 54, 100);
   static const Color divider = Color(0xFFDDE3E9);
 }
 
