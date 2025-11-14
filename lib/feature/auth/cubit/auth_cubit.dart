@@ -113,16 +113,6 @@ class AuthCubit extends Cubit<AuthState> {
       emit(AuthFailure(e.toString()));
       return null;
     }
-
-    final data = doc.data();
-    print('✅ User data fetched: $data');
-
-    return UserModel.fromMap(uid, data!);
-  } catch (e) {
-    print('❌ Error fetching user data: $e');
-    emit(AuthFailure(e.toString()));
-    return null;
-  }
 }
 
   String _handleError(FirebaseAuthException e) {
