@@ -16,13 +16,88 @@ class FilterScreen extends StatefulWidget {
 class _FilterScreenState extends State<FilterScreen> {
   String? selectedItem;
   final RangeValues _currentRangeValues = const RangeValues(0, 18);
-  List<String> egyptGovernorates = List<String>.from(tr('governorates') as Iterable);
+  List<String> egyptGovernorates = [
+    "Cairo",
+    "Giza",
+    "Alexandria",
+    "Qalyubia",
+    "Port Said",
+    "Suez",
+    "Dakahlia",
+    "Sharqia",
+    "Gharbia",
+    "Menoufia",
+    "Beheira",
+    "Kafr El Sheikh",
+    "Fayoum",
+    "Beni Suef",
+    "Minya",
+    "Assiut",
+    "Sohag",
+    "Qena",
+    "Luxor",
+    "Aswan",
+    "Red Sea",
+    "New Valley",
+    "Matrouh",
+    "North Sinai",
+    "South Sinai",
+    "Ismailia",
+  ];
 
-  List<String> eyeColors = List<String>.from('eye_colors'.tr() as Iterable);
+  List<String> eyeColors = [
+    "Brown",
+    "Dark Brown",
+    "Light Brown",
+    "Hazel",
+    "Amber",
+    "Green",
+    "Blue",
+    "Gray",
+    "Black",
+    "Honey",
+    "Violet",
+  ];
 
-  List<String> hairColors = List<String>.from(tr('hair_colors') as Iterable);
+  List<String> hairColors = [
+    "Black Hair",
+    "Dark Brown Hair",
+    "Light Brown Hair",
+    "Blonde",
+    "Platinum Blonde",
+    "Golden Blonde",
+    "Red Hair",
+    "Auburn",
+    "Chestnut",
+    "Gray Hair",
+    "Silver Hair",
+    "White Hair",
+    "Blue Hair",
+    "Pink Hair",
+    "Purple Hair",
+    "Green Hair",
+  ];
 
-  List<String> specialMarks = List<String>.from(tr('special_marks') as Iterable);
+  List<String> specialMarks = [
+    "Scar",
+    "Birthmark",
+    "Mole",
+    "Freckles",
+    "Tattoo",
+    "Piercing",
+    "Burn mark",
+    "Surgery scar",
+    "Missing finger",
+    "Missing tooth",
+    "Discolored skin patch",
+    "Dimple",
+    "Eyebrow cut",
+    "Broken nose",
+    "Limp",
+    "Tattooed eyebrow",
+    "Braces",
+    "None",
+  ];
 
 
 
