@@ -19,7 +19,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ^3.8.1
+  sdk: ^3.9.2
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -52,8 +52,19 @@ dependencies:
   dotted_border: ^3.1.0
   image_picker: ^1.2.0
   calendar_date_picker2: ^2.0.1
+  fl_chart: ^0.63.0
+  freezed_annotation: ^3.1.0
+  dio: ^5.9.0
+  awesome_dialog: ^3.3.0
+  crypto: ^3.0.6
+  share_plus: ^11.0.0
+  screenshot: ^3.0.0
+  path_provider: ^2.1.5
+  shared_preferences: ^2.5.3
 
 dev_dependencies:
+  freezed: ^3.2.3
+  build_runner: ^2.9.0
   flutter_test:
     sdk: flutter
 

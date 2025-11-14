@@ -22,6 +22,11 @@ class AlreadyHaveAccount extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          Text(
+            questionText.tr(),
+            style: TextStyle(fontSize: 21.sp, fontWeight: FontWeight.w400),
+          ),
+          SizedBox(width: 8.w),
           GestureDetector(
             onTap: onTap,
             child: Text(
@@ -31,14 +36,6 @@ class AlreadyHaveAccount extends StatelessWidget {
                 fontWeight: FontWeight.w400,
                 color: AppColors.secondaryColor,
               ),
-            ),
-          ),
-          SizedBox(width: 8.w),
-          Text(
-            questionText.tr(),
-            style: TextStyle(
-              fontSize: 21.sp,
-              fontWeight: FontWeight.w400,
             ),
           ),
         ],

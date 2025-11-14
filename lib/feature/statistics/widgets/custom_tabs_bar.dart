@@ -4,14 +4,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kheet_amal/feature/statistics/widgets/custom_tab_container.dart';
 
 class CustomTabsBar extends StatefulWidget {
-  const CustomTabsBar({super.key});
+  const CustomTabsBar({super.key, required this.onTabChanged});
+  final Function(int) onTabChanged;
 
   @override
   State<CustomTabsBar> createState() => _CustomTabsBarState();
 }
 
 class _CustomTabsBarState extends State<CustomTabsBar> {
-  int isSelected = 0;
+  int selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -26,22 +27,22 @@ class _CustomTabsBarState extends State<CustomTabsBar> {
         children: [
           CustomTabContainer(
             title: 'performance'.tr(),
-            isSelected: isSelected == 0,
+            isSelected: selectedIndex == 0,
             onTap: () {
               setState(() {
-                isSelected = 0;
+                selectedIndex = 0;
+                widget.onTabChanged(selectedIndex);
               });
-              print(isSelected);
             },
           ),
           CustomTabContainer(
             title: 'summary'.tr(),
-            isSelected: isSelected == 1,
+            isSelected: selectedIndex == 1,
             onTap: () {
               setState(() {
-                isSelected = 1;
+                selectedIndex = 1;
+                widget.onTabChanged(selectedIndex);
               });
-              print(isSelected);
             },
           ),
         ],

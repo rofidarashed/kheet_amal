@@ -97,4 +97,26 @@ class AppValidators {
     }
     return null;
   }
+
+  static String? dateValidator(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter a date';
+    }
+    try {
+      // Attempt to parse the date. This will handle various formats.
+      // The output from the date picker might not be in yyyy-MM-dd format.
+      DateFormat.yMd().parse(value);
+    } catch (e) {
+      // If parsing fails, it's not a valid date.
+      return 'Please enter a valid date';
+    }
+    return null;
+  }
+
+  static String? checkboxValidator(bool? value) {
+    if (value == null || value == false) {
+      return 'check'.tr();
+    }
+    return null;
+  }
 }

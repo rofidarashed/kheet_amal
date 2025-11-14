@@ -3,16 +3,16 @@ import 'package:kheet_amal/core/routing/app_routes.dart';
 import 'package:kheet_amal/feature/auth/presentation/screens/login_screen.dart';
 import 'package:kheet_amal/feature/auth/presentation/screens/register_screen.dart';
 import 'package:kheet_amal/feature/comments/comments_screen.dart';
-import 'package:kheet_amal/feature/forget_pass/screens/new_pass.dart';
-import 'package:kheet_amal/feature/home/home_screen.dart';
+import 'package:kheet_amal/feature/auth/forget_pass/screens/new_pass.dart';
+import 'package:kheet_amal/feature/home/presentation/screens/home_screen.dart';
 import 'package:kheet_amal/feature/home_layout/presentation/pages/home_layout_page.dart';
+import 'package:kheet_amal/feature/my_reports_screen/my_reports_screen.dart';
 import 'package:kheet_amal/feature/notification/notification_screen.dart';
 import 'package:kheet_amal/feature/splash/presentation/splash_screen.dart';
 import 'package:kheet_amal/feature/onboarding/onboarding_screen.dart';
-
-import '../../feature/forget_pass/screens/forget_pass_screen.dart';
-import '../../feature/forget_pass/screens/pass_success.dart';
-import '../../feature/forget_pass/screens/verfiction_screen.dart';
+import '../../feature/auth/forget_pass/screens/forget_pass_screen.dart';
+import '../../feature/auth/forget_pass/screens/pass_success.dart';
+import '../../feature/auth/forget_pass/screens/verfiction_screen.dart';
 
 class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -41,6 +41,10 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => PasswordResetSuccessScreen());
       case AppRoutes.notifications:
         return MaterialPageRoute(builder: (_) => NotificationScreen());
+      case AppRoutes.savedItems:
+        return MaterialPageRoute(builder: (_) => MyReports());
+      case AppRoutes.myReports:
+        return MaterialPageRoute(builder: (_) => MyReports());
       case AppRoutes.comments:
         return MaterialPageRoute(builder: (_) => const CommentsPage());
       default:

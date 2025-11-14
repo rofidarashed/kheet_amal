@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:kheet_amal/core/routing/app_routes.dart';
-import 'info_row.dart';
+import 'package:kheet_amal/feature/home/presentation/widgets/custom_info_row.dart';
 
 class ChildCard extends StatelessWidget {
   const ChildCard({super.key, required this.theme});
