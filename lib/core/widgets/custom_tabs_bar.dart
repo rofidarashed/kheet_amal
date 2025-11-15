@@ -1,11 +1,12 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:kheet_amal/feature/statistics/widgets/custom_tab_container.dart';
+import 'package:kheet_amal/core/widgets/custom_tab_container.dart';
 
 class CustomTabsBar extends StatefulWidget {
-  const CustomTabsBar({super.key, required this.onTabChanged});
+  const CustomTabsBar({super.key, required this.onTabChanged, required this.tabTitle1, required this.tabTitle2});
   final Function(int) onTabChanged;
+  final String tabTitle1;
+  final String tabTitle2;
 
   @override
   State<CustomTabsBar> createState() => _CustomTabsBarState();
@@ -26,7 +27,7 @@ class _CustomTabsBarState extends State<CustomTabsBar> {
       child: Row(
         children: [
           CustomTabContainer(
-            title: 'performance'.tr(),
+            title: widget.tabTitle1,
             isSelected: selectedIndex == 0,
             onTap: () {
               setState(() {
@@ -36,7 +37,7 @@ class _CustomTabsBarState extends State<CustomTabsBar> {
             },
           ),
           CustomTabContainer(
-            title: 'summary'.tr(),
+            title: widget.tabTitle2,
             isSelected: selectedIndex == 1,
             onTap: () {
               setState(() {

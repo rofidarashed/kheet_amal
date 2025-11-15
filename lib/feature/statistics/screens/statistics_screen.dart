@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:kheet_amal/core/utils/app_icons.dart';
 import 'package:kheet_amal/feature/statistics/widgets/summary_screen.dart';
-import 'package:kheet_amal/feature/statistics/widgets/custom_tabs_bar.dart';
+import 'package:kheet_amal/core/widgets/custom_tabs_bar.dart';
 import 'package:kheet_amal/feature/statistics/widgets/performance_column.dart';
 
 class StatisticsScreen extends StatefulWidget {
@@ -43,7 +43,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                   setState(() {
                     selectedIndex = index;
                   });
-                },
+                }, tabTitle1: 'performance'.tr(), tabTitle2: 'summary'.tr(),
               ),
               SizedBox(height: 7.h),
 
