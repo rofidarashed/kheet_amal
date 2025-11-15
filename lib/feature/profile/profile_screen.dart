@@ -2,26 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:kheet_amal/core/routing/app_routes.dart';
 import 'package:kheet_amal/feature/auth/cubit/auth_cubit.dart';
 import 'package:kheet_amal/feature/auth/cubit/auth_state.dart';
 import 'package:kheet_amal/feature/auth/presentation/screens/login_screen.dart';
+import 'package:kheet_amal/feature/profile/widgets/profile_menue_section.dart';
+import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 import 'edit_screen.dart';
-import 'widgets/menu_item.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    void changeLanguage() {
-      if (context.locale == Locale('en')) {
-        context.setLocale(Locale('ar'));
-      } else {
-        context.setLocale(Locale('en'));
-      }
-    }
-
     final authCubit = context.read<AuthCubit>();
 
     return Scaffold(
@@ -29,9 +21,14 @@ class ProfileScreen extends StatelessWidget {
         child: BlocConsumer<AuthCubit, AuthState>(
           listener: (context, state) {
             if (state is AuthLoggedOut) {
-              Navigator.of(
+              PersistentNavBarNavigator.pushNewScreen(
                 context,
-              ).pushNamedAndRemoveUntil(AppRoutes.login, (route) => false);
+                screen: LoginScreen(),
+                withNavBar: false,
+                customPageRoute: MaterialPageRoute(
+                  builder: (_) => LoginScreen(),
+                ),
+              );
             }
           },
           builder: (context, state) {
@@ -161,29 +158,10 @@ class ProfileScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: 20.h),
-                    MenuItem(title: 'reports'.tr(), icon: Icons.edit_outlined),
-                    MenuItem(
-                      onTap: changeLanguage,
-                      title: 'language'.tr(),
-                      icon: Icons.language,
-                    ),
-                    MenuItem(title: 'settings'.tr(), icon: Icons.settings),
-                    MenuItem(
-                      onTap: () async {
-                        await authCubit.logout();
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => LoginScreen(),
-                          ),
-                        );
-                      },
-                      title: 'logout'.tr(),
-                      icon: Icons.power_settings_new,
-                      iconColor: Colors.red,
-                      textColor: Colors.red,
-                    ),
+                    Divider(height: 40.h),
+
+                    ProfileMenuSection(authCubit: authCubit),
+
                     const Spacer(),
                   ],
                 ),

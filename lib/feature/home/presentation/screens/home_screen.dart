@@ -69,15 +69,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     tabTitle1: 'missingTab'.tr(),
                     tabTitle2: 'suspectsTab'.tr(),
                   ),
-                  CustomTabsBar(
-                    onTabChanged: (index) {
-                      setState(() {
-                        _selectedTabIndex = index;
-                      });
-                    },
-                    tabTitle1: 'missingTab'.tr(),
-                    tabTitle2: 'suspectsTab'.tr(),
-                  ),
                   SizedBox(height: 12.h),
                   InfoBanner(selectedTabIndex: _selectedTabIndex),
                   SizedBox(height: 12.h),

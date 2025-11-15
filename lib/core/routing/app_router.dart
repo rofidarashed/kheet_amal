@@ -16,6 +16,7 @@ import '../../feature/auth/forget_pass/screens/verfiction_screen.dart';
 
 class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
+    print("On generate route: ${settings.name}");
     switch (settings.name) {
       case AppRoutes.splash:
         return MaterialPageRoute(builder: (_) => const SplashScreen());
