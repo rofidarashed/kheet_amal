@@ -191,7 +191,6 @@ class ReportDetails extends StatelessWidget {
               SizedBox(height: 16.h),
               ReportActionBar(
                 space: 16.w,
-                onPressed: () => _shareScreenshot(context),
                 actionChild: CustomIconButton(
                   text: 'share'.tr(),
                   backgroundColor: AppColors.secondaryColor,

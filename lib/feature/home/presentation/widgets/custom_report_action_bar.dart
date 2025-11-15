@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:kheet_amal/feature/comments/comments_screen.dart';
 
 import '../../../support_reports/cubits/sup_reports_cubit/supprot_reports_cubit.dart';
 import '../../../support_reports/cubits/sup_reports_cubit/supprot_reports_state.dart';
@@ -10,12 +11,10 @@ import '../../data/models/report_model.dart';
 class ReportActionBar extends StatelessWidget {
   const ReportActionBar({
     super.key,
-    required this.onPressed,
     required this.actionChild,
     this.space,
     required this.report,
   });
-  final VoidCallback onPressed;
   final Widget actionChild;
   final double? space;
   final ReportModel report;
@@ -55,7 +54,10 @@ class ReportActionBar extends StatelessWidget {
           Text('20', style: TextStyle(fontSize: 16.sp)),
           SizedBox(width: 25.w),
           InkWell(
-            onTap: () {},
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => CommentsPage()),
+            ),
             child: Image.asset(
               "assets/images/messages_icon.png",
               height: 20.h,

@@ -24,125 +24,117 @@ class ChildCard extends StatelessWidget {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<SavedReportsCubit>().checkIfSaved(report.id);
     });
-    return InkWell(
-      onTap: () {
-        // reuse existing cubit instances and pass them to the new route
-        final savedCubit = context.read<SavedReportsCubit>();
-        final supportCubit = context.read<SupportReportsCubit>();
-
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => MultiBlocProvider(
-              providers: [
-                BlocProvider.value(value: savedCubit),
-                BlocProvider.value(value: supportCubit),
-              ],
-              child: ReportDetails(report: report),
-            ),
-          ),
-        );
-      },
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(12.r),
-        ),
-        padding: EdgeInsets.all(10.w),
-        margin: EdgeInsets.only(bottom: 16.h),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Stack(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(10.r),
-                      child: report.imageUrl.isNotEmpty
-                          ? Image.network(
-                              report.imageUrl,
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12.r),
+      ),
+      padding: EdgeInsets.all(10.w),
+      margin: EdgeInsets.only(bottom: 16.h),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Stack(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(10.r),
+                    child: report.imageUrl.isNotEmpty
+                        ? Image.network(
+                            report.imageUrl,
+                            height: 187.h,
+                            width: 158.w,
+                            fit: BoxFit.cover,
+                            errorBuilder: (_, __, ___) => SvgPicture.asset(
+                              'assets/svgs/profile_icon.svg',
                               height: 187.h,
                               width: 158.w,
                               fit: BoxFit.cover,
-                              errorBuilder: (_, __, ___) => SvgPicture.asset(
-                                'assets/svgs/profile_icon.svg',
-                                height: 187.h,
-                                width: 158.w,
-                                fit: BoxFit.cover,
-                              ),
-                            )
-                          : Container(),
-                    ),
-                    Positioned(
-                      top: 4.h,
-                      left: 4.w,
-                      child: CircleAvatar(
-                        radius: 14.r,
-                        backgroundColor: Colors.white70,
-                        child:
-                            BlocBuilder<SavedReportsCubit, SavedReportsState>(
-                              builder: (context, state) {
-                                bool isSaved = false;
-                                if (state is SavedReportsToggled &&
-                                    state.reportId == report.id) {
-                                  isSaved = state.isSaved;
-                                }
-                                return SvgPicture.asset(
-                                  isSaved
-                                      ? 'assets/svgs/isSaved_svg.svg'
-                                      : 'assets/svgs/save_icon_svg.svg',
-                                  width: 14.w,
-                                  height: 14.h,
-                                );
-                              },
                             ),
+                          )
+                        : Container(),
+                  ),
+                  Positioned(
+                    top: 4.h,
+                    left: 4.w,
+                    child: CircleAvatar(
+                      radius: 14.r,
+                      backgroundColor: Colors.white70,
+                      child: BlocBuilder<SavedReportsCubit, SavedReportsState>(
+                        builder: (context, state) {
+                          bool isSaved = false;
+                          if (state is SavedReportsToggled &&
+                              state.reportId == report.id) {
+                            isSaved = state.isSaved;
+                          }
+                          return SvgPicture.asset(
+                            isSaved
+                                ? 'assets/svgs/isSaved_svg.svg'
+                                : 'assets/svgs/save_icon_svg.svg',
+                            width: 14.w,
+                            height: 14.h,
+                          );
+                        },
                       ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(width: 10.w),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    SizedBox(height: 2.h),
+                    InfoRow(label: 'name'.tr(), value: report.childName),
+                    SizedBox(height: 6.h),
+                    InfoRow(
+                      label: 'age'.tr(),
+                      value: report.startAge == report.endAge
+                          ? report.startAge.toString()
+                          : '${report.startAge} - ${report.endAge}',
+                    ),
+                    SizedBox(height: 6.h),
+                    InfoRow(label: 'place'.tr(), value: report.place),
+                    SizedBox(height: 6.h),
+                    Text(
+                      'since'.tr(),
+                      style: TextStyle(color: Colors.black54, fontSize: 13.sp),
+                      textAlign: TextAlign.right,
                     ),
                   ],
                 ),
-                SizedBox(width: 10.w),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      SizedBox(height: 2.h),
-                      InfoRow(label: 'name'.tr(), value: report.childName),
-                      SizedBox(height: 6.h),
-                      InfoRow(
-                        label: 'age'.tr(),
-                        value: report.startAge == report.endAge
-                            ? report.startAge.toString()
-                            : '${report.startAge} - ${report.endAge}',
-                      ),
-                      SizedBox(height: 6.h),
-                      InfoRow(label: 'place'.tr(), value: report.place),
-                      SizedBox(height: 6.h),
-                      Text(
-                        'since'.tr(),
-                        style: TextStyle(
-                          color: Colors.black54,
-                          fontSize: 13.sp,
-                        ),
-                        textAlign: TextAlign.right,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            ReportActionBar(
-              onPressed: () {},
-              actionChild: CustomIconButton(
-                text: 'details'.tr(),
-                backgroundColor: AppColors.secondaryColor,
-                onPressed: () {},
               ),
-              report: report,
+            ],
+          ),
+          ReportActionBar(
+            actionChild: CustomIconButton(
+              text: 'details'.tr(),
+              backgroundColor: AppColors.secondaryColor,
+              onPressed: () {
+                // reuse existing cubit instances and pass them to the new route
+                final savedCubit = context.read<SavedReportsCubit>();
+                final supportCubit = context.read<SupportReportsCubit>();
+
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MultiBlocProvider(
+                      providers: [
+                        BlocProvider.value(value: savedCubit),
+                        BlocProvider.value(value: supportCubit),
+                      ],
+                      child: ReportDetails(report: report),
+                    ),
+                  ),
+                );
+              },
             ),
-          ],
-        ),
+            report: report,
+          ),
+        ],
       ),
     );
   }
