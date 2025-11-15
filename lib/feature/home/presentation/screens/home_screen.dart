@@ -5,9 +5,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kheet_amal/core/widgets/custom_app_bar.dart';
 import 'package:kheet_amal/feature/home/cubit/home_cubit.dart';
 import 'package:kheet_amal/feature/home/cubit/home_state.dart';
-import 'package:kheet_amal/feature/home/presentation/widgets/segment_tab.dart';
 import 'package:kheet_amal/feature/home/presentation/widgets/info_banner.dart';
 import 'package:kheet_amal/feature/home/presentation/widgets/child_card.dart';
+import 'package:kheet_amal/feature/statistics/widgets/custom_tabs_bar.dart';
 
 import '../../../saved/cubits/saved_reports_cubit/saved_reports_cubit.dart';
 import '../../../support_reports/cubits/sup_reports_cubit/supprot_reports_cubit.dart';
@@ -60,7 +60,15 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 14.h),
               child: Column(
                 children: [
-                  _buildSegmentedTabs(),
+                  CustomTabsBar(
+                    onTabChanged: (index) {
+                      setState(() {
+                        _selectedTabIndex = index;
+                      });
+                    },
+                    tabTitle1: 'missingTab'.tr(),
+                    tabTitle2: 'suspectsTab'.tr(),
+                  ),
                   SizedBox(height: 12.h),
                   InfoBanner(selectedTabIndex: _selectedTabIndex),
                   SizedBox(height: 12.h),
@@ -91,31 +99,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         );
       },
-    );
-  }
-
-  Widget _buildSegmentedTabs() {
-    return Container(
-      height: 48.h,
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(10.r)),
-      child: Row(
-        children: [
-          Expanded(
-            child: SegmentTab(
-              label: 'missingTab'.tr(),
-              isSelected: _selectedTabIndex == 0,
-              onTap: () => setState(() => _selectedTabIndex = 0),
-            ),
-          ),
-          Expanded(
-            child: SegmentTab(
-              label: 'suspectsTab'.tr(),
-              isSelected: _selectedTabIndex == 1,
-              onTap: () => setState(() => _selectedTabIndex = 1),
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

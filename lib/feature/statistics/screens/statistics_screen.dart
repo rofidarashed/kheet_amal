@@ -43,7 +43,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                   setState(() {
                     selectedIndex = index;
                   });
-                },
+                }, tabTitle1: 'performance'.tr(), tabTitle2: 'summary'.tr(),
               ),
               SizedBox(height: 7.h),
 
