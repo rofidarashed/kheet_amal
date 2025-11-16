@@ -66,7 +66,7 @@ class _CommentsPageState extends State<CommentsPage> {
                 onReport: _showReportSheet,
               ),
               separatorBuilder: (_, __) =>
-                  Divider(color: AppColors.hintTextColor, height: 30.h),
+                  Divider(color: AppColors.border, height: 30.h),
               itemCount: comments.length,
             ),
           ),
@@ -81,38 +81,32 @@ class _CommentsPageState extends State<CommentsPage> {
       top: false,
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
-        child: Row(
-          children: [
-            CircleAvatar(
-              radius: 22.r,
-              backgroundColor: AppColors.secondaryColor,
-              child: Icon(
-                Icons.arrow_back,
-                color: AppColors.white,
-                size: 24.sp,
-              ),
+        child: TextField(
+          textAlign: TextAlign.right,
+          decoration: InputDecoration(
+            hintText: 'write_comment'.tr(),
+            hintStyle: TextStyle(fontSize: 18.sp),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30.r),
+              borderSide: BorderSide(color: AppColors.inactiveTrackbarColor),
             ),
-            SizedBox(width: 8.w),
-            Expanded(
-              child: TextField(
-                textAlign: TextAlign.right,
-                decoration: InputDecoration(
-                  hintText: 'write_comment'.tr(),
-                  hintStyle: TextStyle(fontSize: 18.sp),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30.r),
-                    borderSide: BorderSide(
-                      color: AppColors.inactiveTrackbarColor,
-                    ),
-                  ),
-                  contentPadding: EdgeInsets.symmetric(
-                    horizontal: 16.w,
-                    vertical: 12.h,
-                  ),
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: 16.w,
+              vertical: 12.h,
+            ),
+            prefixIcon: Padding(
+              padding: EdgeInsets.only(left: 8.w, right: 4.w),
+              child: CircleAvatar(
+                radius: 18.r,
+                backgroundColor: AppColors.secondaryColor,
+                child: Icon(
+                  Icons.arrow_back,
+                  color: AppColors.white,
+                  size: 20.sp,
                 ),
               ),
             ),
-          ],
+          ),
         ),
       ),
     );
