@@ -18,6 +18,11 @@ class CommentItem extends StatefulWidget {
 class _CommentItemState extends State<CommentItem> {
   late Comment comment;
 
+  bool showReplyField = false;
+  TextEditingController replyController = TextEditingController();
+
+  List<Comment> replies = [];
+
   @override
   void initState() {
     super.initState();
@@ -26,113 +31,296 @@ class _CommentItemState extends State<CommentItem> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        _buildCommentUI(comment),
+
+        if (showReplyField) _buildReplyInput(),
+
+        if (replies.isNotEmpty)
+          Padding(
+            padding: EdgeInsets.only(right: 40.w, top: 10.h),
+            child: Column(
+              children: replies.map((r) => _buildReplyUI(r)).toList(),
+            ),
+          ),
+      ],
+    );
+  }
+
+  Widget _buildCommentUI(Comment c) {
+    return Column(
+      children: [
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  PopupMenuButton<int>(
-                    icon: Icon(Icons.more_vert, size: 22.sp),
-                    itemBuilder: (ctx) => [
-                      PopupMenuItem(
-                        value: 1,
-                        child: Text(
-                          'report'.tr(),
-                          style: TextStyle(fontSize: 18.sp),
-                        ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      PopupMenuButton<int>(
+                        icon: Icon(Icons.more_vert, size: 22.sp),
+                        itemBuilder: (ctx) => [
+                          PopupMenuItem(
+                            value: 1,
+                            child: Text(
+                              'report'.tr(),
+                              style: TextStyle(fontSize: 18.sp),
+                            ),
+                          ),
+                        ],
+                        onSelected: (value) {
+                          if (value == 1) widget.onReport(c);
+                        },
+                      ),
+
+                      Row(
+                        children: [
+                          Text(
+                            c.time,
+                            style: TextStyle(
+                              color: AppColors.inactiveTrackbarColor,
+                              fontSize: 16.sp,
+                            ),
+                          ),
+                          SizedBox(width: 8.w),
+                          Text(
+                            c.name,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20.sp,
+                            ),
+                          ),
+                          SizedBox(width: 8.w),
+                          CircleAvatar(
+                            radius: 22.r,
+                            child: Icon(
+                              Icons.person,
+                              color: AppColors.white,
+                              size: 26.sp,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
-                    onSelected: (value) {
-                      if (value == 1) widget.onReport(comment);
-                    },
                   ),
+                  SizedBox(height: 6.h),
+                  Text(
+                    c.text,
+                    textAlign: TextAlign.right,
+                    style: TextStyle(fontSize: 18.sp),
+                  ),
+                  SizedBox(height: 10.h),
                   Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        comment.time,
-                        style: TextStyle(
-                          color: AppColors.inactiveTrackbarColor,
-                          fontSize: 16.sp,
-                        ),
+                      Row(
+                        children: [
+                          Text('${c.likes}', style: TextStyle(fontSize: 18.sp)),
+                          IconButton(
+                            onPressed: () {
+                              setState(() {
+                                c.isLiked = !c.isLiked;
+                                c.likes += c.isLiked ? 1 : -1;
+                              });
+                            },
+                            icon: Icon(
+                              c.isLiked
+                                  ? Icons.favorite
+                                  : Icons.favorite_border,
+                              size: 22.sp,
+                              color: c.isLiked
+                                  ? AppColors.red
+                                  : AppColors.inactiveTrackbarColor,
+                            ),
+                          ),
+                        ],
                       ),
-                      SizedBox(width: 8.w),
-                      Text(
-                        comment.name,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20.sp,
-                        ),
-                      ),
-                      SizedBox(width: 8.w),
-                      CircleAvatar(
-                        radius: 22.r,
-                        child: Icon(
-                          Icons.person,
-                          color: AppColors.white,
-                          size: 26.sp,
+
+                      GestureDetector(
+                        onTap: () => setState(() {
+                          showReplyField = !showReplyField;
+                        }),
+                        child: Text(
+                          'add_reply'.tr(),
+                          style: TextStyle(
+                            color: AppColors.inactiveTrackbarColor,
+                            fontSize: 18.sp,
+                          ),
                         ),
                       ),
                     ],
                   ),
                 ],
               ),
-              SizedBox(height: 6.h),
-              Text(
-                comment.text,
-                textAlign: TextAlign.right,
-                style: TextStyle(fontSize: 18.sp),
+            ),
+          ],
+        ),
+        SizedBox(height: 12.h),
+      ],
+    );
+  }
+
+  Widget _buildReplyInput() {
+    return Padding(
+      padding: EdgeInsets.only(right: 40.w),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Container(
+            padding: EdgeInsets.all(12.w),
+            decoration: BoxDecoration(
+              color: AppColors.inactiveTrackbarColor.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(10.r),
+            ),
+            child: TextField(
+              controller: replyController,
+              textAlign: TextAlign.right,
+              keyboardType: TextInputType.multiline,
+              maxLines: null,
+              decoration: InputDecoration(
+                hintText: 'write_reply_here'.tr(),
+                border: InputBorder.none,
+                hintStyle: TextStyle(
+                  color: AppColors.inactiveTrackbarColor,
+                  fontSize: 16.sp,
+                ),
               ),
-              SizedBox(height: 10.h),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        '${comment.likes}',
-                        style: TextStyle(fontSize: 18.sp),
+              style: TextStyle(fontSize: 18.sp),
+            ),
+          ),
+
+          SizedBox(height: 6.h),
+
+          Align(
+            alignment: Alignment.centerLeft,
+            child: ElevatedButton(
+              onPressed: () {
+                if (replyController.text.trim().isNotEmpty) {
+                  setState(() {
+                    replies.add(
+                      Comment(
+                        name: "You",
+                        time: "الآن",
+                        text: replyController.text.trim(),
+                        likes: 0,
+                        isLiked: false,
                       ),
-                      IconButton(
-                        onPressed: () {
-                          setState(() {
-                            comment.isLiked = !comment.isLiked;
-                            comment.likes += comment.isLiked ? 1 : -1;
-                          });
-                        },
-                        icon: Icon(
-                          comment.isLiked
-                              ? Icons.favorite
-                              : Icons.favorite_border,
-                          size: 22.sp,
-                          color: comment.isLiked
-                              ? AppColors.red
-                              : AppColors.inactiveTrackbarColor,
-                        ),
-                      ),
-                    ],
-                  ),
-                  GestureDetector(
-                    onTap: () {},
+                    );
+                    replyController.clear();
+                    showReplyField = false;
+                  });
+                }
+              },
+              child: Text("إرسال"),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildReplyUI(Comment reply) {
+    return Container(
+      margin: EdgeInsets.only(bottom: 10.h),
+      padding: EdgeInsets.all(10.w),
+      decoration: BoxDecoration(
+        color: AppColors.inactiveTrackbarColor.withOpacity(0.07),
+        borderRadius: BorderRadius.circular(8.r),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              PopupMenuButton<int>(
+                icon: Icon(Icons.more_vert, size: 20.sp),
+                itemBuilder: (ctx) => [
+                  PopupMenuItem(
+                    value: 1,
                     child: Text(
-                      'add_reply'.tr(),
-                      style: TextStyle(
-                        color: AppColors.inactiveTrackbarColor,
-                        fontSize: 18.sp,
-                      ),
+                      'report'.tr(),
+                      style: TextStyle(fontSize: 16.sp),
+                    ),
+                  ),
+                ],
+                onSelected: (value) {
+                  if (value == 1) {
+                    widget.onReport(reply);
+                  }
+                },
+              ),
+
+              Row(
+                children: [
+                  Text(
+                    reply.time,
+                    style: TextStyle(
+                      color: AppColors.inactiveTrackbarColor,
+                      fontSize: 14.sp,
+                    ),
+                  ),
+                  SizedBox(width: 6.w),
+                  Text(
+                    reply.name,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16.sp,
+                    ),
+                  ),
+                  SizedBox(width: 8.w),
+                  CircleAvatar(
+                    radius: 16.r,
+                    child: Icon(
+                      Icons.person,
+                      size: 18.sp,
+                      color: AppColors.white,
                     ),
                   ),
                 ],
               ),
             ],
           ),
-        ),
-      ],
+
+          SizedBox(height: 6.h),
+
+          Text(
+            reply.text,
+            textAlign: TextAlign.right,
+            style: TextStyle(fontSize: 16.sp),
+          ),
+
+          SizedBox(height: 6.h),
+
+          Row(
+            children: [
+              Text('${reply.likes}', style: TextStyle(fontSize: 16.sp)),
+              IconButton(
+                padding: EdgeInsets.zero,
+                constraints: BoxConstraints(),
+                onPressed: () {
+                  setState(() {
+                    reply.isLiked = !reply.isLiked;
+                    reply.likes += reply.isLiked ? 1 : -1;
+                  });
+                },
+                icon: Icon(
+                  reply.isLiked ? Icons.favorite : Icons.favorite_border,
+                  size: 18.sp,
+                  color: reply.isLiked
+                      ? AppColors.red
+                      : AppColors.inactiveTrackbarColor,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
