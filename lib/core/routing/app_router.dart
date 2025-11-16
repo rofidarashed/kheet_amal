@@ -3,16 +3,14 @@ import 'package:kheet_amal/core/routing/app_routes.dart';
 import 'package:kheet_amal/feature/auth/presentation/screens/login_screen.dart';
 import 'package:kheet_amal/feature/auth/presentation/screens/register_screen.dart';
 import 'package:kheet_amal/feature/comments/comments_screen.dart';
-import 'package:kheet_amal/feature/auth/forget_pass/screens/new_pass.dart';
 import 'package:kheet_amal/feature/home/presentation/screens/home_screen.dart';
 import 'package:kheet_amal/feature/home_layout/presentation/pages/home_layout_page.dart';
 import 'package:kheet_amal/feature/my_reports_screen/my_reports_screen.dart';
 import 'package:kheet_amal/feature/notification/notification_screen.dart';
+import 'package:kheet_amal/feature/onboarding/translate_screen.dart';
 import 'package:kheet_amal/feature/splash/presentation/splash_screen.dart';
 import 'package:kheet_amal/feature/onboarding/onboarding_screen.dart';
 import '../../feature/auth/forget_pass/screens/forget_pass_screen.dart';
-import '../../feature/auth/forget_pass/screens/pass_success.dart';
-import '../../feature/auth/forget_pass/screens/verfiction_screen.dart';
 
 class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -22,6 +20,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const SplashScreen());
       case AppRoutes.onboarding:
         return MaterialPageRoute(builder: (_) => const OnboardingScreen());
+      case AppRoutes.translation:
+        return MaterialPageRoute(builder: (_) => const TranslateScreen());
       case AppRoutes.login:
         return MaterialPageRoute(builder: (_) => LoginScreen());
       case AppRoutes.register:
@@ -32,14 +32,6 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const HomeScreen());
       case AppRoutes.forgetPass:
         return MaterialPageRoute(builder: (_) => const ForgetPassScreen());
-      case AppRoutes.verification:
-        return MaterialPageRoute(
-          builder: (_) => const VerificationScreen(phoneNumber: ''),
-        );
-      case AppRoutes.newPass:
-        return MaterialPageRoute(builder: (_) => NewPasswordPage());
-      case AppRoutes.passSuccess:
-        return MaterialPageRoute(builder: (_) => PasswordResetSuccessScreen());
       case AppRoutes.notifications:
         return MaterialPageRoute(builder: (_) => NotificationScreen());
       case AppRoutes.savedItems:

@@ -16,7 +16,6 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> registerUser({
-    // required String uid,
     required String email,
     required String password,
     required String name,
@@ -30,21 +29,26 @@ class AuthCubit extends Cubit<AuthState> {
         password: password,
       );
 
-      final uid = userCredential.user!.uid;
+      final user = userCredential.user!;
 
-      await _firestore.collection('users').doc(uid).set({
-        'uid': uid,
+      await user.sendEmailVerification();
+
+      await _firestore.collection('users').doc(user.uid).set({
+        'uid': user.uid,
         'name': name,
         'phone': phone,
         'email': email,
         'createdAt': DateTime.now(),
         'address': address,
       });
-      await SharedPrefsHelper.saveUserLocally(userCredential.user);
 
-      emit(AuthSuccess(userCredential.user!));
+      emit(AuthFailure("email-verification-sent"));
     } on FirebaseAuthException catch (e) {
-      emit(AuthFailure(_handleError(e)));
+      if (e.code == "email-already-in-use") {
+        emit(AuthFailure("email-already-in-use"));
+      } else {
+        emit(AuthFailure(_handleError(e)));
+      }
     } catch (e) {
       emit(AuthFailure(e.toString()));
     }
@@ -60,6 +64,14 @@ class AuthCubit extends Cubit<AuthState> {
         email: email,
         password: password,
       );
+      final user = userCredential.user!;
+
+      if (!user.emailVerified) {
+        await user.sendEmailVerification();
+        emit(AuthFailure("email-not-verified".tr()));
+        await _auth.signOut();
+        return;
+      }
       await SharedPrefsHelper.saveUserLocally(userCredential.user);
       emit(AuthSuccess(userCredential.user!));
     } on FirebaseAuthException catch (e) {
@@ -72,6 +84,15 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> resetPassword(String email) async {
     emit(AuthLoading());
     try {
+      final querySnapshot = await _firestore
+          .collection('users')
+          .where('email', isEqualTo: email)
+          .get();
+
+      if (querySnapshot.docs.isEmpty) {
+        emit(AuthFailure("no_user_with_email".tr()));
+        return;
+      }
       await _auth.sendPasswordResetEmail(email: email);
       emit(AuthInitial());
     } on FirebaseAuthException catch (e) {
@@ -86,9 +107,7 @@ class AuthCubit extends Cubit<AuthState> {
       await _auth.signOut();
       await SharedPrefsHelper.clearUserLocally();
       emit(AuthLoggedOut());
-
-    } catch (_) {
-    }
+    } catch (_) {}
   }
 
   Future<UserModel?> fetchUserData() async {
@@ -113,7 +132,7 @@ class AuthCubit extends Cubit<AuthState> {
       emit(AuthFailure(e.toString()));
       return null;
     }
-}
+  }
 
   String _handleError(FirebaseAuthException e) {
     switch (e.code) {
@@ -127,6 +146,8 @@ class AuthCubit extends Cubit<AuthState> {
         return 'weak-password'.tr();
       case 'invalid-email':
         return 'invalid-email'.tr();
+      case 'invalid-credential':
+        return e.code;
       default:
         return e.message ?? 'invalid-email'.tr();
     }

@@ -54,7 +54,7 @@ class _SplashScreenState extends State<SplashScreen>
               print('Navigating to Home Layout Screen');
               Navigator.of(context).pushReplacementNamed(AppRoutes.homeLayout);
             } else {
-              Navigator.of(context).pushReplacementNamed(AppRoutes.onboarding);
+              Navigator.of(context).pushReplacementNamed(AppRoutes.translation);
             }
           }
         },

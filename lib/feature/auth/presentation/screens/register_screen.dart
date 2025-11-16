@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -40,23 +42,35 @@ class RegisterScreen extends StatelessWidget {
                 Navigator.pushReplacementNamed(context, AppRoutes.homeLayout);
               });
             }
-            String? emailError;
-            String? passwordError;
-            String? phoneError;
-            String? nameError;
 
             if (state is AuthFailure) {
-              if (state.error.contains('email')) {
-                emailError = state.error;
-              } else if (state.error.contains('password')) {
-                passwordError = state.error;
-              } else if (state.error.contains('phone')) {
-                phoneError = state.error;
-              } else if (state.error.contains('name')) {
-                nameError = state.error;
-              } else {
-                debugPrint(state.error);
-              }
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                String message = "";
+
+                switch (state.error) {
+                  case "email-verification-sent":
+                    message = "verification_email_sent".tr();
+                    break;
+
+                  case "email-not-verified":
+                    message = "please_confirm_email".tr();
+                    break;
+                  case "email-already-in-use":
+                    message = "email_already_exists".tr();
+                    break;
+
+                  case "invalid-email":
+                    message = "invalid_email_format".tr();
+                    break;
+
+                  default:
+                    message = "something_went_wrong".tr();
+                }
+                log('Auth Error: ${state.error} message: $message');
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text(message), backgroundColor: Colors.red),
+                );
+              });
             }
 
             return Form(
@@ -91,7 +105,6 @@ class RegisterScreen extends StatelessWidget {
                         ),
                         hint: "enter_username".tr(),
                         controller: usernameController,
-                        errorText: nameError,
                         prefixIcon: SvgPicture.asset(AppIcons.userIcon),
                       ),
                       FieldLabel("email".tr()),
@@ -100,11 +113,7 @@ class RegisterScreen extends StatelessWidget {
                             AppValidators.emailValidator(emailController.text),
                         hint: "enter_email".tr(),
                         controller: emailController,
-                        errorText: emailError,
-                        prefixIcon: SvgPicture.asset(
-                          AppIcons.emailIcon,
-                          
-                        ),
+                        prefixIcon: SvgPicture.asset(AppIcons.emailIcon),
                       ),
                       FieldLabel("mobile_number".tr()),
                       CustomTextField(
@@ -114,11 +123,7 @@ class RegisterScreen extends StatelessWidget {
                         ),
                         hint: "enter_mobile_number".tr(),
                         controller: phoneController,
-                        errorText: phoneError,
-                        prefixIcon: SvgPicture.asset(
-                          AppIcons.phoneIcon,
-                         
-                        ),
+                        prefixIcon: SvgPicture.asset(AppIcons.phoneIcon),
                       ),
                       FieldLabel("password".tr()),
                       CustomTextField(
@@ -127,12 +132,8 @@ class RegisterScreen extends StatelessWidget {
                         ),
                         hint: "enter_password".tr(),
                         controller: passwordController,
-                        errorText: passwordError,
                         isPassword: true,
-                        prefixIcon: SvgPicture.asset(
-                          AppIcons.lockIcon,
-                         
-                        ),
+                        prefixIcon: SvgPicture.asset(AppIcons.lockIcon),
                       ),
                       TermsAgreement(
                         value: context.watch<AuthCubit>().value,
@@ -163,7 +164,7 @@ class RegisterScreen extends StatelessWidget {
                         },
                         textButton: 'register'.tr(),
                       ),
-                      AlreadyHaveAccount(
+                      CustomTextButton(
                         actionText: "login".tr(),
                         questionText: "already_have_account".tr(),
                         onTap: () {
