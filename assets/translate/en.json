@@ -318,5 +318,7 @@
   "misleading_info": "Misleading or incorrect information",
   "inappropriate_content": "Inappropriate or violent content",
   "fraud_or_ads": "Fraud or advertisement",
-  "other": "Other"
+  "other": "Other",
+  "choose_number": "Choose a number to call",
+  "no_number_available": "No number available to call"
 }
