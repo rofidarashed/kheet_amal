@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:kheet_amal/core/utils/app_colors.dart';
+import 'package:kheet_amal/feature/comments/cubits/comments_cubit/comments_cubit.dart';
 import 'package:kheet_amal/feature/home/data/models/report_model.dart';
 import 'package:kheet_amal/feature/home/presentation/screens/report_details_screen.dart';
 import 'package:kheet_amal/feature/home/presentation/widgets/custom_icon_button.dart';
@@ -109,30 +110,33 @@ class ChildCard extends StatelessWidget {
               ),
             ],
           ),
-          ReportActionBar(
-            actionChild: CustomIconButton(
-              text: 'details'.tr(),
-              backgroundColor: AppColors.secondaryColor,
-              onPressed: () {
-                // reuse existing cubit instances and pass them to the new route
-                final savedCubit = context.read<SavedReportsCubit>();
-                final supportCubit = context.read<SupportReportsCubit>();
+          BlocProvider(
+            create: (context) =>
+                CommentsCubit()..commentCount(postId: report.id),
+            child: ReportActionBar(
+              actionChild: CustomIconButton(
+                text: 'details'.tr(),
+                backgroundColor: AppColors.secondaryColor,
+                onPressed: () {
+                  final savedCubit = context.read<SavedReportsCubit>();
+                  final supportCubit = context.read<SupportReportsCubit>();
 
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => MultiBlocProvider(
-                      providers: [
-                        BlocProvider.value(value: savedCubit),
-                        BlocProvider.value(value: supportCubit),
-                      ],
-                      child: ReportDetails(report: report),
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MultiBlocProvider(
+                        providers: [
+                          BlocProvider.value(value: savedCubit),
+                          BlocProvider.value(value: supportCubit),
+                        ],
+                        child: ReportDetails(report: report),
+                      ),
                     ),
-                  ),
-                );
-              },
+                  );
+                },
+              ),
+              report: report,
             ),
-            report: report,
           ),
         ],
       ),
