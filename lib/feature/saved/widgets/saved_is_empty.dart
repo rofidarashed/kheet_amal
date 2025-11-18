@@ -2,13 +2,12 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kheet_amal/core/utils/app_images.dart';
-
-import '../../../core/utils/app_colors.dart';
+import 'package:kheet_amal/core/utils/app_colors.dart';
 
 class Emptysaved extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
+    print("Emptysaved: Displaying empty saved screen");
     return Center(
       child: Padding(
         padding: EdgeInsets.only(top: 100.h),
