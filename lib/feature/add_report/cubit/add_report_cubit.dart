@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kheet_amal/feature/add_report/cubit/add_report_state.dart';
@@ -17,6 +18,7 @@ class AddReportCubit extends Cubit<AddReportState> {
   final TextEditingController descriptionController = TextEditingController();
   final ImagePicker _picker = ImagePicker();
   final BackblazeService _backblazeService = BackblazeService();
+  final user = FirebaseAuth.instance.currentUser;
   @override
   Future<void> close() {
     nameController.dispose();
@@ -107,6 +109,10 @@ class AddReportCubit extends Cubit<AddReportState> {
         }
       }
       await FirebaseFirestore.instance.collection('reports').add({
+        'userId': user!.uid  ,
+      'userEmail': user!.email,
+      'userPhone': user!.phoneNumber,
+      'userName': user!.displayName,
         'reportType': state.reportType.name,
         'gender': state.gender.name,
         'skinColor': state.skinColor.name,
