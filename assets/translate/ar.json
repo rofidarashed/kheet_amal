@@ -37,10 +37,10 @@
   "email-not-verified": "البريد الإلكتروني غير مفعل",
   "wrong_email_or_password": "البريد الإلكتروني أو كلمة المرور غير صحيحة",
   "verification_email_sent": "تم إرسال بريد التحقق. من فضلك تحقق من بريدك الإلكتروني.",
- "please_confirm_email": "من فضلك قم بتأكيد بريدك الإلكتروني",
- "email_already_exists": "هذا البريد الإلكتروني مستخدم بالفعل",
- "invalid_email_format": "صيغة البريد الإلكتروني غير صحيحة",
- "something_went_wrong": "حدث خطأ ما. من فضلك حاول مرة أخرى.",
+  "please_confirm_email": "من فضلك قم بتأكيد بريدك الإلكتروني",
+  "email_already_exists": "هذا البريد الإلكتروني مستخدم بالفعل",
+  "invalid_email_format": "صيغة البريد الإلكتروني غير صحيحة",
+  "something_went_wrong": "حدث خطأ ما. من فضلك حاول مرة أخرى.",
   "confirm": "تأكيد",
   "required": "هذا الحقل مطلوب",
   "home": "الرئيسية",
@@ -316,5 +316,7 @@
   "misleading_info": "معلومات مضللة أو غير صحيحة",
   "inappropriate_content": "محتوى غير مناسب أو عنيف",
   "fraud_or_ads": "احتيال أو إعلان",
-  "other": "أخرى"
+  "other": "أخرى",
+  "choose_number": "اختر رقم للاتصال",
+  "no_number_available": "لا يوجد رقم متاح للاتصال"
 }
