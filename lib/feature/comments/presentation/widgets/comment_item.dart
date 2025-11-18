@@ -1,51 +1,103 @@
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kheet_amal/core/utils/app_colors.dart';
-import '../models/comment_model.dart';
 import 'package:easy_localization/easy_localization.dart';
+
+import '../../cubits/comments_cubit/comments_cubit.dart';
+import '../../cubits/comments_cubit/comments_state.dart';
+import '../../data/models/comment_model.dart';
 
 class CommentItem extends StatefulWidget {
   final Comment comment;
+  final reportId;
   final Function(Comment) onReport;
 
-  const CommentItem({Key? key, required this.comment, required this.onReport})
-    : super(key: key);
+  const CommentItem({
+    Key? key,
+    required this.comment,
+    required this.onReport,
+    required this.reportId,
+  }) : super(key: key);
 
   @override
   State<CommentItem> createState() => _CommentItemState();
 }
 
 class _CommentItemState extends State<CommentItem> {
-  late Comment comment;
-
   bool showReplyField = false;
   TextEditingController replyController = TextEditingController();
-
-  List<Comment> replies = [];
+  bool isLoadingReplies = false;
 
   @override
-  void initState() {
-    super.initState();
-    comment = widget.comment;
+  void dispose() {
+    replyController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        _buildCommentUI(comment),
+    final comment = widget.comment;
 
-        if (showReplyField) _buildReplyInput(),
+    return BlocListener<CommentsCubit, CommentsState>(
+      listener: (context, state) {
+        if (state is ReplyStateSuccess) {
+          // Clear the reply field after successful reply
+          replyController.clear();
+          setState(() {
+            showReplyField = false;
+          });
+        } else if (state is ReplyStateError) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(state.message)),
+          );
+        } else if (state is RepliesGetError) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(state.message)),
+          );
+        }
+      },
+      child: BlocBuilder<CommentsCubit, CommentsState>(
+        builder: (context, state) {
+          // Get the latest comment data from the cubit's cache
+          final cubit = context.read<CommentsCubit>();
+          final latestComment = cubit.comments.firstWhere(
+                (c) => c.id == comment.id,
+            orElse: () => comment,
+          );
 
-        if (replies.isNotEmpty)
-          Padding(
-            padding: EdgeInsets.only(right: 40.w, top: 10.h),
-            child: Column(
-              children: replies.map((r) => _buildReplyUI(r)).toList(),
-            ),
-          ),
-      ],
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              _buildCommentUI(latestComment),
+
+              if (showReplyField) _buildReplyInput(latestComment),
+
+              if (isLoadingReplies)
+                Padding(
+                  padding: EdgeInsets.only(right: 40.w, top: 10.h),
+                  child: Center(
+                    child: SizedBox(
+                      width: 20.w,
+                      height: 20.h,
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    ),
+                  ),
+                ),
+              if (latestComment.replies.isNotEmpty && !isLoadingReplies)
+                Padding(
+                  padding: EdgeInsets.only(right: 40.w, top: 10.h),
+                  child: Column(
+                    children: latestComment.replies.map((r) {
+                      return _buildReplyUI(r, latestComment.id);
+                    }).toList(),
+                  ),
+                ),
+            ],
+          );
+        },
+      ),
     );
   }
 
@@ -77,7 +129,6 @@ class _CommentItemState extends State<CommentItem> {
                           if (value == 1) widget.onReport(c);
                         },
                       ),
-
                       Row(
                         children: [
                           Text(
@@ -120,13 +171,17 @@ class _CommentItemState extends State<CommentItem> {
                     children: [
                       Row(
                         children: [
-                          Text('${c.likes}', style: TextStyle(fontSize: 18.sp)),
+                          Text(
+                            '${c.likes}',
+                            style: TextStyle(fontSize: 18.sp),
+                          ),
                           IconButton(
                             onPressed: () {
-                              setState(() {
-                                c.isLiked = !c.isLiked;
-                                c.likes += c.isLiked ? 1 : -1;
-                              });
+                              // Let the cubit handle all the state updates
+                              context.read<CommentsCubit>().toggleLike(
+                                postId: widget.reportId,
+                                commentId: c.id,
+                              );
                             },
                             icon: Icon(
                               c.isLiked
@@ -140,11 +195,12 @@ class _CommentItemState extends State<CommentItem> {
                           ),
                         ],
                       ),
-
                       GestureDetector(
-                        onTap: () => setState(() {
-                          showReplyField = !showReplyField;
-                        }),
+                        onTap: () {
+                          setState(() {
+                            showReplyField = !showReplyField;
+                          });
+                        },
                         child: Text(
                           'add_reply'.tr(),
                           style: TextStyle(
@@ -165,9 +221,9 @@ class _CommentItemState extends State<CommentItem> {
     );
   }
 
-  Widget _buildReplyInput() {
+  Widget _buildReplyInput(Comment comment) {
     return Padding(
-      padding: EdgeInsets.only(right: 40.w),
+      padding: EdgeInsets.only(right: 40.w, bottom: 10.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
@@ -193,27 +249,17 @@ class _CommentItemState extends State<CommentItem> {
               style: TextStyle(fontSize: 18.sp),
             ),
           ),
-
           SizedBox(height: 6.h),
-
           Align(
             alignment: Alignment.centerLeft,
             child: ElevatedButton(
               onPressed: () {
                 if (replyController.text.trim().isNotEmpty) {
-                  setState(() {
-                    replies.add(
-                      Comment(
-                        name: "You",
-                        time: "الآن",
-                        text: replyController.text.trim(),
-                        likes: 0,
-                        isLiked: false,
-                      ),
-                    );
-                    replyController.clear();
-                    showReplyField = false;
-                  });
+                  context.read<CommentsCubit>().replyToComment(
+                    postId: widget.reportId,
+                    commentId: comment.id,
+                    text: replyController.text.trim(),
+                  );
                 }
               },
               child: Text("إرسال"),
@@ -224,7 +270,7 @@ class _CommentItemState extends State<CommentItem> {
     );
   }
 
-  Widget _buildReplyUI(Comment reply) {
+  Widget _buildReplyUI(Comment reply, String parentCommentId) {
     return Container(
       margin: EdgeInsets.only(bottom: 10.h),
       padding: EdgeInsets.all(10.w),
@@ -255,7 +301,6 @@ class _CommentItemState extends State<CommentItem> {
                   }
                 },
               ),
-
               Row(
                 children: [
                   Text(
@@ -286,17 +331,13 @@ class _CommentItemState extends State<CommentItem> {
               ),
             ],
           ),
-
           SizedBox(height: 6.h),
-
           Text(
             reply.text,
             textAlign: TextAlign.right,
             style: TextStyle(fontSize: 16.sp),
           ),
-
           SizedBox(height: 6.h),
-
           Row(
             children: [
               Text('${reply.likes}', style: TextStyle(fontSize: 16.sp)),
@@ -304,10 +345,12 @@ class _CommentItemState extends State<CommentItem> {
                 padding: EdgeInsets.zero,
                 constraints: BoxConstraints(),
                 onPressed: () {
-                  setState(() {
-                    reply.isLiked = !reply.isLiked;
-                    reply.likes += reply.isLiked ? 1 : -1;
-                  });
+                  // Call the toggleReplyLike method with parent comment ID
+                  context.read<CommentsCubit>().toggleReplyLike(
+                    postId: widget.reportId,
+                    commentId: parentCommentId,
+                    replyId: reply.id,
+                  );
                 },
                 icon: Icon(
                   reply.isLiked ? Icons.favorite : Icons.favorite_border,

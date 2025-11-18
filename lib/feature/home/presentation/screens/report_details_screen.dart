@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:kheet_amal/core/utils/app_colors.dart';
+import 'package:kheet_amal/feature/comments/cubits/comments_cubit/comments_cubit.dart';
 import 'package:kheet_amal/feature/home/data/models/report_model.dart';
 import 'package:kheet_amal/feature/home/presentation/widgets/custom_founder_info.dart';
 import 'package:kheet_amal/feature/home/presentation/widgets/custom_icon_button.dart';
@@ -189,7 +190,9 @@ class ReportDetails extends StatelessWidget {
               ),
               ReportDetailsCardsColumn(report: report),
               SizedBox(height: 16.h),
-              ReportActionBar(
+              BlocProvider(
+  create: (context) => CommentsCubit()..commentCount(postId: report.id),
+  child: ReportActionBar(
                 space: 16.w,
                 actionChild: CustomIconButton(
                   text: 'share'.tr(),
@@ -199,6 +202,7 @@ class ReportDetails extends StatelessWidget {
                 ),
                 report: report,
               ),
+),
             ],
           ),
         ),

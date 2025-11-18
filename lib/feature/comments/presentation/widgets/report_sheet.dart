@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kheet_amal/core/utils/app_colors.dart';
 import 'package:easy_localization/easy_localization.dart';
 
+import '../../cubits/comments_cubit/comments_cubit.dart';
+
 class ReportSheet extends StatefulWidget {
   final void Function(String reason, String details) onSubmitted;
-  const ReportSheet({Key? key, required this.onSubmitted}) : super(key: key);
+  final postId;
+  final commentId;
+  const ReportSheet({super.key, required this.onSubmitted, required this.postId, required this.commentId});
 
   @override
   State<ReportSheet> createState() => _ReportSheetState();
@@ -101,10 +106,21 @@ class _ReportSheetState extends State<ReportSheet> {
                   ),
                 ),
                 onPressed: () {
+                  // Calculate reason and details first
                   final reason = _reason == 'other'.tr()
                       ? _otherController.text
                       : _reason;
-                  widget.onSubmitted(reason, _detailsController.text);
+                  final details = _detailsController.text;
+
+                  context.read<CommentsCubit>().reportComment(
+                    postId: widget.postId,
+                    commentId: widget.commentId,
+                    reason: reason,
+                    details: details,
+                  );
+
+                  // Call the callback
+                  widget.onSubmitted(reason, details);
                 },
                 child: Text(
                   'send_report'.tr(),

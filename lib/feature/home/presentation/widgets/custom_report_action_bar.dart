@@ -1,9 +1,13 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:kheet_amal/feature/comments/comments_screen.dart';
+import 'package:kheet_amal/feature/comments/presentation/screen/comments_screen.dart';
 
+import '../../../comments/cubits/comments_cubit/comments_cubit.dart';
+import '../../../comments/cubits/comments_cubit/comments_state.dart';
 import '../../../support_reports/cubits/sup_reports_cubit/supprot_reports_cubit.dart';
 import '../../../support_reports/cubits/sup_reports_cubit/supprot_reports_state.dart';
 import '../../data/models/report_model.dart';
@@ -56,7 +60,12 @@ class ReportActionBar extends StatelessWidget {
           InkWell(
             onTap: () => Navigator.push(
               context,
-              MaterialPageRoute(builder: (_) => CommentsPage()),
+              MaterialPageRoute(
+                builder: (_) => BlocProvider(
+                  create: (context) => CommentsCubit()..commentCount(postId: report.id),
+                  child: CommentsPage(reportId: report.id),
+                ),
+              ),
             ),
             child: Image.asset(
               "assets/images/messages_icon.png",
@@ -65,7 +74,16 @@ class ReportActionBar extends StatelessWidget {
             ),
           ),
           SizedBox(width: 5.w),
-          Text('20', style: TextStyle(fontSize: 16.sp)),
+          BlocBuilder<CommentsCubit, CommentsState>(
+            builder: (context, state) {
+              if (state is CommentCountState) {
+                int countComment = state.count;
+                log("$countComment");
+                return Text("$countComment", style: TextStyle(fontSize: 16.sp));
+              }
+              return Text('0');
+            },
+          ),
           Spacer(),
           Padding(
             padding: EdgeInsets.fromLTRB(0, 0.h, 8.w, 0.h),
