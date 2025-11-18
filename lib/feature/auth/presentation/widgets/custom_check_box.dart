@@ -20,7 +20,7 @@ class TermsAgreement extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(22.w, 12.h, 47.w, 16.h),
+      padding: EdgeInsets.fromLTRB(40.w, 12.h, 47.w, 16.h),
       child: Column(
         children: [
           Row(
@@ -36,17 +36,32 @@ class TermsAgreement extends StatelessWidget {
                   onChanged: onChanged,
                   activeColor: AppColors.secondaryColor,
                   checkColor: AppColors.white,
+                  side: BorderSide(color: AppColors.secondaryColor, width: 1.5),
                 ),
               ),
-              SizedBox(width: 8.w),
-              Text("agree_on".tr(), style: TextStyle(fontSize: 16.sp)),
-              Text(
-                "agree_terms".tr(),
-                style: TextStyle(
-                  fontSize: 16.sp,
-                  color: AppColors.secondaryColor,
+              SizedBox(width: 10.w),
+              Flexible(
+                child: RichText(
+                  textDirection: context.locale.languageCode == 'ar'
+                      ? ui.TextDirection.rtl
+                      : ui.TextDirection.ltr,
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: "agree_on".tr() + " ",
+                        style: TextStyle(fontSize: 16.sp, color: Colors.black),
+                      ),
+                      TextSpan(
+                        text: "agree_terms".tr(),
+                        style: TextStyle(
+                          fontSize: 16.sp,
+                          color: AppColors.secondaryColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                  maxLines: 2,
                 ),
-                maxLines: 2,
               ),
             ],
           ),

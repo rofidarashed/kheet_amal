@@ -5,12 +5,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../core/utils/app_colors.dart';
 
-class AlreadyHaveAccount extends StatelessWidget {
+class CustomTextButton extends StatelessWidget {
   final String actionText;
   final String questionText;
   final VoidCallback onTap;
 
-  const AlreadyHaveAccount({
+  const CustomTextButton({
     super.key,
     required this.actionText,
     required this.questionText,
@@ -29,7 +29,7 @@ class AlreadyHaveAccount extends StatelessWidget {
         children: [
           Text(
             questionText.tr(),
-            style: TextStyle(fontSize: 21.sp, fontWeight: FontWeight.w400),
+            style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w400),
           ),
           SizedBox(width: 8.w),
           GestureDetector(
@@ -37,8 +37,8 @@ class AlreadyHaveAccount extends StatelessWidget {
             child: Text(
               actionText.tr(),
               style: TextStyle(
-                fontSize: 21.sp,
-                fontWeight: FontWeight.w400,
+                fontSize: 19.sp,
+                fontWeight: FontWeight.w500,
                 color: AppColors.secondaryColor,
               ),
             ),

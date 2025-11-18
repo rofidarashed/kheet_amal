@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -34,16 +36,28 @@ class LoginScreen extends StatelessWidget {
           },
 
           builder: (context, state) {
-            String? emailError;
-            String? passwordError;
-
             if (state is AuthFailure) {
-              if (state.error.contains('email') ||
-                  state.error.contains('user')) {
-                emailError = state.error;
-              } else if (state.error.contains('password')) {
-                passwordError = state.error;
-              }
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                String message = state.error;
+                print(state.error);
+                if (state.error.contains('email-not-verified')) {
+                  message = 'please_confirm_email'.tr();
+                } else if (state.error.contains('user-not-found') ||
+                    state.error.contains('wrong-password') ||
+                    state.error.contains('invalid-email') ||
+                    state.error.contains('invalid-credential')) {
+                  message = "wrong_email_or_password".tr();
+                }
+
+                log('Auth Error: ${state.error} message: $message');
+
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(message),
+                    backgroundColor: AppColors.red,
+                  ),
+                );
+              });
             }
 
             if (state is AuthSuccess) {
@@ -73,9 +87,11 @@ class LoginScreen extends StatelessWidget {
                       ),
                       SizedBox(height: 10.h),
                       Padding(
-                        padding: EdgeInsets.fromLTRB(0, 0, 23.w, 0),
+                        padding: EdgeInsets.fromLTRB(23.w, 0, 23.w, 0),
                         child: Align(
-                          alignment: Alignment.topRight,
+                          alignment: context.locale.languageCode == 'ar'
+                              ? Alignment.topRight
+                              : Alignment.topLeft,
                           child: Text(
                             "login".tr(),
                             style: TextStyle(
@@ -91,7 +107,6 @@ class LoginScreen extends StatelessWidget {
                             AppValidators.emailValidator(emailController.text),
                         hint: "enter_email".tr(),
                         controller: emailController,
-                        errorText: emailError,
                         prefixIcon: SvgPicture.asset(AppIcons.emailIcon),
                       ),
                       FieldLabel("password".tr()),
@@ -102,7 +117,6 @@ class LoginScreen extends StatelessWidget {
                         hint: "enter_password".tr(),
                         controller: passwordController,
                         isPassword: true,
-                        errorText: passwordError,
                         prefixIcon: SvgPicture.asset(AppIcons.lockIcon),
                       ),
                       Padding(
@@ -139,7 +153,7 @@ class LoginScreen extends StatelessWidget {
                         },
                         textButton: "login".tr(),
                       ),
-                      AlreadyHaveAccount(
+                      CustomTextButton(
                         actionText: "create_new_account".tr(),
                         questionText: "dont_have_account".tr(),
                         onTap: () {
