@@ -9,7 +9,6 @@ class FilterScreen extends StatefulWidget {
   FilterScreen({super.key});
   static const String routeName = "filter";
 
-
   @override
   State<FilterScreen> createState() => _FilterScreenState();
 }
@@ -107,8 +106,6 @@ class _FilterScreenState extends State<FilterScreen> {
 
   final TextEditingController _dateController = TextEditingController();
 
-
-
   @override
   Widget build(BuildContext context) {
     const TextStyle textStyle = TextStyle(fontWeight: FontWeight.w400);
@@ -117,13 +114,12 @@ class _FilterScreenState extends State<FilterScreen> {
       appBar: AppBar(
         backgroundColor: AppColors.backgroundColor,
         title: Text("Filter".tr()),
-
       ),
       body: SingleChildScrollView(
         child: Column(
-            crossAxisAlignment: context.locale.languageCode == 'ar'
-                ? CrossAxisAlignment.start
-                : CrossAxisAlignment.end,
+          crossAxisAlignment: context.locale.languageCode == 'ar'
+              ? CrossAxisAlignment.start
+              : CrossAxisAlignment.end,
           children: [
             Padding(
               padding: EdgeInsets.all(16.0.w),
@@ -134,10 +130,12 @@ class _FilterScreenState extends State<FilterScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                       Text(
+                      Text(
                         "Status".tr(),
                         style: TextStyle(
-                            fontWeight: FontWeight.w400, fontSize: 26.sp),
+                          fontWeight: FontWeight.w400,
+                          fontSize: 26.sp,
+                        ),
                       ),
                       buildRadioListTile(
                         text: "Missing".tr(),
@@ -160,7 +158,6 @@ class _FilterScreenState extends State<FilterScreen> {
                           });
                         },
                       ),
-
                     ],
                   ),
                 ),
@@ -175,8 +172,13 @@ class _FilterScreenState extends State<FilterScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Age".tr(), style: TextStyle(
-                          fontWeight: FontWeight.w400, fontSize: 26.sp)),
+                      Text(
+                        "Age".tr(),
+                        style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 26.sp,
+                        ),
+                      ),
                       RangeSlider(
                         values: _currentRangeValues,
                         min: 0,
@@ -184,10 +186,12 @@ class _FilterScreenState extends State<FilterScreen> {
                         divisions: 18,
                         activeColor: AppColors.primaryColor,
                         inactiveColor: AppColors.inactiveTrackbarColor,
-                        labels: RangeLabels("${_currentRangeValues.start
-                            .round()
-                            .toString()} years".tr(), "${_currentRangeValues.end
-                            .round().toString()} years".tr()),
+                        labels: RangeLabels(
+                          "${_currentRangeValues.start.round().toString()} years"
+                              .tr(),
+                          "${_currentRangeValues.end.round().toString()} years"
+                              .tr(),
+                        ),
                         onChanged: (RangeValues newRange) {
                           setState(() {
                             _currentRangeValues = newRange;
@@ -196,64 +200,92 @@ class _FilterScreenState extends State<FilterScreen> {
                       ),
                       Padding(
                         padding: EdgeInsets.only(bottom: 7.h),
-                        child: Text("Gender".tr(), style: TextStyle(
-                            fontSize: 24.sp, fontWeight: FontWeight.w400),),
+                        child: Text(
+                          "Gender".tr(),
+                          style: TextStyle(
+                            fontSize: 24.sp,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
                       ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    _GenderButton(
-                      color: AppColors.girlIcon,
-                      imagePath: AppImages.girl,
-                      value: "girl",
-                      selectedValue: selectedGender,
-                      onSelect: (value) {
-                        setState(() {
-                          selectedGender = value;
-                        });
-                      },
-                    ),
-                    SizedBox(width: 20.w),
-                    _GenderButton(
-                      color: AppColors.boyIcon,
-                      imagePath: AppImages.boy,
-                      value: "boy",
-                      selectedValue: selectedGender,
-                      onSelect: (value) {
-                        setState(() {
-                          selectedGender = value;
-                        });
-                      },
-                    ),
-                  ],
-                ),
-                      SizedBox(height: 5.h,),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          _GenderButton(
+                            color: AppColors.girlIcon,
+                            imagePath: AppImages.girl,
+                            value: "girl",
+                            selectedValue: selectedGender,
+                            onSelect: (value) {
+                              setState(() {
+                                selectedGender = value;
+                              });
+                            },
+                          ),
+                          SizedBox(width: 20.w),
+                          _GenderButton(
+                            color: AppColors.boyIcon,
+                            imagePath: AppImages.boy,
+                            value: "boy",
+                            selectedValue: selectedGender,
+                            onSelect: (value) {
+                              setState(() {
+                                selectedGender = value;
+                              });
+                            },
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 5.h),
                       buildTextField("Skin tone".tr(), "Select Skin tone".tr()),
-                      SizedBox(height: 5.h,),
-                      buildDropdown("Eye Color".tr(), "Select Eye Color".tr(), eyeColors, selectedEyeColor),
-                      SizedBox(height: 5.h,),
-                      buildDropdown("Hair Color".tr(), "Select Hair Color".tr(), hairColors, selectedHairColor),
-                      SizedBox(height: 5.h,),
-                      buildDropdown("Special Marks (Optional)".tr(), "e.g. a small scar above the eyebrow".tr(), specialMarks, selectedSpecialMark),
+                      SizedBox(height: 5.h),
+                      buildDropdown(
+                        "Eye Color".tr(),
+                        "Select Eye Color".tr(),
+                        eyeColors,
+                        selectedEyeColor,
+                      ),
+                      SizedBox(height: 5.h),
+                      buildDropdown(
+                        "Hair Color".tr(),
+                        "Select Hair Color".tr(),
+                        hairColors,
+                        selectedHairColor,
+                      ),
+                      SizedBox(height: 5.h),
+                      buildDropdown(
+                        "Special Marks (Optional)".tr(),
+                        "e.g. a small scar above the eyebrow".tr(),
+                        specialMarks,
+                        selectedSpecialMark,
+                      ),
                     ],
                   ),
                 ),
               ),
             ),
             Padding(
-              padding:  EdgeInsets.only(right: 16.w, left: 16.w, bottom: 16.h),
+              padding: EdgeInsets.only(right: 16.w, left: 16.w, bottom: 16.h),
               child: Container(
                 decoration: buildBoxDecoration(),
                 child: Padding(
                   padding: EdgeInsets.all(10.w),
                   child: Column(
                     children: [
-                      buildDropdown( "Governorate".tr(), "example: Cairo, Giza, Alexandria".tr(),egyptGovernorates ,selectedGovernorate ),
-                      SizedBox(height:5.h ,),
-                      buildTextField("Area".tr(), "example: Nasr city, Maadi, Shopra".tr()),
+                      buildDropdown(
+                        "Governorate".tr(),
+                        "example: Cairo, Giza, Alexandria".tr(),
+                        egyptGovernorates,
+                        selectedGovernorate,
+                      ),
+                      SizedBox(height: 5.h),
+                      buildTextField(
+                        "Area".tr(),
+                        "example: Nasr city, Maadi, Shopra".tr(),
+                      ),
                     ],
-              ),
                   ),
+                ),
               ),
             ),
             Padding(
@@ -265,23 +297,33 @@ class _FilterScreenState extends State<FilterScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Date (Select the date of last viewing)",style: TextStyle(fontWeight: FontWeight.w400, fontSize: 20.sp),),
-                      SizedBox(height: 3,),
+                      Text(
+                        "Date (Select the date of last viewing)",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 20.sp,
+                        ),
+                      ),
+                      SizedBox(height: 3),
                       GestureDetector(
                         onTap: () async {
-                          final pickedDate = await showCalendarDatePicker2Dialog(
-                            context: context,
-                            config: CalendarDatePicker2WithActionButtonsConfig(
-                              calendarType: CalendarDatePicker2Type.single,
-                            ),
-                            dialogSize: const Size(325, 400),
-                            borderRadius: BorderRadius.circular(15),
-                            value: [],
-                          );
+                          final pickedDate =
+                              await showCalendarDatePicker2Dialog(
+                                context: context,
+                                config:
+                                    CalendarDatePicker2WithActionButtonsConfig(
+                                      calendarType:
+                                          CalendarDatePicker2Type.single,
+                                    ),
+                                dialogSize: const Size(325, 400),
+                                borderRadius: BorderRadius.circular(15),
+                                value: [],
+                              );
 
                           if (pickedDate != null && pickedDate.isNotEmpty) {
                             final date = pickedDate[0]!;
-                            _dateController.text = '${date.day}/${date.month}/${date.year}';
+                            _dateController.text =
+                                '${date.day}/${date.month}/${date.year}';
                           }
                         },
                         child: AbsorbPointer(
@@ -295,31 +337,40 @@ class _FilterScreenState extends State<FilterScreen> {
                                 fontSize: 16,
                                 color: AppColors.inactiveTrackbarColor,
                               ),
-                              helperStyle: TextStyle(fontSize: 12, color: AppColors.inactiveTrackbarColor),
-                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(15.r),
-                                  borderSide: BorderSide(color: AppColors.primaryColor)
+                              helperStyle: TextStyle(
+                                fontSize: 12,
+                                color: AppColors.inactiveTrackbarColor,
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15.r),
+                                borderSide: BorderSide(
+                                  color: AppColors.primaryColor,
+                                ),
                               ),
                               enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15.r),
-                                  borderSide: BorderSide(color: AppColors.primaryColor)
+                                borderRadius: BorderRadius.circular(15.r),
+                                borderSide: BorderSide(
+                                  color: AppColors.primaryColor,
+                                ),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15.r),
-                                  borderSide: BorderSide(color: AppColors.primaryColor)
+                                borderRadius: BorderRadius.circular(15.r),
+                                borderSide: BorderSide(
+                                  color: AppColors.primaryColor,
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      )
-
+                      ),
                     ],
-        ),
-      ),
+                  ),
+                ),
               ),
             ),
-            SizedBox(height: 20.h,),
+            SizedBox(height: 20.h),
             Padding(
-              padding: EdgeInsets.only(right: 50.w,left: 50.w,bottom: 35.h),
+              padding: EdgeInsets.only(right: 50.w, left: 50.w, bottom: 35.h),
               child: SizedBox(
                 width: double.infinity.w,
                 child: ElevatedButton(
@@ -337,11 +388,10 @@ class _FilterScreenState extends State<FilterScreen> {
                   ),
                 ),
               ),
-            )
-
-          ]
-    ),
-    ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -359,9 +409,7 @@ class _FilterScreenState extends State<FilterScreen> {
       value: value,
       groupValue: selectedValue,
       onChanged: onChanged,
-      shape: StadiumBorder(
-        side: BorderSide(color: AppColors.primaryColor),
-      ),
+      shape: StadiumBorder(side: BorderSide(color: AppColors.primaryColor)),
       fillColor: MaterialStateProperty.all(AppColors.primaryColor),
       activeColor: AppColors.primaryColor,
       selectedTileColor: AppColors.primaryColor.withOpacity(0.1),
@@ -373,21 +421,24 @@ class _FilterScreenState extends State<FilterScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          text, style: TextStyle(fontWeight: FontWeight.w400, fontSize: 24.sp),),
+          text,
+          style: TextStyle(fontWeight: FontWeight.w400, fontSize: 24.sp),
+        ),
         TextField(
           decoration: InputDecoration(
             hintText: hint,
             hintStyle: TextStyle(color: AppColors.inactiveTrackbarColor),
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(15.r),
-                borderSide: BorderSide(color: AppColors.primaryColor)
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15.r),
+              borderSide: BorderSide(color: AppColors.primaryColor),
             ),
             enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(15.r),
-                borderSide: BorderSide(color: AppColors.primaryColor)
+              borderRadius: BorderRadius.circular(15.r),
+              borderSide: BorderSide(color: AppColors.primaryColor),
             ),
             focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(15.r),
-                borderSide: BorderSide(color: AppColors.primaryColor)
+              borderRadius: BorderRadius.circular(15.r),
+              borderSide: BorderSide(color: AppColors.primaryColor),
             ),
           ),
         ),
@@ -395,7 +446,12 @@ class _FilterScreenState extends State<FilterScreen> {
     );
   }
 
-  Column buildDropdown(String text, String hint, List<String> items, String? selectedItem) {
+  Column buildDropdown(
+    String text,
+    String hint,
+    List<String> items,
+    String? selectedItem,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -407,7 +463,10 @@ class _FilterScreenState extends State<FilterScreen> {
         DropdownButtonFormField<String>(
           decoration: InputDecoration(
             hintText: hint,
-            hintStyle: TextStyle(color: AppColors.hintTextColor, fontSize: 16.sp),
+            hintStyle: TextStyle(
+              color: AppColors.hintTextColor,
+              fontSize: 16.sp,
+            ),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15.r),
               borderSide: BorderSide(color: AppColors.primaryColor),
@@ -420,7 +479,10 @@ class _FilterScreenState extends State<FilterScreen> {
               borderRadius: BorderRadius.circular(15.r),
               borderSide: BorderSide(color: AppColors.primaryColor),
             ),
-            contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: 16.w,
+              vertical: 12.h,
+            ),
           ),
           value: selectedItem,
           hint: Text(hint, style: TextStyle(fontSize: 16.sp)),
@@ -448,9 +510,9 @@ class _FilterScreenState extends State<FilterScreen> {
 
   BoxDecoration buildBoxDecoration() {
     return BoxDecoration(
-                borderRadius: BorderRadius.circular(25.r),
-                color: AppColors.white,
-              );
+      borderRadius: BorderRadius.circular(25.r),
+      color: AppColors.white,
+    );
   }
 }
 
@@ -501,5 +563,3 @@ class _GenderButton extends StatelessWidget {
     );
   }
 }
-
-
