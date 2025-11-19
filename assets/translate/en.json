@@ -273,5 +273,36 @@
   "Conclusion": "Conclusion",
   "-Most exposed groups: ": "-Most exposed groups: ",
   "8-12 year": "8–12 years",
-  "\n- Decrease in cases among ages 0–3 years": "Decrease in cases among ages 0–3 years"
+  "\n- Decrease in cases among ages 0–3 years": "Decrease in cases among ages 0–3 years",
+
+  "Filter": "Filter",
+  "Needs Verification": "Needs Verification",
+
+  "Age": "Age",
+  "years": "years",
+
+  "Gender": "Gender",
+
+  "Skin tone": "Skin tone",
+  "Select Skin tone": "Select Skin tone",
+
+  "Eye Color": "Eye Color",
+  "Select Eye Color": "Select Eye Color",
+
+  "Hair Color": "Hair Color",
+  "Select Hair Color": "Select Hair Color",
+
+  "Special Marks (Optional)": "Special Marks (Optional)",
+  "e.g. a small scar above the eyebrow": "e.g. a small scar above the eyebrow",
+
+  "Governorate": "Governorate",
+  "example: Cairo, Giza, Alexandria": "example: Cairo, Giza, Alexandria",
+
+  "Area": "Area",
+  "example: Nasr city, Maadi, Shopra": "example: Nasr city, Maadi, Shopra",
+
+  "Date (Select the date of last viewing)": "Date (Select the date of last viewing)",
+  "Day/Month/Year": "Day/Month/Year",
+
+  "Add": "Add"
 }

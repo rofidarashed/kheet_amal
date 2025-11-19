@@ -14,8 +14,8 @@ class ArchivesCard extends StatelessWidget {
         color: AppColors.white,
         borderRadius: BorderRadius.circular(20.r),
       ),
-      width: 390.w,
-      height: 240.h,
+      width: 380.w,
+      height: 220.h,
       child: Padding(
         padding: EdgeInsets.all(15.w),
         child: Column(
