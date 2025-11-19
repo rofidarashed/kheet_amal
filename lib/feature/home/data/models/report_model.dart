@@ -58,4 +58,26 @@ class ReportModel {
       date: data['date'] != null ? DateTime.tryParse(data['date']) : null,
     );
   }
+  factory ReportModel.empty() {
+    return ReportModel(
+      reportType: '',
+      gender: '',
+      skinColor: '',
+      eyeColor: '',
+      hairColor: '',
+      distinctiveMarks: '',
+      description: '',
+      clothes: '',
+
+      phone2: '',
+      date: DateTime(1),
+      id: '',
+      startAge: 0,
+      endAge: 0,
+      childName: '',
+      place: '',
+      imageUrl: '',
+      phone1: '',
+    );
+  }
 }
