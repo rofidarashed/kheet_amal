@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kheet_amal/core/utils/app_colors.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 import '../../cubits/comments_cubit/comments_cubit.dart';
 import '../../cubits/comments_cubit/comments_state.dart';
 import '../../data/models/comment_model.dart';
@@ -48,52 +49,53 @@ class _CommentsPageState extends State<CommentsPage> {
             comments.isEmpty &&
             (state is CommentsGetLoading || state is CommentsStateLoading);
 
-        return Scaffold(
-          appBar: AppBarComment(countOfComment: comments.length.toString()),
-          body: showLoader
-              ? Center(child: CircularProgressIndicator())
-              : Column(
-                  children: [
-                    Expanded(
-                      child: ListView.separated(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 16.w,
-                          vertical: 10.h,
+        return Skeletonizer(
+          enabled: showLoader,
+          child: Scaffold(
+            appBar: AppBarComment(countOfComment: comments.length.toString()),
+            body:Column(
+                    children: [
+                      Expanded(
+                        child: ListView.separated(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 16.w,
+                            vertical: 10.h,
+                          ),
+                          itemBuilder: (context, index) => CommentItem(
+                            comment: comments[index],
+                            onReport: (comment) {
+                              CommentsHelpers.showReportSheet(
+                                context: context,
+                                comment: comment,
+                                reportId: widget.reportId,
+                                onSubmitted: () =>
+                                    CommentsHelpers.showSuccessDialog(context),
+                              );
+                            },
+                            reportId: widget.reportId!,
+                          ),
+                          separatorBuilder: (_, __) => Divider(
+                            color: AppColors.hintTextColor,
+                            height: 30.h,
+                          ),
+                          itemCount: comments.length,
                         ),
-                        itemBuilder: (context, index) => CommentItem(
-                          comment: comments[index],
-                          onReport: (comment) {
-                            CommentsHelpers.showReportSheet(
-                              context: context,
-                              comment: comment,
-                              reportId: widget.reportId,
-                              onSubmitted: () =>
-                                  CommentsHelpers.showSuccessDialog(context),
-                            );
-                          },
-                          reportId: widget.reportId!,
-                        ),
-                        separatorBuilder: (_, __) => Divider(
-                          color: AppColors.hintTextColor,
-                          height: 30.h,
-                        ),
-                        itemCount: comments.length,
                       ),
-                    ),
-                    CommentInputField(
-                      controller: controllerComment,
-                      onSend: () {
-                        if (controllerComment.text.trim().isNotEmpty) {
-                          context.read<CommentsCubit>().addComments(
-                            postId: widget.reportId!,
-                            text: controllerComment.text.trim(),
-                          );
-                          controllerComment.clear();
-                        }
-                      },
-                    ),
-                  ],
-                ),
+                      CommentInputField(
+                        controller: controllerComment,
+                        onSend: () {
+                          if (controllerComment.text.trim().isNotEmpty) {
+                            context.read<CommentsCubit>().addComments(
+                              postId: widget.reportId!,
+                              text: controllerComment.text.trim(),
+                            );
+                            controllerComment.clear();
+                          }
+                        },
+                      ),
+                    ],
+                  ),
+          ),
         );
       },
     );

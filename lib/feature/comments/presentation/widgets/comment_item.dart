@@ -371,11 +371,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kheet_amal/feature/comments/presentation/widgets/comment_content.dart';
 import 'package:kheet_amal/feature/comments/presentation/widgets/reply_input_field.dart';
 import 'package:kheet_amal/feature/comments/presentation/widgets/reply_list.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../cubits/comments_cubit/comments_cubit.dart';
 import '../../cubits/comments_cubit/comments_state.dart';
 import '../../data/models/comment_model.dart';
-
 
 class CommentItem extends StatefulWidget {
   final Comment comment;
@@ -428,9 +428,9 @@ class _CommentItemState extends State<CommentItem> {
   }
 
   void _showErrorMessage(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message)),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(message)));
   }
 
   @override
@@ -449,43 +449,47 @@ class _CommentItemState extends State<CommentItem> {
         builder: (context, state) {
           final cubit = context.read<CommentsCubit>();
           final latestComment = cubit.comments.firstWhere(
-                (c) => c.id == widget.comment.id,
+            (c) => c.id == widget.comment.id,
             orElse: () => widget.comment,
           );
 
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              CommentContent(
-                comment: latestComment,
-                reportId: widget.reportId,
-                onReport: widget.onReport,
-                onReplyTap: _toggleReplyField,
-              ),
-              if (showReplyField)
-                ReplyInputField(
-                  controller: replyController,
-                  onSubmit: _handleReplySubmit,
-                ),
-              if (isLoadingReplies)
-                Padding(
-                  padding: EdgeInsets.only(right: 40.w, top: 10.h),
-                  child: Center(
-                    child: SizedBox(
-                      width: 20.w,
-                      height: 20.h,
-                      child: const CircularProgressIndicator(strokeWidth: 2),
-                    ),
-                  ),
-                ),
-              if (latestComment.replies.isNotEmpty && !isLoadingReplies)
-                ReplyList(
-                  replies: latestComment.replies,
-                  parentCommentId: latestComment.id,
+          return Skeletonizer(
+            enabled:
+                state is CommentsStateLoading || state is ReplyStateLoading,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                CommentContent(
+                  comment: latestComment,
                   reportId: widget.reportId,
                   onReport: widget.onReport,
+                  onReplyTap: _toggleReplyField,
                 ),
-            ],
+                if (showReplyField)
+                  ReplyInputField(
+                    controller: replyController,
+                    onSubmit: _handleReplySubmit,
+                  ),
+                if (isLoadingReplies)
+                  Padding(
+                    padding: EdgeInsets.only(right: 40.w, top: 10.h),
+                    child: Center(
+                      child: SizedBox(
+                        width: 20.w,
+                        height: 20.h,
+                        child: const CircularProgressIndicator(strokeWidth: 2),
+                      ),
+                    ),
+                  ),
+                if (latestComment.replies.isNotEmpty && !isLoadingReplies)
+                  ReplyList(
+                    replies: latestComment.replies,
+                    parentCommentId: latestComment.id,
+                    reportId: widget.reportId,
+                    onReport: widget.onReport,
+                  ),
+              ],
+            ),
           );
         },
       ),

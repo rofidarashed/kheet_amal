@@ -15,7 +15,13 @@ import '../../../saved/cubits/saved_reports_cubit/saved_reports_state.dart';
 import 'info_row.dart';
 
 class ChildCard extends StatelessWidget {
-  const ChildCard({super.key, required this.theme, required this.report});
+  const ChildCard({
+    super.key,
+    required this.theme,
+    required this.report,
+    this.isSkeleton = false,
+  });
+  final bool isSkeleton;
 
   final ThemeData theme;
   final ReportModel report;
@@ -42,7 +48,13 @@ class ChildCard extends StatelessWidget {
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(10.r),
-                    child: report.imageUrl.isNotEmpty
+                    child: isSkeleton
+                        ? Container(
+                            height: 187.h,
+                            width: 158.w,
+                            color: Colors.grey.shade300,
+                          )
+                        : report.imageUrl.isNotEmpty
                         ? Image.network(
                             report.imageUrl,
                             height: 187.h,
@@ -89,16 +101,37 @@ class ChildCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     SizedBox(height: 2.h),
-                    InfoRow(label: 'name'.tr(), value: report.childName),
+                    isSkeleton
+                        ? Container(
+                            height: 14.h,
+                            width: 80.w,
+                            color: Colors.grey.shade300,
+                            margin: EdgeInsets.only(bottom: 6.h),
+                          )
+                        : InfoRow(label: 'name'.tr(), value: report.childName),
                     SizedBox(height: 6.h),
-                    InfoRow(
-                      label: 'age'.tr(),
-                      value: report.startAge == report.endAge
-                          ? report.startAge.toString()
-                          : '${report.startAge} - ${report.endAge}',
-                    ),
+                    isSkeleton
+                        ? Container(
+                            height: 14.h,
+                            width: 80.w,
+                            color: Colors.grey.shade300,
+                            margin: EdgeInsets.only(bottom: 6.h),
+                          )
+                        : InfoRow(
+                            label: 'age'.tr(),
+                            value: report.startAge == report.endAge
+                                ? report.startAge.toString()
+                                : '${report.startAge} - ${report.endAge}',
+                          ),
                     SizedBox(height: 6.h),
-                    InfoRow(label: 'place'.tr(), value: report.place),
+                    isSkeleton
+                        ? Container(
+                            height: 14.h,
+                            width: 80.w,
+                            color: Colors.grey.shade300,
+                            margin: EdgeInsets.only(bottom: 6.h),
+                          )
+                        : InfoRow(label: 'place'.tr(), value: report.place),
                     SizedBox(height: 6.h),
                     Text(
                       'since'.tr(),
