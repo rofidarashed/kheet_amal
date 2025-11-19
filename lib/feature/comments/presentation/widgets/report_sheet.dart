@@ -8,9 +8,14 @@ import '../../cubits/comments_cubit/comments_cubit.dart';
 
 class ReportSheet extends StatefulWidget {
   final void Function(String reason, String details) onSubmitted;
-  final postId;
-  final commentId;
-  const ReportSheet({super.key, required this.onSubmitted, required this.postId, required this.commentId});
+  final String postId;
+  final String commentId;
+  const ReportSheet({
+    super.key,
+    required this.onSubmitted,
+    required this.postId,
+    required this.commentId,
+  });
 
   @override
   State<ReportSheet> createState() => _ReportSheetState();
