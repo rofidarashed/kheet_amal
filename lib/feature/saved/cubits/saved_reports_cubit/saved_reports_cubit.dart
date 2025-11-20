@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:kheet_amal/feature/saved/cubits/saved_reports_cubit/saved_reports_state.dart';
@@ -32,13 +35,27 @@ class SavedReportsCubit extends Cubit<SavedReportsState> {
       }
 
       final reportData = reportDoc.data();
-      await _userSavedReports(user.uid)
-          .doc(reportId)
-          .set({
-            'id': reportDoc.id,
-            ...?reportData,
-            'savedAt': FieldValue.serverTimestamp()
-          });
+
+      // 1. Create the reference first so we can inspect it
+      final targetDocRef = _userSavedReports(user.uid).doc(reportId);
+
+      // ----------------- DEBUG LOGS -----------------
+      // Check WHICH PROJECT you are talking to (Staging vs Prod)
+      log('🔴 Project ID: ${FirebaseFirestore.instance.app.options.projectId}');
+
+      // Check the EXACT PATH being written to
+      log('📂 Target Collection: ${targetDocRef.parent.path}');
+      log('📄 Full Document Path: ${targetDocRef.path}');
+      // ----------------------------------------------
+
+      await targetDocRef.set({
+        'id': reportDoc.id,
+        ...?reportData,
+        'savedAt': FieldValue.serverTimestamp(),
+      });
+
+      log('✅ Report saved successfully');
+      debugPrint('✅ Report saved successfully  $reportId');
 
       emit(SavedReportsToggled(reportId: reportId, isSaved: true));
     } catch (e) {
@@ -60,7 +77,8 @@ class SavedReportsCubit extends Cubit<SavedReportsState> {
       if (doc.exists) {
         await docRef.delete();
       }
-
+      log('✅ Report removed successfully');
+      debugPrint('✅ Report removed successfully  $reportId');
       emit(SavedReportsToggled(reportId: reportId, isSaved: false));
     } catch (e) {
       emit(SavedReportsFailed(message: e.toString()));

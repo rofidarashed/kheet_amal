@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -83,12 +86,20 @@ class ChildCard extends StatelessWidget {
                               state.reportId == report.id) {
                             isSaved = state.isSaved;
                           }
-                          return SvgPicture.asset(
-                            isSaved
-                                ? 'assets/svgs/isSaved_svg.svg'
-                                : 'assets/svgs/save_icon_svg.svg',
-                            width: 14.w,
-                            height: 14.h,
+                          return GestureDetector(
+                            onTap: () {
+                              context
+                                  .read<SavedReportsCubit>()
+                                  .toggleSaveReport(report.id);
+                                  log('Toggled save for report ID: ${report.id}and for user ${FirebaseAuth.instance.currentUser?.uid}');
+                            },
+                            child: SvgPicture.asset(
+                              isSaved
+                                  ? 'assets/svgs/isSaved_svg.svg'
+                                  : 'assets/svgs/save_icon_svg.svg',
+                              width: 14.w,
+                              height: 14.h,
+                            ),
                           );
                         },
                       ),

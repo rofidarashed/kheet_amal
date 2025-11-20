@@ -23,6 +23,7 @@ class ReportActionBar extends StatelessWidget {
   final double? space;
   final ReportModel report;
   @override
+  
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.w),

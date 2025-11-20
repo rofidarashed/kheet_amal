@@ -1,4 +1,3 @@
-
 import 'dart:developer' as developer;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -179,8 +178,7 @@ class CommentsCubit extends Cubit<CommentsState> {
           commentId: commentId,
           userId: uid,
         );
-      }
-      else {
+      } else {
         target.isLiked = true;
         target.likes++;
         if (!target.likedBy.contains(uid)) {
@@ -206,7 +204,6 @@ class CommentsCubit extends Cubit<CommentsState> {
         target.likedBy.remove(uid);
       }
       emit(CommentsGetSuccess(List.unmodifiable(_commentsCache)));
-
     }
   }
 
@@ -236,7 +233,6 @@ class CommentsCubit extends Cubit<CommentsState> {
         target.likes--;
         target.likedBy.remove(uid);
         emit(CommentsGetSuccess(List.unmodifiable(_commentsCache)));
-
 
         await repo.unlikeReply(
           postId: postId,
@@ -275,8 +271,10 @@ class CommentsCubit extends Cubit<CommentsState> {
   }
 
   Future<void> commentCount({required String postId}) async {
+    if (postId.isEmpty) {
+      return;
+    }
     final count = await repo.getCountComment(postId: postId);
     emit(CommentCountState(count: count));
-
   }
 }

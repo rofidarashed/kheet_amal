@@ -203,20 +203,25 @@ class ReportDetails extends StatelessWidget {
               SizedBox(height: 16.h),
 
               /// زرار المشاركة
-         BlocProvider(
-  create: (context) => CommentsCubit()..commentCount(postId: report.id),
-  child: ReportActionBar(
-    space: 16.w,
-    actionChild: CustomIconButton(
-      text: 'share'.tr(),
-      backgroundColor: AppColors.secondaryColor,
-      onPressed: () => _shareScreenshot(context),
-      icon: Icon(Icons.share, color: AppColors.white, size: 20.sp),
-    ),
-    report: report,
-  ),
-),
+              BlocProvider(
+                create: (context) =>
+                    CommentsCubit()..commentCount(postId: report.id),
 
+                child: ReportActionBar(
+                  space: 16.w,
+                  actionChild: CustomIconButton(
+                    text: 'share'.tr(),
+                    backgroundColor: AppColors.secondaryColor,
+                    onPressed: () => _shareScreenshot(context),
+                    icon: Icon(
+                      Icons.share,
+                      color: AppColors.white,
+                      size: 20.sp,
+                    ),
+                  ),
+                  report: report,
+                ),
+              ),
             ],
           ),
         ),

@@ -1,23 +1,27 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:kheet_amal/core/utils/app_colors.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:kheet_amal/feature/my_reports_screen/widgets/report_custom_card.dart';
+import 'package:kheet_amal/feature/home/data/models/report_model.dart';
+import 'package:kheet_amal/feature/home/presentation/widgets/child_card.dart';
 
 class Fullsaved extends StatelessWidget {
-  final List<QueryDocumentSnapshot> savedDocs;
+  final List<ReportModel> savedReports;
 
-  Fullsaved({required this.savedDocs});
+  const Fullsaved({required this.savedReports, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-      itemCount: savedDocs.length,
+      itemCount: savedReports.length,
       itemBuilder: (context, index) {
-        var data = savedDocs[index].data() as Map<String, dynamic>;
+        final report = savedReports[index];
+        
         return Padding(
           padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 8.h),
-          child: ReportCard(reportData: data),
+          child: ChildCard(
+            report: report,
+            theme: Theme.of(context),
+          ),
         );
       },
       separatorBuilder: (context, index) => Divider(

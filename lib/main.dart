@@ -10,6 +10,8 @@ import 'package:kheet_amal/core/theme/app_theme.dart';
 import 'package:kheet_amal/feature/auth/cubit/auth_cubit.dart';
 import 'package:kheet_amal/feature/home/cubit/home_cubit.dart';
 import 'package:kheet_amal/feature/home/data/repositories/report_repository.dart';
+import 'package:kheet_amal/feature/saved/cubits/saved_reports_cubit/saved_reports_cubit.dart';
+import 'package:kheet_amal/feature/support_reports/cubits/sup_reports_cubit/supprot_reports_cubit.dart';
 import 'dart:ui' as ui;
 import 'feature/home_layout/presentation/cubit/bottom_nav_cubit.dart';
 import 'firebase_options.dart';
@@ -50,6 +52,8 @@ class MyApp extends StatelessWidget {
             BlocProvider(
               create: (_) => HomeCubit(ReportRepository())..loadReports(),
             ),
+            BlocProvider(create: (context) => SavedReportsCubit()),
+            BlocProvider(create: (context) => SupportReportsCubit()),
             BlocProvider(create: (_) => AuthCubit()),
           ],
           child: MaterialApp(
