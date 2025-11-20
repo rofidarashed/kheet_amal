@@ -81,10 +81,13 @@ class _HomeScreenState extends State<HomeScreen> {
                           ? ListView.builder(
                               // skeleton
                               itemCount: 6,
-                              itemBuilder: (_, __) => ChildCard(
-                                theme: theme,
-                                report: ReportModel.empty(),
-                                isSkeleton: true,
+                              itemBuilder: (_, __) => BlocProvider(
+                                create: (context) => SavedReportsCubit(),
+                                child: ChildCard(
+                                  theme: theme,
+                                  report: ReportModel.empty(),
+                                  isSkeleton: true,
+                                ),
                               ),
                             )
                           : currentReports.isEmpty
