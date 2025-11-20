@@ -22,15 +22,16 @@ class ChildCard extends StatelessWidget {
     this.isSkeleton = false,
   });
   final bool isSkeleton;
-
   final ThemeData theme;
   final ReportModel report;
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<SavedReportsCubit>().checkIfSaved(report.id);
-    });
+    isSkeleton
+        ? null
+        : WidgetsBinding.instance.addPostFrameCallback((_) {
+            context.read<SavedReportsCubit>().checkIfSaved(report.id);
+          });
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -143,34 +144,37 @@ class ChildCard extends StatelessWidget {
               ),
             ],
           ),
-          BlocProvider(
-            create: (context) =>
-                CommentsCubit()..commentCount(postId: report.id),
-            child: ReportActionBar(
-              actionChild: CustomIconButton(
-                text: 'details'.tr(),
-                backgroundColor: AppColors.secondaryColor,
-                onPressed: () {
-                  final savedCubit = context.read<SavedReportsCubit>();
-                  final supportCubit = context.read<SupportReportsCubit>();
+          isSkeleton
+              ? SizedBox()
+              : BlocProvider(
+                  create: (context) =>
+                      CommentsCubit()..commentCount(postId: report.id),
+                  child: ReportActionBar(
+                    actionChild: CustomIconButton(
+                      text: 'details'.tr(),
+                      backgroundColor: AppColors.secondaryColor,
+                      onPressed: () {
+                        final savedCubit = context.read<SavedReportsCubit>();
+                        final supportCubit = context
+                            .read<SupportReportsCubit>();
 
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => MultiBlocProvider(
-                        providers: [
-                          BlocProvider.value(value: savedCubit),
-                          BlocProvider.value(value: supportCubit),
-                        ],
-                        child: ReportDetails(report: report),
-                      ),
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => MultiBlocProvider(
+                              providers: [
+                                BlocProvider.value(value: savedCubit),
+                                BlocProvider.value(value: supportCubit),
+                              ],
+                              child: ReportDetails(report: report),
+                            ),
+                          ),
+                        );
+                      },
                     ),
-                  );
-                },
-              ),
-              report: report,
-            ),
-          ),
+                    report: report,
+                  ),
+                ),
         ],
       ),
     );
