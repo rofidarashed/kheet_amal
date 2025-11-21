@@ -110,30 +110,46 @@ class AddReportCubit extends Cubit<AddReportState> {
           debugPrint('Failed to upload image, using default one.');
         }
       }
-      await FirebaseFirestore.instance.collection('reports').add({
-        'userId': user!.uid  ,
-      'userEmail': user!.email,
-      'userPhone': user!.phoneNumber,
-      'userName': user!.displayName,
-        'reportType': state.reportType.name,
-        'gender': state.gender.name,
-        'skinColor': state.skinColor.name,
-        'eyeColor': state.eyeColor.name,
-        'hairColor': state.hairColor.name,
-        'startAge': state.startAge,
-        'endAge': state.endAge,
-        'childName': nameController.text.trim(),
-        'distinctiveMarks': marksController.text.trim(),
-        'description': descriptionController.text.trim(),
-        'place': place,
-        'clothes': clothes,
-        'date': state.lastSeenDate?.toIso8601String(),
-        'contactCode': state.contactCode,
-        'phone1': phone1,
-        'phone2': phone2,
-        'imageUrl': imageUrl,
-        'createdAt': FieldValue.serverTimestamp(),
-      });
+      DocumentReference docRef = await FirebaseFirestore.instance
+          .collection('reports')
+          .add({
+            'userId': user!.uid,
+            'userEmail': user!.email,
+            'userPhone': user!.phoneNumber,
+            'userName': user!.displayName,
+            'reportType': state.reportType.name,
+            'gender': state.gender.name,
+            'skinColor': state.skinColor.name,
+            'eyeColor': state.eyeColor.name,
+            'hairColor': state.hairColor.name,
+            'startAge': state.startAge,
+            'endAge': state.endAge,
+            'childName': nameController.text.trim(),
+            'distinctiveMarks': marksController.text.trim(),
+            'description': descriptionController.text.trim(),
+            'place': place,
+            'clothes': clothes,
+            'date': state.lastSeenDate?.toIso8601String(),
+            'contactCode': state.contactCode,
+            'phone1': phone1,
+            'phone2': phone2,
+            'imageUrl': imageUrl,
+            'createdAt': FieldValue.serverTimestamp(),
+          });
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user!.uid)
+          .collection('notifications')
+          .add({
+            'title': "تحديث", // "Update" title
+            'body':
+                "تم إضافة بلاغك بنجاح، سيتم مراجعته وإبلاغك بأي تحديثات.", // "Report added successfully"
+            'type': "update", // Green Checkmark Icon
+            'relatedReportId': docRef.id, // Link to the new report
+            'isRead': false,
+            'senderId': "SYSTEM", // Mark as System notification
+            'createdAt': FieldValue.serverTimestamp(),
+          });
     } catch (e) {
       debugPrint(e.toString());
     }
