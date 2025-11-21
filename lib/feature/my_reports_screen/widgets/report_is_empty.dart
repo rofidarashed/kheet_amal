@@ -11,15 +11,18 @@ class EmptyReport extends StatelessWidget {
     // TODO: implement build
     return Center(
       child: Padding(
-        padding:  EdgeInsets.only(top: 100.h),
+        padding: EdgeInsets.only(top: 100.h),
         child: Column(
           children: [
             Image.asset(AppImages.emptyReport),
-            SizedBox(height: 15.h,),
-            Text("No Added Reports until now".tr(),style: TextStyle(color: AppColors.black,fontSize: 24.sp),),
-            SizedBox(height: 25.h,),
+            SizedBox(height: 15.h),
+            Text(
+              "no_added_reports".tr(),
+              style: TextStyle(color: AppColors.black, fontSize: 24.sp),
+            ),
+            SizedBox(height: 25.h),
             TextButton(
-              onPressed: (){},
+              onPressed: () {},
               style: TextButton.styleFrom(
                 backgroundColor: AppColors.secondaryColor,
                 shape: RoundedRectangleBorder(
@@ -28,11 +31,14 @@ class EmptyReport extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
                 fixedSize: Size(160.w, 32.h),
               ),
-              child: Text("Add Report".tr(), style: TextStyle(color: AppColors.white,fontSize: 16.sp),),),
+              child: Text(
+                "add".tr(),
+                style: TextStyle(color: AppColors.white, fontSize: 16.sp),
+              ),
+            ),
           ],
         ),
       ),
     );
   }
-
 }

@@ -112,4 +112,11 @@ class AppValidators {
     }
     return null;
   }
+
+  static String? checkboxValidator(bool? value) {
+    if (value == null || value == false) {
+      return 'check'.tr();
+    }
+    return null;
+  }
 }

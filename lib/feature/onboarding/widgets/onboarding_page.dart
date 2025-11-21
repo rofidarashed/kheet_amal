@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kheet_amal/core/utils/app_colors.dart';
@@ -59,7 +60,7 @@ class OnboardingPage extends StatelessWidget {
                     ? TextButton(
                         onPressed: onSkip,
                         child: Text(
-                          'تخطي',
+                          'skip'.tr(),
                           style: TextStyle(color: Colors.grey, fontSize: 25.sp),
                         ),
                       )

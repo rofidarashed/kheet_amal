@@ -210,6 +210,7 @@ class _SummaryScreen1State extends State<SummaryScreen1> {
                                       style: TextStyle(fontSize: 10.sp),
                                     );
                                   },
+
                                 ),
                               ),
                               bottomTitles: AxisTitles(
@@ -317,6 +318,7 @@ BarChartGroupData makeGroupData(
   double suspected,
  )
 {
+
   return BarChartGroupData(
     x: x,
     barsSpace: 4.w,
@@ -358,6 +360,7 @@ class LegendItem extends StatelessWidget {
         Container(
           width: 20.w,
           height: 15.h,
+
           decoration: BoxDecoration(color: color, shape: BoxShape.rectangle),
         ),
       ],
