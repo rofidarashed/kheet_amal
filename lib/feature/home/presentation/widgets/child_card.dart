@@ -13,6 +13,7 @@ import 'package:kheet_amal/feature/home/presentation/screens/report_details_scre
 import 'package:kheet_amal/feature/home/presentation/widgets/custom_icon_button.dart';
 import 'package:kheet_amal/feature/home/presentation/widgets/custom_report_action_bar.dart';
 import 'package:kheet_amal/feature/saved/cubits/saved_reports_cubit/saved_reports_cubit.dart';
+import 'package:timeago/timeago.dart' as timeago;
 import '../../../support_reports/cubits/sup_reports_cubit/supprot_reports_cubit.dart';
 import '../../../saved/cubits/saved_reports_cubit/saved_reports_state.dart';
 import 'info_row.dart';
@@ -30,6 +31,10 @@ class ChildCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final timeString = timeago.format(
+      report.createdAt,
+      locale: context.locale.languageCode,
+    );
     isSkeleton
         ? null
         : WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -91,7 +96,9 @@ class ChildCard extends StatelessWidget {
                               context
                                   .read<SavedReportsCubit>()
                                   .toggleSaveReport(report.id);
-                                  log('Toggled save for report ID: ${report.id}and for user ${FirebaseAuth.instance.currentUser?.uid}');
+                              log(
+                                'Toggled save for report ID: ${report.id}and for user ${FirebaseAuth.instance.currentUser?.uid}',
+                              );
                             },
                             child: SvgPicture.asset(
                               isSaved
@@ -146,7 +153,7 @@ class ChildCard extends StatelessWidget {
                         : InfoRow(label: 'place'.tr(), value: report.place),
                     SizedBox(height: 6.h),
                     Text(
-                      'since'.tr(),
+                      timeString,
                       style: TextStyle(color: Colors.black54, fontSize: 13.sp),
                       textAlign: TextAlign.right,
                     ),

@@ -10,8 +10,11 @@ import 'package:kheet_amal/core/theme/app_theme.dart';
 import 'package:kheet_amal/feature/auth/cubit/auth_cubit.dart';
 import 'package:kheet_amal/feature/home/cubit/home_cubit.dart';
 import 'package:kheet_amal/feature/home/data/repositories/report_repository.dart';
+import 'package:kheet_amal/feature/notification/cubit/notification_cubit.dart';
+import 'package:kheet_amal/feature/notification/service/notification_service.dart';
 import 'package:kheet_amal/feature/saved/cubits/saved_reports_cubit/saved_reports_cubit.dart';
 import 'package:kheet_amal/feature/support_reports/cubits/sup_reports_cubit/supprot_reports_cubit.dart';
+import 'package:timeago/timeago.dart' as timeago;
 import 'dart:ui' as ui;
 import 'feature/home_layout/presentation/cubit/bottom_nav_cubit.dart';
 import 'firebase_options.dart';
@@ -20,10 +23,13 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await NotificationService().init();
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+  timeago.setLocaleMessages('ar', timeago.ArMessages());
+  timeago.setLocaleMessages('en', timeago.EnMessages());
   runApp(
     EasyLocalization(
       supportedLocales: [Locale('en'), Locale('ar')],
@@ -55,6 +61,9 @@ class MyApp extends StatelessWidget {
             BlocProvider(create: (context) => SavedReportsCubit()),
             BlocProvider(create: (context) => SupportReportsCubit()),
             BlocProvider(create: (_) => AuthCubit()),
+            BlocProvider(
+              create: (context) => NotificationCubit()..initNotifications(),
+            ),
           ],
           child: MaterialApp(
             localizationsDelegates: context.localizationDelegates,

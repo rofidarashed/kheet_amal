@@ -141,13 +141,13 @@ class AddReportCubit extends Cubit<AddReportState> {
           .doc(user!.uid)
           .collection('notifications')
           .add({
-            'title': "تحديث", // "Update" title
+            'title': "تحديث", 
             'body':
-                "تم إضافة بلاغك بنجاح، سيتم مراجعته وإبلاغك بأي تحديثات.", // "Report added successfully"
-            'type': "update", // Green Checkmark Icon
-            'relatedReportId': docRef.id, // Link to the new report
+                "تم إضافة بلاغك بنجاح، سيتم مراجعته وإبلاغك بأي تحديثات.", 
+            'type': "update", 
+            'relatedReportId': docRef.id, 
             'isRead': false,
-            'senderId': "SYSTEM", // Mark as System notification
+            'senderId': "SYSTEM", 
             'createdAt': FieldValue.serverTimestamp(),
           });
     } catch (e) {
