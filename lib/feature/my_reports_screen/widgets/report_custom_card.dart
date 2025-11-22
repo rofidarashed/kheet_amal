@@ -7,14 +7,14 @@ import 'package:intl/intl.dart';
 
 class ReportCard extends StatelessWidget {
   final Map<String, dynamic>? reportData;
+  final String reportId;
 
-  ReportCard({this.reportData});
+  ReportCard({this.reportData, required this.reportId});
 
   @override
   Widget build(BuildContext context) {
     final data = reportData ?? {};
 
-    // Format createdAt
     String createdAtString = "Unknown";
     if (data['createdAt'] != null) {
       if (data['createdAt'] is Timestamp) {
@@ -25,7 +25,6 @@ class ReportCard extends StatelessWidget {
       }
     }
 
-    // Image URL
     final imageUrl = data['imageUrl'] ?? '';
 
     return Container(
@@ -40,7 +39,6 @@ class ReportCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              // Image container
               Container(
                 width: 80.w,
                 height: 80.h,
@@ -119,10 +117,29 @@ class ReportCard extends StatelessWidget {
           SizedBox(height: 7.h),
           Row(
             children: [
-              Icon(Icons.favorite_border, color: AppColors.black, size: 20),
-              SizedBox(width: 4.w),
-              Text('${data['likes'] ?? 0}'.tr(),
-                  style: TextStyle(color: AppColors.black, fontSize: 14.sp)),
+              StreamBuilder<DocumentSnapshot>(
+                stream: FirebaseFirestore.instance
+                    .collection('reports')
+                    .doc(reportId)
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  int likes = 0;
+                  if (snapshot.hasData && snapshot.data!.exists) {
+                    final docData = snapshot.data!.data() as Map<String, dynamic>?;
+                    likes = docData?['likesCount'] ?? 0;
+                  }
+                  return Row(
+                    children: [
+                      Icon(Icons.favorite_border,
+                          color: AppColors.black, size: 20),
+                      SizedBox(width: 4.w),
+                      Text('$likes',
+                          style:
+                              TextStyle(color: AppColors.black, fontSize: 14.sp)),
+                    ],
+                  );
+                },
+              ),
               SizedBox(width: 16.w),
               Icon(Icons.mode_comment_outlined,
                   color: AppColors.black, size: 20),

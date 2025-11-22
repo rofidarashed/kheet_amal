@@ -10,7 +10,7 @@ class FullReport extends StatelessWidget {
     return ListView.separated(
         itemBuilder: (context , index) => Padding(
           padding: EdgeInsets.only(left: 10.w ,right: 10.w),
-          child: ReportCard(),
+          child: ReportCard(reportId: '',),
         ) ,
         separatorBuilder: (context , index) => Divider(
           color: AppColors.divider,
