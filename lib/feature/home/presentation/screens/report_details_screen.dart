@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:kheet_amal/core/utils/app_colors.dart';
 import 'package:kheet_amal/feature/ai_model/ai_model_screen.dart';
+import 'package:kheet_amal/feature/comments/cubits/comments_cubit/comments_cubit.dart';
 import 'package:kheet_amal/feature/home/data/models/report_model.dart';
 import 'package:kheet_amal/feature/home/presentation/widgets/custom_founder_info.dart';
 import 'package:kheet_amal/feature/home/presentation/widgets/custom_icon_button.dart';
@@ -17,9 +18,14 @@ import 'package:kheet_amal/feature/saved/cubits/saved_reports_cubit/saved_report
 import 'package:path_provider/path_provider.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ReportDetails extends StatelessWidget {
   final ScreenshotController _screenshotController = ScreenshotController();
+
+  ReportDetails({super.key, required this.report});
+
+  final ReportModel report;
 
   Future<void> _shareScreenshot(BuildContext context) async {
     try {
@@ -51,10 +57,6 @@ class ReportDetails extends StatelessWidget {
     }
   }
 
-  ReportDetails({super.key, required this.report});
-
-  final ReportModel report;
-
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -71,6 +73,7 @@ class ReportDetails extends StatelessWidget {
             child: BlocBuilder<SavedReportsCubit, SavedReportsState>(
               builder: (context, state) {
                 bool isSaved = false;
+
                 if (state is SavedReportsToggled &&
                     state.reportId == report.id) {
                   isSaved = state.isSaved;
@@ -134,6 +137,8 @@ class ReportDetails extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 14.h),
+
+              /// صورة البلاغ
               Container(
                 alignment: Alignment.center,
                 child: ClipRRect(
@@ -154,9 +159,13 @@ class ReportDetails extends StatelessWidget {
                       : Container(),
                 ),
               ),
+
               SizedBox(height: 20.h),
+
               FounderInfo(),
               SizedBox(height: 16.h),
+
+              /// أزرار الاتصال و AI
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 25.0.sp),
                 child: Row(
@@ -164,7 +173,9 @@ class ReportDetails extends StatelessWidget {
                     CustomIconButton(
                       text: 'contact'.tr(),
                       backgroundColor: AppColors.secondaryColor,
-                      onPressed: () {},
+                      onPressed: () {
+                        showPhoneChooser(context, report);
+                      },
                     ),
                     Spacer(),
                     Container(
@@ -196,22 +207,95 @@ class ReportDetails extends StatelessWidget {
                   ],
                 ),
               ),
+
               ReportDetailsCardsColumn(report: report),
               SizedBox(height: 16.h),
-              ReportActionBar(
-                space: 16.w,
-                actionChild: CustomIconButton(
-                  text: 'share'.tr(),
-                  backgroundColor: AppColors.secondaryColor,
-                  onPressed: () => _shareScreenshot(context),
-                  icon: Icon(Icons.share, color: AppColors.white, size: 20.sp),
+
+              /// زرار المشاركة
+              BlocProvider(
+                create: (context) =>
+                    CommentsCubit()..commentCount(postId: report.id),
+
+                child: ReportActionBar(
+                  space: 16.w,
+                  actionChild: CustomIconButton(
+                    text: 'share'.tr(),
+                    backgroundColor: AppColors.secondaryColor,
+                    onPressed: () => _shareScreenshot(context),
+                    icon: Icon(
+                      Icons.share,
+                      color: AppColors.white,
+                      size: 20.sp,
+                    ),
+                  ),
+                  report: report,
                 ),
-                report: report,
               ),
             ],
           ),
         ),
       ),
     );
+  }
+}
+
+void showPhoneChooser(BuildContext context, ReportModel report) {
+  showModalBottomSheet(
+    context: context,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+    ),
+    builder: (context) {
+      return Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              "choose_number".tr(),
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 20),
+
+            if (report.phone1.isNotEmpty)
+              ListTile(
+                leading: const Icon(Icons.phone),
+                title: Text(report.phone1),
+                onTap: () {
+                  Navigator.pop(context);
+                  callUser(report.phone1);
+                },
+              ),
+
+            if (report.phone2.isNotEmpty)
+              ListTile(
+                leading: const Icon(Icons.phone),
+                title: Text(report.phone2),
+                onTap: () {
+                  Navigator.pop(context);
+                  callUser(report.phone2);
+                },
+              ),
+
+            if (report.phone1.isEmpty && report.phone2.isEmpty)
+              Padding(
+                padding: EdgeInsets.all(12.0),
+                child: Text(
+                  "no_number_available".tr(),
+                  style: TextStyle(fontSize: 16),
+                ),
+              ),
+          ],
+        ),
+      );
+    },
+  );
+}
+
+void callUser(String phone) async {
+  final Uri url = Uri(scheme: 'tel', path: phone);
+
+  if (!await launchUrl(url)) {
+    throw Exception('Could not launch phone call');
   }
 }

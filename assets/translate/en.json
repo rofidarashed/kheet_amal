@@ -333,7 +333,7 @@
   "result_load_error": "Error loading the result",
   "file_not_found": "File not found",
   "conversion_result": "The image has been processed successfully",
-  "result_page_title": "Conversion Result"
-
-
+  "result_page_title": "Conversion Result",
+  "choose_number": "Choose a number to call",
+  "no_number_available": "No number available to call"
 }
