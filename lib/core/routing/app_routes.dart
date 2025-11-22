@@ -12,4 +12,6 @@ class AppRoutes {
   static const String savedItems = '/saved_items';
   static const String myReports = '/my_reports';
   static const String comments = '/comments';
+  static const String aiscreen = '/AiScreen';
+
 }
