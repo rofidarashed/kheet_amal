@@ -13,5 +13,8 @@ class AppRoutes {
   static const String myReports = '/my_reports';
   static const String comments = '/comments';
   static const String aiscreen = '/AiScreen';
-
+  static const settings = '/settings';
+  static const faq = '/faq';
+  static const contact = '/contact';
+  static const about = '/about';
 }
