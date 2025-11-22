@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:kheet_amal/core/routing/app_routes.dart';
+import 'package:kheet_amal/feature/ai_model/ai_model_screen.dart';
 import 'package:kheet_amal/feature/auth/presentation/screens/login_screen.dart';
 import 'package:kheet_amal/feature/auth/presentation/screens/register_screen.dart';
+import 'package:kheet_amal/feature/home/data/models/report_model.dart';
 import 'package:kheet_amal/feature/comments/presentation/screen/comments_screen.dart';
 import 'package:kheet_amal/feature/home/presentation/screens/home_screen.dart';
 import 'package:kheet_amal/feature/home_layout/presentation/pages/home_layout_page.dart';
