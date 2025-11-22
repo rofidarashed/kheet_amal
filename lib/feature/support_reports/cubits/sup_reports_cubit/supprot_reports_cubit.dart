@@ -7,7 +7,6 @@ import 'package:kheet_amal/feature/support_reports/cubits/sup_reports_cubit/supp
 class SupportReportsCubit extends Cubit<SupportReportsState> {
   SupportReportsCubit() : super(SupportReportsInitial());
 
-  
   CollectionReference<Map<String, dynamic>> _userSupportReports(String userId) {
     return FirebaseFirestore.instance
         .collection('users')
@@ -18,30 +17,24 @@ class SupportReportsCubit extends Cubit<SupportReportsState> {
   Future<void> supportReport(String reportId) async {
     try {
       final user = FirebaseAuth.instance.currentUser;
-      if (user == null) {
-        emit(SupportReportsFailed(message: 'User not logged in'));
-        return;
-      }
+      if (user == null) throw Exception('User not logged in');
 
-      final reportDoc = await FirebaseFirestore.instance
-          .collection('reports')
-          .doc(reportId)
-          .get();
+      final reportRef = FirebaseFirestore.instance.collection('reports').doc(reportId);
 
-      if (!reportDoc.exists) {
-        emit(SupportReportsFailed(message: 'Report not found'));
-        return;
-      }
+      await FirebaseFirestore.instance.runTransaction((transaction) async {
+        final snapshot = await transaction.get(reportRef);
+        if (!snapshot.exists) throw Exception('Report not found');
 
-      final reportData = reportDoc.data();
-      debugPrint('Supporting report: $reportId for user: ${user.uid}');
-      
-      await _userSupportReports(user.uid).doc(reportId).set({
-        ...reportData!,
-        'supportedAt': FieldValue.serverTimestamp(),
+        int currentLikes = snapshot.data()?['likesCount'] ?? 0;
+
+        // سجل دعم المستخدم
+        final userSupportRef = _userSupportReports(user.uid).doc(reportId);
+        transaction.set(userSupportRef, {'supportedAt': FieldValue.serverTimestamp()});
+
+        // زيادة اللايك
+        transaction.update(reportRef, {'likesCount': currentLikes + 1});
       });
 
-      debugPrint('✅ Report supported successfully');
       emit(SupportReportsToggled(reportId: reportId, isSupported: true));
     } catch (e) {
       debugPrint('🔥 Error supporting report: $e');
@@ -52,18 +45,23 @@ class SupportReportsCubit extends Cubit<SupportReportsState> {
   Future<void> unsupportReport(String reportId) async {
     try {
       final user = FirebaseAuth.instance.currentUser;
-      if (user == null) {
-        emit(SupportReportsFailed(message: 'User not logged in'));
-        return;
-      }
+      if (user == null) throw Exception('User not logged in');
 
-      final docRef = _userSupportReports(user.uid).doc(reportId);
-      final doc = await docRef.get();
+      final reportRef = FirebaseFirestore.instance.collection('reports').doc(reportId);
 
-      if (doc.exists) {
-        await docRef.delete();
-        debugPrint('✅ Report unsupported successfully');
-      }
+      await FirebaseFirestore.instance.runTransaction((transaction) async {
+        final snapshot = await transaction.get(reportRef);
+        if (!snapshot.exists) throw Exception('Report not found');
+
+        int currentLikes = snapshot.data()?['likesCount'] ?? 0;
+
+        // إزالة سجل دعم المستخدم
+        final userSupportRef = _userSupportReports(user.uid).doc(reportId);
+        transaction.delete(userSupportRef);
+
+        // نقصان اللايك
+        transaction.update(reportRef, {'likesCount': currentLikes > 0 ? currentLikes - 1 : 0});
+      });
 
       emit(SupportReportsToggled(reportId: reportId, isSupported: false));
     } catch (e) {
@@ -75,10 +73,7 @@ class SupportReportsCubit extends Cubit<SupportReportsState> {
   Future<void> toggleSupport(String reportId) async {
     try {
       final user = FirebaseAuth.instance.currentUser;
-      if (user == null) {
-        emit(SupportReportsFailed(message: 'User not logged in'));
-        return;
-      }
+      if (user == null) throw Exception('User not logged in');
 
       final docRef = _userSupportReports(user.uid).doc(reportId);
       final snapshot = await docRef.get();
