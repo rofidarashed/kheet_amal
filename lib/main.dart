@@ -54,7 +54,7 @@ class MyApp extends StatelessWidget {
             locale: context.locale,
             debugShowCheckedModeBanner: false,
             theme: AppTheme.lightTheme,
-            initialRoute: AppRoutes.splash,
+            initialRoute: AppRoutes.home,
             onGenerateRoute: (settings) => AppRouter.generateRoute(settings),
             builder: (buildContext, widget) {
               return Directionality(
