@@ -35,7 +35,7 @@ Widget customSearchFailed({
       SizedBox(height: 24.h),
       Center(
         child: Image.asset(
-          "assets/images/no_results.png",
+          "assets/images/image.png",
           height: 200.h,
           width: 180.w,
           fit: BoxFit.contain,
