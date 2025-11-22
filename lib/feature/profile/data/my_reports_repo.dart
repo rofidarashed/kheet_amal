@@ -1,12 +1,13 @@
 import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
-import '../models/report_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:kheet_amal/feature/home/data/models/report_model.dart';
 
-class ReportRepository {
+class MyReportsRepository {
   final _firestore = FirebaseFirestore.instance;
   final _dio = Dio();
+  final _auth = FirebaseAuth.instance;
 
   static const _keyId = '003c5e49060e5980000000001';
   static const _applicationKey = 'K003XYSe4Gx40iX+oPZWabUX9qoM0js';
@@ -45,12 +46,18 @@ class ReportRepository {
     }
   }
 
-  Stream<List<ReportModel>> getReportsStream() {
+  Stream<List<ReportModel>> getMyReportsStream() {
+    final user = _auth.currentUser;
+    if (user == null) {
+      return Stream.value([]);
+    }
+
     return _firestore
         .collection('reports')
+        .where('userId', isEqualTo: user.uid)
         .orderBy('createdAt', descending: true)
-        .snapshots() 
-        .asyncMap((snapshot) async { 
+        .snapshots()
+        .asyncMap((snapshot) async {
       final reports = <ReportModel>[];
 
       for (final doc in snapshot.docs) {

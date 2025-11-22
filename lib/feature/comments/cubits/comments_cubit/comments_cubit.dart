@@ -275,6 +275,8 @@ class CommentsCubit extends Cubit<CommentsState> {
       return;
     }
     final count = await repo.getCountComment(postId: postId);
-    emit(CommentCountState(count: count));
+    if (!isClosed) {
+      emit(CommentCountState(count: count));
+    }
   }
 }

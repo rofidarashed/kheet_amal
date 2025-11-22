@@ -39,7 +39,7 @@ Widget buildScreenshotContent({required ReportModel report}) {
                 ),
               ),
               SizedBox(height: 20.h),
-              FounderInfo(),
+              FounderInfo(report: report),
               ReportDetailsCardsColumn(report: report),
             ],
           ),

@@ -162,10 +162,9 @@ class ReportDetails extends StatelessWidget {
 
               SizedBox(height: 20.h),
 
-              FounderInfo(),
+              FounderInfo(report: report),
               SizedBox(height: 16.h),
 
-              /// أزرار الاتصال و AI
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 25.0.sp),
                 child: Row(
@@ -197,8 +196,7 @@ class ReportDetails extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (_) =>
-                                  AiScreen(reportmodel: report,),
+                              builder: (_) => AiScreen(reportmodel: report),
                             ),
                           );
                         },

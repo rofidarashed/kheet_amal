@@ -17,7 +17,7 @@ class AppValidators {
     if (desc == null || desc.isEmpty) {
       return 'required'.tr();
     }
-    if (desc.length < 20) {
+    if (desc.length < 10) {
       return 'The Text is too short';
     }
     return null;

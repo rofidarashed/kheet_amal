@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class ReportModel {
   final String id;
   final String reportType;
@@ -16,6 +18,9 @@ class ReportModel {
   final String phone2;
   final String imageUrl;
   final DateTime? date;
+  final String? userId;
+  final String userName;
+  final DateTime createdAt;
 
   ReportModel({
     required this.id,
@@ -35,6 +40,9 @@ class ReportModel {
     required this.phone2,
     required this.imageUrl,
     required this.date,
+    required this.userId,
+    required this.userName,
+    required this.createdAt,
   });
 
   factory ReportModel.fromMap(String id, Map<String, dynamic> data) {
@@ -56,6 +64,9 @@ class ReportModel {
       phone2: data['phone2'] ?? '',
       imageUrl: data['imageUrl'] ?? '',
       date: data['date'] != null ? DateTime.tryParse(data['date']) : null,
+      userId: data['userId'] ?? '',
+      userName: data['userName'] ?? '',
+      createdAt: (data['createdAt'] as Timestamp?)?.toDate() ?? DateTime.now(),
     );
   }
   factory ReportModel.empty() {
@@ -78,6 +89,9 @@ class ReportModel {
       place: '',
       imageUrl: '',
       phone1: '',
+      userId: '',
+      userName: '',
+      createdAt: DateTime.now(),
     );
   }
 }

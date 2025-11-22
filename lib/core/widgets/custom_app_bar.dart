@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kheet_amal/core/routing/app_routes.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:kheet_amal/feature/notification/cubit/notification_cubit.dart';
+import 'package:kheet_amal/feature/notification/cubit/notification_state.dart';
 import 'package:kheet_amal/feature/statistics/screens/statistics_screen.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const CustomAppBar({
-    super.key,
-    required this.title,
-    required this.notificationsCount,
-  });
+  const CustomAppBar({super.key, required this.title});
 
-  final int notificationsCount;
   final String title;
 
   @override
@@ -50,7 +48,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   'assets/svgs/charts.svg',
                   width: 20.w,
                   height: 20.w,
-
                 ),
                 onPressed: () {
                   Navigator.push(
@@ -67,44 +64,62 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
         ),
       ],
-      leading: Stack(
-        children: [
-          IconButton(
-            icon: Icon(
-              Icons.notifications_none,
-              size: 25.sp,
-              color: Colors.black87,
-            ),
-            onPressed: () {
-              Navigator.of(
-                context,
-                rootNavigator: true,
-              ).pushNamed(AppRoutes.notifications);
-            },
-          ),
-          if (notificationsCount > 0)
-            Positioned(
-              left: 20.w,
-              top: 4.h,
-              child: Container(
-                padding: EdgeInsets.all(3.w),
-                decoration: const BoxDecoration(
-                  color: Colors.red,
-                  shape: BoxShape.circle,
+      // Wrap the Leading widget with BlocBuilder to listen to changes
+      leading: BlocBuilder<NotificationCubit, NotificationState>(
+        builder: (context, state) {
+          int notificationsCount = 0;
+
+          // Calculate count if loaded
+          if (state is NotificationLoaded) {
+            // Count only UNREAD notifications
+            notificationsCount = state.notifications
+                .where((n) => !n.isRead)
+                .length;
+          }
+
+          return Stack(
+            children: [
+              IconButton(
+                icon: Icon(
+                  Icons.notifications_none,
+                  size: 25.sp,
+                  color: Colors.black87,
                 ),
-                constraints: BoxConstraints(minWidth: 13.w, minHeight: 13.h),
-                child: Text(
-                  '$notificationsCount',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 10.sp,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
+                onPressed: () {
+                  Navigator.of(
+                    context,
+                    rootNavigator: true,
+                  ).pushNamed(AppRoutes.notifications);
+                },
               ),
-            ),
-        ],
+              if (notificationsCount > 0)
+                Positioned(
+                  left: 20.w,
+                  top: 4.h,
+                  child: Container(
+                    padding: EdgeInsets.all(3.w),
+                    decoration: const BoxDecoration(
+                      color: Colors.red,
+                      shape: BoxShape.circle,
+                    ),
+                    constraints: BoxConstraints(
+                      minWidth: 13.w,
+                      minHeight: 13.h,
+                    ),
+                    child: Text(
+                      '$notificationsCount',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 10.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+            ],
+          );
+        },
       ),
     );
   }

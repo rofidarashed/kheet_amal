@@ -55,7 +55,7 @@ class ProfileScreen extends StatelessWidget {
             );
 
             final isLoading = state is AuthLoading || user == null;
-            final displayUser = isLoading ? skeletonUser : user!;
+            final displayUser = isLoading ? skeletonUser : user;
             return Skeletonizer(
               enabled: isLoading,
               child: Padding(

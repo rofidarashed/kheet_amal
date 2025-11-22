@@ -1,13 +1,43 @@
+import 'package:cloud_firestore/cloud_firestore.dart'; // Import Firestore
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kheet_amal/core/utils/app_colors.dart';
+import 'package:kheet_amal/feature/home/data/models/report_model.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class FounderInfo extends StatelessWidget {
-  const FounderInfo({super.key});
+  final ReportModel report;
+
+  const FounderInfo({super.key, required this.report});
+
+  Future<String> _fetchUserName(String userId) async {
+    if (userId.isEmpty) return 'Unknown';
+    try {
+      final doc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userId)
+          .get();
+
+      if (doc.exists) {
+        final data = doc.data();
+        return data?['name'] ??
+            data?['userName'] ??
+            data?['displayName'] ??
+            'Unknown';
+      }
+    } catch (e) {
+      debugPrint('Error fetching user name: $e');
+    }
+    return 'Unknown';
+  }
 
   @override
   Widget build(BuildContext context) {
+    final timeString = timeago.format(
+      report.createdAt,
+      locale: context.locale.languageCode,
+    );
     return Padding(
       padding: EdgeInsets.fromLTRB(25.w, 0, 25.w, 0),
       child: Row(
@@ -15,19 +45,33 @@ class FounderInfo extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Text(
-            'since'.tr(),
+            timeString,
             style: TextStyle(color: AppColors.black, fontSize: 13.sp),
           ),
-          Spacer(),
-          Text(
-            " احمد محمد",
-            style: TextStyle(
-              fontSize: 20.sp,
-              fontWeight: FontWeight.w600,
-              color: AppColors.black,
-            ),
+          const Spacer(),
+
+          FutureBuilder<String>(
+            future: _fetchUserName(report.userId ?? ''),
+            builder: (context, snapshot) {
+              String displayName = report.userName.isNotEmpty
+                  ? report.userName
+                  : "...";
+
+              if (snapshot.hasData) {
+                displayName = snapshot.data!;
+              }
+
+              return Text(
+                " $displayName",
+                style: TextStyle(
+                  fontSize: 20.sp,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.black,
+                ),
+              );
+            },
           ),
-    
+
           Text("posted_by").tr(),
         ],
       ),

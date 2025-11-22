@@ -23,7 +23,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedTabIndex = 0;
-  int _notificationsCount = 3;
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +56,6 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Scaffold(
               backgroundColor: const Color(0xFFF7F7F7),
               appBar: CustomAppBar(
-                notificationsCount: _notificationsCount,
                 title: 'homeTitle'.tr(),
               ),
               body: Padding(
