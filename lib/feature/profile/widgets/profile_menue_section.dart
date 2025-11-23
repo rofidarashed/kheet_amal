@@ -7,6 +7,7 @@ import 'package:kheet_amal/feature/auth/cubit/auth_cubit.dart';
 import 'package:kheet_amal/feature/profile/my_reports_screen.dart';
 import 'package:kheet_amal/feature/profile/widgets/change_lang.dart';
 import 'package:kheet_amal/feature/saved/saved_screen.dart';
+import 'package:kheet_amal/feature/settings/settings_home.dart';
 import 'menu_item.dart';
 
 class ProfileMenuSection extends StatelessWidget {
@@ -35,7 +36,17 @@ class ProfileMenuSection extends StatelessWidget {
           ),
         ),
         const ChangeLang(),
-        MenuItem(title: 'settings'.tr(), icon: Icons.settings),
+        MenuItem(
+          title: 'settings'.tr(),
+          icon: Icons.settings,
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const SettingsHome()),
+            );
+          },
+        ),
+
         InkWell(
           onTap: () {
             AwesomeDialog(
