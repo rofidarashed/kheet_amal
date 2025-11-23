@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
@@ -108,30 +110,46 @@ class AddReportCubit extends Cubit<AddReportState> {
           debugPrint('Failed to upload image, using default one.');
         }
       }
-      await FirebaseFirestore.instance.collection('reports').add({
-        'userId': user!.uid  ,
-      'userEmail': user!.email,
-      'userPhone': user!.phoneNumber,
-      'userName': user!.displayName,
-        'reportType': state.reportType.name,
-        'gender': state.gender.name,
-        'skinColor': state.skinColor.name,
-        'eyeColor': state.eyeColor.name,
-        'hairColor': state.hairColor.name,
-        'startAge': state.startAge,
-        'endAge': state.endAge,
-        'childName': nameController.text.trim(),
-        'distinctiveMarks': marksController.text.trim(),
-        'description': descriptionController.text.trim(),
-        'place': place,
-        'clothes': clothes,
-        'date': state.lastSeenDate?.toIso8601String(),
-        'contactCode': state.contactCode,
-        'phone1': phone1,
-        'phone2': phone2,
-        'imageUrl': imageUrl,
-        'createdAt': FieldValue.serverTimestamp(),
-      });
+      DocumentReference docRef = await FirebaseFirestore.instance
+          .collection('reports')
+          .add({
+            'userId': user!.uid,
+            'userEmail': user!.email,
+            'userPhone': user!.phoneNumber,
+            'userName': user!.displayName,
+            'reportType': state.reportType.name,
+            'gender': state.gender.name,
+            'skinColor': state.skinColor.name,
+            'eyeColor': state.eyeColor.name,
+            'hairColor': state.hairColor.name,
+            'startAge': state.startAge,
+            'endAge': state.endAge,
+            'childName': nameController.text.trim(),
+            'distinctiveMarks': marksController.text.trim(),
+            'description': descriptionController.text.trim(),
+            'place': place,
+            'clothes': clothes,
+            'date': state.lastSeenDate?.toIso8601String(),
+            'contactCode': state.contactCode,
+            'phone1': phone1,
+            'phone2': phone2,
+            'imageUrl': imageUrl,
+            'createdAt': FieldValue.serverTimestamp(),
+          });
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user!.uid)
+          .collection('notifications')
+          .add({
+            'title': "تحديث", 
+            'body':
+                "تم إضافة بلاغك بنجاح، سيتم مراجعته وإبلاغك بأي تحديثات.", 
+            'type': "update", 
+            'relatedReportId': docRef.id, 
+            'isRead': false,
+            'senderId': "SYSTEM", 
+            'createdAt': FieldValue.serverTimestamp(),
+          });
     } catch (e) {
       debugPrint(e.toString());
     }
