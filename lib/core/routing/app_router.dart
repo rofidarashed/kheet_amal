@@ -7,6 +7,10 @@ import 'package:kheet_amal/feature/home/presentation/screens/home_screen.dart';
 import 'package:kheet_amal/feature/home_layout/presentation/pages/home_layout_page.dart';
 import 'package:kheet_amal/feature/notification/notification_screen.dart';
 import 'package:kheet_amal/feature/onboarding/translate_screen.dart';
+import 'package:kheet_amal/feature/settings/about_app.dart';
+import 'package:kheet_amal/feature/settings/contact_page.dart';
+import 'package:kheet_amal/feature/settings/faq_page.dart';
+import 'package:kheet_amal/feature/settings/settings_home.dart';
 import 'package:kheet_amal/feature/splash/presentation/splash_screen.dart';
 import 'package:kheet_amal/feature/onboarding/onboarding_screen.dart';
 import '../../feature/auth/forget_pass/screens/forget_pass_screen.dart';
@@ -35,6 +39,14 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => NotificationScreen());
       case AppRoutes.comments:
         return MaterialPageRoute(builder: (_) => const CommentsPage());
+      case AppRoutes.settings:
+        return MaterialPageRoute(builder: (_) => const SettingsHome());
+      case AppRoutes.faq:
+        return MaterialPageRoute(builder: (_) => const FAQPage());
+      case AppRoutes.contact:
+        return MaterialPageRoute(builder: (_) => const ContactPage());
+      case AppRoutes.about:
+        return MaterialPageRoute(builder: (_) => const AboutAppPage());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(body: Center(child: Text('404 Not Found'))),
