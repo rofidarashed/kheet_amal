@@ -117,7 +117,7 @@ class SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: 'search'.tr(), notificationsCount: 3),
+      appBar: CustomAppBar(title: 'search'.tr(),),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 25.w),
         child: SingleChildScrollView(

@@ -17,7 +17,7 @@ class AppValidators {
     if (desc == null || desc.isEmpty) {
       return 'required'.tr();
     }
-    if (desc.length < 20) {
+    if (desc.length < 10) {
       return 'The Text is too short';
     }
     return null;
@@ -109,6 +109,13 @@ class AppValidators {
     } catch (e) {
       // If parsing fails, it's not a valid date.
       return 'Please enter a valid date';
+    }
+    return null;
+  }
+
+  static String? checkboxValidator(bool? value) {
+    if (value == null || value == false) {
+      return 'check'.tr();
     }
     return null;
   }

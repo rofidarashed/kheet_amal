@@ -1,30 +1,30 @@
+// import 'dart:convert';
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:crypto/crypto.dart';
 import 'package:dio/dio.dart';
 
 class BackblazeService {
-  final _dio = Dio();
+  static final _dio = Dio();
 
   static const _keyId = '003c5e49060e5980000000001';
   static const _applicationKey = 'K003XYSe4Gx40iX+oPZWabUX9qoM0js';
   static const _bucketId = 'dcc57ee459d066709e950918';
+  static const _bucketName = 'kheet-amal-assets';
+
   static const _defaultImage =
       'https://firebasestorage.googleapis.com/v0/b/demo-app.appspot.com/o/defaults%2Fdefault_image.jpg?alt=media';
 
-  /// 🔹 Step 1: Authorize Backblaze account
+  /// Authorize Backblaze account
   Future<Map<String, dynamic>?> _authorizeAccount() async {
     final basicAuth =
         'Basic ${base64Encode(utf8.encode("$_keyId:$_applicationKey"))}';
+
     try {
-      print('📡 Authorizing Backblaze account...');
       final response = await _dio.get(
         'https://api.backblazeb2.com/b2api/v2/b2_authorize_account',
         options: Options(headers: {'Authorization': basicAuth}),
       );
-      print('✅ Authorization success!');
-      print('🧾 Auth data: ${response.data}');
       return response.data;
     } catch (e) {
       print('❌ Authorization failed: $e');
@@ -32,18 +32,15 @@ class BackblazeService {
     }
   }
 
-  /// 🔹 Step 2: Get upload URL
+  /// Get upload URL
   Future<Map<String, dynamic>?> _getUploadUrl(
       String apiUrl, String authToken) async {
     try {
-      print('📡 Getting upload URL...');
       final response = await _dio.post(
         '$apiUrl/b2api/v2/b2_get_upload_url',
         data: {'bucketId': _bucketId},
         options: Options(headers: {'Authorization': authToken}),
       );
-      print('✅ Got upload URL!');
-      print('🧾 Upload data: ${response.data}');
       return response.data;
     } catch (e) {
       print('❌ Failed to get upload URL: $e');
@@ -51,51 +48,32 @@ class BackblazeService {
     }
   }
 
-  /// 🔹 Step 3: Upload image
+  /// Upload image and return **PUBLIC URL**
   Future<String> uploadImage(File? imageFile) async {
-    if (imageFile == null) {
-      print('⚠️ No image selected, returning default image.');
-      return _defaultImage;
-    }
+    if (imageFile == null) return _defaultImage;
 
     try {
-      // 1️⃣ Authorize
+      // Step 1: Authorize
       final authData = await _authorizeAccount();
-      if (authData == null) {
-        print('❌ Authorization data is null.');
-        return _defaultImage;
-      }
+      if (authData == null) return _defaultImage;
 
       final apiUrl = authData['apiUrl'];
       final authToken = authData['authorizationToken'];
-      final downloadUrl = authData['downloadUrl'];
+      // final downloadUrl = authData['downloadUrl'];
 
-      print('🔑 Auth token (account-level): $authToken');
-      print('🌐 API URL: $apiUrl');
-
-      // 2️⃣ Get upload URL
+      // Step 2: Get upload URL
       final uploadData = await _getUploadUrl(apiUrl, authToken);
-      if (uploadData == null) {
-        print('❌ Upload data is null.');
-        return _defaultImage;
-      }
+      if (uploadData == null) return _defaultImage;
 
       final uploadUrl = uploadData['uploadUrl'];
       final uploadAuthToken = uploadData['authorizationToken'];
 
-      print('📤 Upload URL: $uploadUrl');
-      print('🔑 Upload token: $uploadAuthToken');
-
-      // 3️⃣ Prepare file
+      // Step 3: Prepare file
       final fileName = 'reports/${DateTime.now().millisecondsSinceEpoch}.jpg';
       final bytes = await imageFile.readAsBytes();
       final sha1Hash = sha1.convert(bytes).toString();
 
-      print('📦 File name: $fileName');
-      print('📏 File size: ${bytes.length} bytes');
-      print('🔐 SHA1 hash: $sha1Hash');
-
-      // 4️⃣ Upload file
+      // Step 4: Upload to Backblaze
       final response = await _dio.post(
         uploadUrl,
         data: bytes,
@@ -105,26 +83,118 @@ class BackblazeService {
             'X-Bz-File-Name': Uri.encodeComponent(fileName),
             'Content-Type': 'image/jpeg',
             'X-Bz-Content-Sha1': sha1Hash,
-            'Content-Length': bytes.length.toString(), // ✅ fix here
           },
         ),
       );
 
-      print('📨 Upload response status: ${response.statusCode}');
-      print('🧾 Upload response data: ${response.data}');
-
       if (response.statusCode == 200) {
-        print('✅ Uploaded successfully!');
-        final uploadedUrl = '$downloadUrl/file/kheet-amal-assets/$fileName';
-        print('🌍 File available at: $uploadedUrl');
-        return uploadedUrl;
+        // ✅ This is the **Public Direct Link**
+        final publicUrl = 'https://f003.backblazeb2.com/file/$_bucketName/$fileName';
+        return publicUrl;
       } else {
-        print('⚠️ Upload failed with status code: ${response.statusCode}');
+        print('⚠️ Upload failed: ${response.statusCode}');
         return _defaultImage;
       }
     } catch (e) {
-      print('❌ Backblaze upload error: $e');
+      print('❌ Upload error: $e');
       return _defaultImage;
     }
   }
+
+   static Future<String?> getTemporaryImageUrl(String fileName) async {
+    try {
+      final basicAuth =
+          'Basic ${base64Encode(utf8.encode("$_keyId:$_applicationKey"))}';
+      final authResponse = await _dio.get(
+        'https://api.backblazeb2.com/b2api/v2/b2_authorize_account',
+        options: Options(headers: {'Authorization': basicAuth}),
+      );
+
+      final apiUrl = authResponse.data['apiUrl'];
+      final authToken = authResponse.data['authorizationToken'];
+
+      final response = await _dio.post(
+        '$apiUrl/b2api/v2/b2_get_download_authorization',
+        data: {
+          'bucketId': 'dcc57ee459d066709e950918',
+          'fileNamePrefix': fileName,
+          'validDurationInSeconds': 3600,
+        },
+        options: Options(headers: {'Authorization': authToken}),
+      );
+
+      final downloadAuthToken = response.data['authorizationToken'];
+      final downloadUrl = authResponse.data['downloadUrl'];
+      final fileUrl =
+          '$downloadUrl/file/kheet-amal-assets/$fileName?Authorization=$downloadAuthToken';
+
+      return fileUrl;
+    } catch (e) {
+      print('OOO Failed to get temporary image URL: $e');
+      return null;
+    }
+  }
+
+  static   Future<void> deleteImageFromStorage(String imageUrl) async {
+    try {
+      if (!imageUrl.contains('reports/')) {
+        return;
+      }
+
+      final fileName = imageUrl.split('reports/').last;
+
+      // Get authorization for B2 API
+      final basicAuth =
+          'Basic ${base64Encode(utf8.encode("$_keyId:$_applicationKey"))}';
+      final authResponse = await _dio.get(
+        'https://api.backblazeb2.com/b2api/v2/b2_authorize_account',
+        options: Options(headers: {'Authorization': basicAuth}),
+      );
+
+      final apiUrl = authResponse.data['apiUrl'];
+      final authToken = authResponse.data['authorizationToken'];
+
+      // Delete the file from B2
+      await _dio.post(
+        '$apiUrl/b2api/v2/b2_delete_file_version',
+        data: {
+          'fileName': 'reports/$fileName',
+          'fileId': await _getFileId('reports/$fileName', authToken, apiUrl),
+        },
+        options: Options(headers: {'Authorization': authToken}),
+      );
+
+      print('OOO Image deleted from storage: reports/$fileName');
+    } catch (e) {
+      print('OOO Error deleting image from storage: $e');
+      // Don't throw here - we still want to delete the Firestore document even if image deletion fails
+    }
+  }
+ static Future<String> _getFileId(
+    String fileName,
+    String authToken,
+    String apiUrl,
+  ) async {
+    try {
+      final response = await _dio.post(
+        '$apiUrl/b2api/v2/b2_list_file_names',
+        data: {
+          'bucketId': 'dcc57ee459d066709e950918',
+          'startFileName': fileName,
+          'maxFileCount': 1,
+        },
+        options: Options(headers: {'Authorization': authToken}),
+      );
+
+      final files = response.data['files'] as List;
+      if (files.isNotEmpty) {
+        return files.first['fileId'] as String;
+      }
+      throw Exception('File not found in storage');
+    } catch (e) {
+      print('OOO Error getting file ID: $e');
+      throw e;
+    }
+  }
+
 }

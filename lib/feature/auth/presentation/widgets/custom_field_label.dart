@@ -10,9 +10,11 @@ class FieldLabel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(0, 10.h, 33.w, 0),
+      padding: EdgeInsets.fromLTRB(33.w, 10.h, 33.w, 0),
       child: Align(
-        alignment: Alignment.topRight,
+        alignment: context.locale.languageCode == 'ar'
+            ? Alignment.topRight
+            : Alignment.topLeft,
         child: Text(
           text.tr(),
           style: TextStyle(fontSize: 21.sp, fontWeight: FontWeight.w400),
