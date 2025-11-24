@@ -298,7 +298,7 @@ class _FilterScreenState extends State<FilterScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Date (Select the date of last viewing)",
+                        "Date (Select the date of last viewing)".tr(),
                         style: TextStyle(
                           fontWeight: FontWeight.w400,
                           fontSize: 20.sp,
@@ -374,7 +374,18 @@ class _FilterScreenState extends State<FilterScreen> {
               child: SizedBox(
                 width: double.infinity.w,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pop(context, {
+                      'status': selectedStatus,
+                      'governorate': selectedGovernorate,
+                      'gender': selectedGender,
+                      'eyeColor': selectedEyeColor,
+                      'hairColor': selectedHairColor,
+                      'specialMark': selectedSpecialMark,
+                      'ageRange': _currentRangeValues,
+                      'date': _dateController.text,
+                    });
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.secondaryColor,
                     padding: EdgeInsets.symmetric(vertical: 14.h),

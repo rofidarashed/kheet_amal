@@ -10,6 +10,7 @@ Widget customSearchRow({
   required BuildContext context,
   required TextEditingController controller,
   required Function(String) onSearch,
+  required VoidCallback onFilterTap,
 }) {
   return Row(
     children: [
@@ -74,12 +75,7 @@ Widget customSearchRow({
             borderRadius: BorderRadius.circular(13.r),
           ),
           child: InkWell(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => FilterScreen()),
-              );
-            },
+            onTap: onFilterTap,
             child: Icon(Icons.tune_rounded, color: AppColors.white),
           ),
         ),

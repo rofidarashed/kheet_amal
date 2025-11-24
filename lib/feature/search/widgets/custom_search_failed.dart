@@ -8,6 +8,7 @@ import 'package:kheet_amal/feature/filter/filter_screen.dart';
 Widget customSearchFailed({
   required BuildContext context,
   required Function(List<DocumentSnapshot>) updateResults,
+  required Future<void> Function() fetchLatestCases,
 }) {
 
   Future<void> fetchLatestCases() async {
@@ -17,7 +18,6 @@ Widget customSearchFailed({
           .orderBy('createdAt', descending: true)
           .limit(10)
           .get();
-
 
       updateResults(querySnapshot.docs);
     } catch (e) {
@@ -35,7 +35,7 @@ Widget customSearchFailed({
       SizedBox(height: 24.h),
       Center(
         child: Image.asset(
-          "assets/images/no_results.png",
+          "assets/images/search_failed.png",
           height: 200.h,
           width: 180.w,
           fit: BoxFit.contain,
