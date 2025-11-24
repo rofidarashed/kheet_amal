@@ -30,6 +30,11 @@ void main() async {
   ]);
   timeago.setLocaleMessages('ar', timeago.ArMessages());
   timeago.setLocaleMessages('en', timeago.EnMessages());
+  FlutterError.onError = (FlutterErrorDetails details) {
+    FlutterError.presentError(details);
+    print('=== FULL STACK TRACE ===');
+    print(details.stack);
+  };
   runApp(
     EasyLocalization(
       supportedLocales: [Locale('en'), Locale('ar')],

@@ -379,5 +379,14 @@
   "our_goal_desc": "An app designed to simplify reporting missing cases and tracking reports safely and quickly, with instant notifications and effective community collaboration.",
   "app_info_title": "App Info",
   "app_version": "Version: 1.0.0",
-  "app_developer": "Developer: ITC Team"
+  "app_developer": "Developer: ITC Team",
+   "delete_report": "Delete Report",
+  "are_you_sure_delete_report": "Are you sure you want to delete this report?",
+  "cancel": "Cancel",
+  "delete": "Delete",
+  "report_deleted_successfully": "Report deleted successfully",
+  "delete_confirmation_title": "Are you sure you want to delete this report?",
+  "delete_confirmation_message": "This action cannot be undone",
+  "report_deleted": "Report deleted",
+  "are_you_sure_logout": "Are you sure you want to logout?"
 }

@@ -1,50 +1,11 @@
-import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:kheet_amal/feature/add_report/data/backblaze_service.dart';
 import 'package:kheet_amal/feature/home/data/models/report_model.dart';
 
 class MyReportsRepository {
   final _firestore = FirebaseFirestore.instance;
-  final _dio = Dio();
   final _auth = FirebaseAuth.instance;
-
-  static const _keyId = '003c5e49060e5980000000001';
-  static const _applicationKey = 'K003XYSe4Gx40iX+oPZWabUX9qoM0js';
-
-  Future<String?> _getTemporaryImageUrl(String fileName) async {
-    try {
-      final basicAuth =
-          'Basic ${base64Encode(utf8.encode("$_keyId:$_applicationKey"))}';
-      final authResponse = await _dio.get(
-        'https://api.backblazeb2.com/b2api/v2/b2_authorize_account',
-        options: Options(headers: {'Authorization': basicAuth}),
-      );
-
-      final apiUrl = authResponse.data['apiUrl'];
-      final authToken = authResponse.data['authorizationToken'];
-
-      final response = await _dio.post(
-        '$apiUrl/b2api/v2/b2_get_download_authorization',
-        data: {
-          'bucketId': 'dcc57ee459d066709e950918',
-          'fileNamePrefix': fileName,
-          'validDurationInSeconds': 3600,
-        },
-        options: Options(headers: {'Authorization': authToken}),
-      );
-
-      final downloadAuthToken = response.data['authorizationToken'];
-      final downloadUrl = authResponse.data['downloadUrl'];
-      final fileUrl =
-          '$downloadUrl/file/kheet-amal-assets/$fileName?Authorization=$downloadAuthToken';
-
-      return fileUrl;
-    } catch (e) {
-      print('OOO Failed to get temporary image URL: $e');
-      return null;
-    }
-  }
 
   Stream<List<ReportModel>> getMyReportsStream() {
     final user = _auth.currentUser;
@@ -58,24 +19,94 @@ class MyReportsRepository {
         .orderBy('createdAt', descending: true)
         .snapshots()
         .asyncMap((snapshot) async {
-      final reports = <ReportModel>[];
+          final reports = <ReportModel>[];
 
-      for (final doc in snapshot.docs) {
-        final data = doc.data();
+          for (final doc in snapshot.docs) {
+            final data = doc.data();
 
-        String imageUrl = data['imageUrl'] ?? '';
-        if (imageUrl.contains('reports/')) {
-          final fileName = imageUrl.split('reports/').last;
-          final secureUrl = await _getTemporaryImageUrl('reports/$fileName');
-          if (secureUrl != null) imageUrl = secureUrl;
-        }
+            String imageUrl = data['imageUrl'] ?? '';
+            if (imageUrl.contains('reports/')) {
+              final fileName = imageUrl.split('reports/').last;
+              final secureUrl = await BackblazeService.getTemporaryImageUrl(
+                'reports/$fileName',
+              );
+              if (secureUrl != null) imageUrl = secureUrl;
+            }
 
-        reports.add(
-          ReportModel.fromMap(doc.id, {...data, 'imageUrl': imageUrl}),
-        );
+            reports.add(
+              ReportModel.fromMap(doc.id, {...data, 'imageUrl': imageUrl}),
+            );
+          }
+
+          return reports;
+        });
+  }
+
+  Future<bool> deleteReportWithImage(String reportId) async {
+    try {
+      final user = _auth.currentUser;
+      if (user == null) {
+        throw Exception('User not authenticated');
       }
 
-      return reports;
-    });
+      // Get report data first to find the image path
+      final reportDoc = await _firestore
+          .collection('reports')
+          .doc(reportId)
+          .get();
+
+      if (!reportDoc.exists) {
+        throw Exception('Report not found');
+      }
+
+      final reportData = reportDoc.data();
+      if (reportData?['userId'] != user.uid) {
+        throw Exception('You can only delete your own reports');
+      }
+
+      // Delete image from Backblaze B2 if it exists
+      final imageUrl = reportData?['imageUrl'] ?? '';
+      if (imageUrl.isNotEmpty && imageUrl.contains('reports/')) {
+        await BackblazeService.deleteImageFromStorage(imageUrl);
+      }
+
+      // Delete the report document
+      await _firestore.collection('reports').doc(reportId).delete();
+
+      print('OOO Report and image deleted successfully: $reportId');
+      return true;
+    } catch (e) {
+      print('OOO Error deleting report with image: $e');
+      throw e;
+    }
+  }
+
+
+ 
+
+  /// Get a single report by ID (useful for confirmation dialogs)
+  Future<ReportModel?> getReportById(String reportId) async {
+    try {
+      final doc = await _firestore.collection('reports').doc(reportId).get();
+
+      if (!doc.exists) {
+        return null;
+      }
+
+      final data = doc.data()!;
+
+      // Process image URL
+      String imageUrl = data['imageUrl'] ?? '';
+      if (imageUrl.contains('reports/')) {
+        final fileName = imageUrl.split('reports/').last;
+        final secureUrl = await BackblazeService.getTemporaryImageUrl('reports/$fileName');
+        if (secureUrl != null) imageUrl = secureUrl;
+      }
+
+      return ReportModel.fromMap(doc.id, {...data, 'imageUrl': imageUrl});
+    } catch (e) {
+      print('OOO Error getting report by ID: $e');
+      return null;
+    }
   }
 }

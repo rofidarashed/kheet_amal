@@ -1,8 +1,7 @@
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:kheet_amal/core/utils/app_colors.dart';
+import 'package:kheet_amal/core/utils/app_icons.dart';
+import 'package:kheet_amal/core/widgets/custom_confirm_dialog.dart';
 import 'package:kheet_amal/feature/auth/cubit/auth_cubit.dart';
 import 'package:kheet_amal/feature/profile/my_reports_screen.dart';
 import 'package:kheet_amal/feature/profile/widgets/change_lang.dart';
@@ -49,24 +48,17 @@ class ProfileMenuSection extends StatelessWidget {
 
         InkWell(
           onTap: () {
-            AwesomeDialog(
-              btnOkColor: AppColors.red,
-              btnCancelColor: AppColors.inactiveTrackbarColor,
+            showDialog(
               context: context,
-              animType: AnimType.bottomSlide,
-              dialogType: DialogType.error,
-              body: Center(
-                child: Text(
-                  'هل انت متأكد من\nتسجيل الخروج؟',
-                  style: TextStyle(fontSize: 22.sp),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              btnCancelOnPress: () {},
-              btnOkOnPress: () {
-                authCubit.logout();
+              builder: (BuildContext context) {
+                return CustomConfirmationDialog(
+                  onPressed: () => authCubit.logout(),
+                  icon: AppIcons.logoutIcon,
+                  title: 'are_you_sure_logout'.tr(),
+                  actionText: 'logout'.tr(),
+                );
               },
-            ).show();
+            );
           },
           child: MenuItem(
             title: 'logout'.tr(),

@@ -24,10 +24,14 @@ class ChildCard extends StatelessWidget {
     required this.theme,
     required this.report,
     this.isSkeleton = false,
+    this.onTap,
+    this.showDelete,
   });
   final bool isSkeleton;
   final ThemeData theme;
   final ReportModel report;
+  final bool? showDelete;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -119,6 +123,25 @@ class ChildCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
+                    showDelete == true
+                        ? PopupMenuButton(
+                            itemBuilder: (context) => [
+                              PopupMenuItem(
+                                onTap: onTap,
+                                value: 'delete',
+                                child: Row(
+                                  children: [
+                                    Icon(Icons.delete, color: Colors.red),
+                                    Text(
+                                      "حذف البلاغ",
+                                      style: TextStyle(color: Colors.red),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          )
+                        : SizedBox.shrink(),
                     SizedBox(height: 2.h),
                     isSkeleton
                         ? Container(

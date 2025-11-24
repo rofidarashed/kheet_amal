@@ -34,9 +34,11 @@ class FounderInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+      final locale = _getSafeLocale(context);
+
     final timeString = timeago.format(
       report.createdAt,
-      locale: context.locale.languageCode,
+      locale: locale
     );
     return Padding(
       padding: EdgeInsets.fromLTRB(25.w, 0, 25.w, 0),
@@ -76,5 +78,14 @@ class FounderInfo extends StatelessWidget {
         ],
       ),
     );
+  }
+  String? _getSafeLocale(BuildContext context) {
+    try {
+      final locale = context.locale;
+      return locale.languageCode;
+    } catch (e) {
+      debugPrint('EasyLocalization not available in this context: $e');
+      return null;
+    }
   }
 }

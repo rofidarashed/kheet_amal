@@ -229,6 +229,7 @@ class ReportDetails extends StatelessWidget {
                   report: report,
                 ),
               ),
+              SizedBox(height: 16.h),
             ],
           ),
         ),

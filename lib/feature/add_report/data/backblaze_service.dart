@@ -5,7 +5,7 @@ import 'package:crypto/crypto.dart';
 import 'package:dio/dio.dart';
 
 class BackblazeService {
-  final _dio = Dio();
+  static final _dio = Dio();
 
   static const _keyId = '003c5e49060e5980000000001';
   static const _applicationKey = 'K003XYSe4Gx40iX+oPZWabUX9qoM0js';
@@ -59,7 +59,7 @@ class BackblazeService {
 
       final apiUrl = authData['apiUrl'];
       final authToken = authData['authorizationToken'];
-      final downloadUrl = authData['downloadUrl'];
+      // final downloadUrl = authData['downloadUrl'];
 
       // Step 2: Get upload URL
       final uploadData = await _getUploadUrl(apiUrl, authToken);
@@ -100,4 +100,101 @@ class BackblazeService {
       return _defaultImage;
     }
   }
+
+   static Future<String?> getTemporaryImageUrl(String fileName) async {
+    try {
+      final basicAuth =
+          'Basic ${base64Encode(utf8.encode("$_keyId:$_applicationKey"))}';
+      final authResponse = await _dio.get(
+        'https://api.backblazeb2.com/b2api/v2/b2_authorize_account',
+        options: Options(headers: {'Authorization': basicAuth}),
+      );
+
+      final apiUrl = authResponse.data['apiUrl'];
+      final authToken = authResponse.data['authorizationToken'];
+
+      final response = await _dio.post(
+        '$apiUrl/b2api/v2/b2_get_download_authorization',
+        data: {
+          'bucketId': 'dcc57ee459d066709e950918',
+          'fileNamePrefix': fileName,
+          'validDurationInSeconds': 3600,
+        },
+        options: Options(headers: {'Authorization': authToken}),
+      );
+
+      final downloadAuthToken = response.data['authorizationToken'];
+      final downloadUrl = authResponse.data['downloadUrl'];
+      final fileUrl =
+          '$downloadUrl/file/kheet-amal-assets/$fileName?Authorization=$downloadAuthToken';
+
+      return fileUrl;
+    } catch (e) {
+      print('OOO Failed to get temporary image URL: $e');
+      return null;
+    }
+  }
+
+  static   Future<void> deleteImageFromStorage(String imageUrl) async {
+    try {
+      if (!imageUrl.contains('reports/')) {
+        return;
+      }
+
+      final fileName = imageUrl.split('reports/').last;
+
+      // Get authorization for B2 API
+      final basicAuth =
+          'Basic ${base64Encode(utf8.encode("$_keyId:$_applicationKey"))}';
+      final authResponse = await _dio.get(
+        'https://api.backblazeb2.com/b2api/v2/b2_authorize_account',
+        options: Options(headers: {'Authorization': basicAuth}),
+      );
+
+      final apiUrl = authResponse.data['apiUrl'];
+      final authToken = authResponse.data['authorizationToken'];
+
+      // Delete the file from B2
+      await _dio.post(
+        '$apiUrl/b2api/v2/b2_delete_file_version',
+        data: {
+          'fileName': 'reports/$fileName',
+          'fileId': await _getFileId('reports/$fileName', authToken, apiUrl),
+        },
+        options: Options(headers: {'Authorization': authToken}),
+      );
+
+      print('OOO Image deleted from storage: reports/$fileName');
+    } catch (e) {
+      print('OOO Error deleting image from storage: $e');
+      // Don't throw here - we still want to delete the Firestore document even if image deletion fails
+    }
+  }
+ static Future<String> _getFileId(
+    String fileName,
+    String authToken,
+    String apiUrl,
+  ) async {
+    try {
+      final response = await _dio.post(
+        '$apiUrl/b2api/v2/b2_list_file_names',
+        data: {
+          'bucketId': 'dcc57ee459d066709e950918',
+          'startFileName': fileName,
+          'maxFileCount': 1,
+        },
+        options: Options(headers: {'Authorization': authToken}),
+      );
+
+      final files = response.data['files'] as List;
+      if (files.isNotEmpty) {
+        return files.first['fileId'] as String;
+      }
+      throw Exception('File not found in storage');
+    } catch (e) {
+      print('OOO Error getting file ID: $e');
+      throw e;
+    }
+  }
+
 }

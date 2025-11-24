@@ -377,5 +377,14 @@
   "our_goal_desc": "تطبيق يهدف إلى تسهيل الإبلاغ عن الحالات المفقودة وتتبع البلاغات بطريقة آمنة وسريعة، مع إشعارات فورية وتعاون مجتمعي فعال.",
   "app_info_title": "معلومات حول التطبيق",
   "app_version": "الإصدار: 1.0.0",
-  "app_developer": "المطور: ITC Team"
+  "app_developer": "المطور: ITC Team",
+ "delete_report": "حذف البلاغ",
+  "are_you_sure_delete_report": "هل أنت متأكد من رغبتك في حذف البلاغ؟",
+  "cancel": "إلغاء",
+  "delete": "حذف",
+  "report_deleted_successfully": "تم حذف البلاغ بنجاح",
+  "delete_confirmation_title": "هل أنت متأكد من رغبتك في حذف البلاغ؟",
+  "delete_confirmation_message": "لا يمكن التراجع عن هذا الإجراء",
+  "report_deleted": "تم الحذف",
+  "are_you_sure_logout": "هل أنت متأكد من رغبتك في تسجيل الخروج؟"
 }

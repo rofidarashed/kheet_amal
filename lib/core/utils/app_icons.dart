@@ -19,4 +19,6 @@ class AppIcons {
   static const String timeIcon = 'assets/svgs/clock-hour-4.svg';
   static const String ratingIcon = 'assets/svgs/rating_icon.svg';
   static const String volunteerIcon = 'assets/svgs/volunteer_icon.svg';
+  static const String deleteIcon = 'assets/svgs/Delete.svg';
+  static const String logoutIcon = 'assets/svgs/logOut.svg';
 }
