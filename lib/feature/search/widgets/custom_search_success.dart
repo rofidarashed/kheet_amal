@@ -2,7 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../my_reports_screen/widgets/report_custom_card.dart';
+
+import '../../profile/widgets/report_custom_card.dart';
 
 Widget customSearchSuccess({
   required BuildContext context,
