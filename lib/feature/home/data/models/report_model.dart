@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class ReportModel {
   final String id;
@@ -21,6 +22,10 @@ class ReportModel {
   final String? userId;
   final String userName;
   final DateTime createdAt;
+   int likes;
+  bool isLiked;
+  List<String> likedBy;
+
 
   ReportModel({
     required this.id,
@@ -43,6 +48,9 @@ class ReportModel {
     required this.userId,
     required this.userName,
     required this.createdAt,
+    this.likes = 0,
+    this.isLiked = false,
+    this.likedBy = const [],
   });
 
   factory ReportModel.fromMap(String id, Map<String, dynamic> data) {
@@ -67,6 +75,12 @@ class ReportModel {
       userId: data['userId'] ?? '',
       userName: data['userName'] ?? '',
       createdAt: _parseDateTime(data['createdAt']),
+      likes: (data['likes'] ?? 0),
+    likedBy: List<String>.from(data['likedBy'] ?? []),
+
+    isLiked: (data['likedBy'] ?? []).contains(
+      FirebaseAuth.instance.currentUser!.uid,
+    ),
     );
   }
 

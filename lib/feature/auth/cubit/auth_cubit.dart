@@ -66,12 +66,12 @@ class AuthCubit extends Cubit<AuthState> {
       );
       final user = userCredential.user!;
 
-      if (!user.emailVerified) {
-        await user.sendEmailVerification();
-        emit(AuthFailure("email-not-verified".tr()));
-        await _auth.signOut();
-        return;
-      }
+      // if (!user.emailVerified) {
+      //   await user.sendEmailVerification();
+      //   emit(AuthFailure("email-not-verified".tr()));
+      //   await _auth.signOut();
+      //   return;
+      // }
       await SharedPrefsHelper.saveUserLocally(userCredential.user);
       emit(AuthSuccess(userCredential.user!));
     } on FirebaseAuthException catch (e) {

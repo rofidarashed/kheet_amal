@@ -10,9 +10,7 @@ import 'package:kheet_amal/feature/home/presentation/widgets/info_banner.dart';
 import 'package:kheet_amal/feature/home/presentation/widgets/child_card.dart';
 import 'package:kheet_amal/core/widgets/custom_tabs_bar.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-
 import '../../../saved/cubits/saved_reports_cubit/saved_reports_cubit.dart';
-import '../../../support_reports/cubits/sup_reports_cubit/supprot_reports_cubit.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -29,14 +27,6 @@ class _HomeScreenState extends State<HomeScreen> {
     final theme = Theme.of(context);
     return BlocBuilder<HomeCubit, HomeState>(
       builder: (context, state) {
-        // if (state.isLoading) {
-        //   return const Center(child: CircularProgressIndicator());
-        // }
-
-        // if (state.reports.isEmpty) {
-        //   return const Center(child: Text('No reports found.'));
-        // }
-
         final missingReports = state.reports
             .where((report) => report.reportType == 'lostChild')
             .toList();
@@ -49,71 +39,68 @@ class _HomeScreenState extends State<HomeScreen> {
             ? missingReports
             : suspectReports;
 
-        return BlocProvider<SupportReportsCubit>(
-          create: (_) => SupportReportsCubit(),
-          child: Skeletonizer(
-            enabled: state.isLoading || state.reports.isEmpty,
-            child: Scaffold(
-              backgroundColor: const Color(0xFFF7F7F7),
-              appBar: CustomAppBar(
-                title: 'homeTitle'.tr(),
-              ),
-              body: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 14.h),
-                child: Column(
-                  children: [
-                    CustomTabsBar(
-                      onTabChanged: (index) {
-                        setState(() {
-                          _selectedTabIndex = index;
-                        });
-                      },
-                      tabTitle1: 'missingTab'.tr(),
-                      tabTitle2: 'suspectsTab'.tr(),
-                    ),
-                    SizedBox(height: 12.h),
-                    InfoBanner(selectedTabIndex: _selectedTabIndex),
-                    SizedBox(height: 12.h),
-                    Expanded(
-                      child: state.isLoading
-                          ? ListView.builder(
-                              // skeleton
-                              itemCount: 6,
-                              itemBuilder: (_, __) => BlocProvider(
+        return Skeletonizer(
+          enabled: state.isLoading || state.reports.isEmpty,
+          child: Scaffold(
+            backgroundColor: const Color(0xFFF7F7F7),
+            appBar: CustomAppBar(
+              title: 'homeTitle'.tr(),
+            ),
+            body: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 14.h),
+              child: Column(
+                children: [
+                  CustomTabsBar(
+                    onTabChanged: (index) {
+                      setState(() {
+                        _selectedTabIndex = index;
+                      });
+                    },
+                    tabTitle1: 'missingTab'.tr(),
+                    tabTitle2: 'suspectsTab'.tr(),
+                  ),
+                  SizedBox(height: 12.h),
+                  InfoBanner(selectedTabIndex: _selectedTabIndex),
+                  SizedBox(height: 12.h),
+                  Expanded(
+                    child: state.isLoading
+                        ? ListView.builder(
+                            // skeleton
+                            itemCount: 6,
+                            itemBuilder: (_, __) => BlocProvider(
+                              create: (context) => SavedReportsCubit(),
+                              child: ChildCard(
+                                theme: theme,
+                                report: ReportModel.empty(),
+                                isSkeleton: true,
+                              ),
+                            ),
+                          )
+                        : currentReports.isEmpty
+                        ? Center(
+                            child: Text(
+                              _selectedTabIndex == 0
+                                  ? 'No missing children reports.'
+                                  : 'No suspect reports.',
+                              style: TextStyle(color: Colors.grey.shade600),
+                            ),
+                          )
+                        : ListView.builder(
+                            itemCount: currentReports.length,
+                            itemBuilder: (context, index) {
+                              final report = currentReports[index];
+                              return BlocProvider(
                                 create: (context) => SavedReportsCubit(),
                                 child: ChildCard(
                                   theme: theme,
-                                  report: ReportModel.empty(),
-                                  isSkeleton: true,
+                                  report: report,
+                                  isSkeleton: false,
                                 ),
-                              ),
-                            )
-                          : currentReports.isEmpty
-                          ? Center(
-                              child: Text(
-                                _selectedTabIndex == 0
-                                    ? 'No missing children reports.'
-                                    : 'No suspect reports.',
-                                style: TextStyle(color: Colors.grey.shade600),
-                              ),
-                            )
-                          : ListView.builder(
-                              itemCount: currentReports.length,
-                              itemBuilder: (context, index) {
-                                final report = currentReports[index];
-                                return BlocProvider(
-                                  create: (context) => SavedReportsCubit(),
-                                  child: ChildCard(
-                                    theme: theme,
-                                    report: report,
-                                    isSkeleton: false,
-                                  ),
-                                );
-                              },
-                            ),
-                    ),
-                  ],
-                ),
+                              );
+                            },
+                          ),
+                  ),
+                ],
               ),
             ),
           ),

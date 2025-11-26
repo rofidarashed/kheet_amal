@@ -106,8 +106,6 @@ class AddReportCubit extends Cubit<AddReportState> {
         final uploadedUrl = await _backblazeService.uploadImage(state.image!);
         if (uploadedUrl != null) {
           imageUrl = uploadedUrl;
-        } else {
-          debugPrint('Failed to upload image, using default one.');
         }
       }
       DocumentReference docRef = await FirebaseFirestore.instance
@@ -135,6 +133,8 @@ class AddReportCubit extends Cubit<AddReportState> {
             'phone2': phone2,
             'imageUrl': imageUrl,
             'createdAt': FieldValue.serverTimestamp(),
+                 'likes': 0,
+      'likedBy': [],
           });
       await FirebaseFirestore.instance
           .collection('users')
