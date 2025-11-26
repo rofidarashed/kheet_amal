@@ -14,7 +14,6 @@ import 'package:kheet_amal/feature/home/presentation/widgets/custom_icon_button.
 import 'package:kheet_amal/feature/home/presentation/widgets/custom_report_action_bar.dart';
 import 'package:kheet_amal/feature/saved/cubits/saved_reports_cubit/saved_reports_cubit.dart';
 import 'package:timeago/timeago.dart' as timeago;
-import '../../../support_reports/cubits/sup_reports_cubit/supprot_reports_cubit.dart';
 import '../../../saved/cubits/saved_reports_cubit/saved_reports_state.dart';
 import 'info_row.dart';
 
@@ -196,8 +195,7 @@ class ChildCard extends StatelessWidget {
                       backgroundColor: AppColors.secondaryColor,
                       onPressed: () {
                         final savedCubit = context.read<SavedReportsCubit>();
-                        final supportCubit = context
-                            .read<SupportReportsCubit>();
+
 
                         Navigator.push(
                           context,
@@ -205,7 +203,7 @@ class ChildCard extends StatelessWidget {
                             builder: (context) => MultiBlocProvider(
                               providers: [
                                 BlocProvider.value(value: savedCubit),
-                                BlocProvider.value(value: supportCubit),
+
                               ],
                               child: ReportDetails(report: report),
                             ),

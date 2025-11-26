@@ -33,4 +33,29 @@ class ReportRepository {
           return reports;
         });
   }
+   
+Future<void> likeReport({
+  required String postId,
+  required String userId,
+}) async {
+  final ref = FirebaseFirestore.instance.collection('reports').doc(postId);
+
+  await ref.update({
+    'likes': FieldValue.increment(1),
+    'likedBy': FieldValue.arrayUnion([userId]),
+  });
+}
+
+Future<void> unlikeReport({
+  required String postId,
+  required String userId,
+}) async {
+  final ref = FirebaseFirestore.instance.collection('reports').doc(postId);
+
+  await ref.update({
+    'likes': FieldValue.increment(-1),
+    'likedBy': FieldValue.arrayRemove([userId]),
+  });
+}
+
 }

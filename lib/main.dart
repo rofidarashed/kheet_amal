@@ -13,7 +13,6 @@ import 'package:kheet_amal/feature/home/data/repositories/report_repository.dart
 import 'package:kheet_amal/feature/notification/cubit/notification_cubit.dart';
 import 'package:kheet_amal/feature/notification/service/notification_service.dart';
 import 'package:kheet_amal/feature/saved/cubits/saved_reports_cubit/saved_reports_cubit.dart';
-import 'package:kheet_amal/feature/support_reports/cubits/sup_reports_cubit/supprot_reports_cubit.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'dart:ui' as ui;
 import 'feature/home_layout/presentation/cubit/bottom_nav_cubit.dart';
@@ -64,7 +63,7 @@ class MyApp extends StatelessWidget {
               create: (_) => HomeCubit(ReportRepository())..loadReports(),
             ),
             BlocProvider(create: (context) => SavedReportsCubit()),
-            BlocProvider(create: (context) => SupportReportsCubit()),
+
             BlocProvider(create: (_) => AuthCubit()),
             BlocProvider(
               create: (context) => NotificationCubit()..initNotifications(),
