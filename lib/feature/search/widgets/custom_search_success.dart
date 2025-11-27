@@ -1,56 +1,41 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:kheet_amal/core/utils/app_colors.dart';
-import 'package:kheet_amal/core/utils/app_icons.dart';
+import 'package:kheet_amal/feature/home/data/models/report_model.dart';
+import 'package:kheet_amal/feature/home/presentation/widgets/child_card.dart';
 
-Widget customSearchSuccess({required BuildContext context}) {
+Widget customSearchSuccess({
+  required BuildContext context,
+  required List<ReportModel> results,
+}) {
   return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      SizedBox(height: 30.h),
-      Center(
-        child: SvgPicture.asset(
-          "assets/svgs/search_image.svg",
-          height: 200.h,
-          width: 200.w,
+      SizedBox(height: 10.h),
+
+      Align(
+        alignment: Alignment.topRight,
+        child: Text(
+          "latest_cases".tr(),
+          style: TextStyle(fontSize: 24.sp, fontWeight: FontWeight.w400),
         ),
       ),
-      SizedBox(height: 20.h),
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
 
-            children: [
-              Expanded(
-                child: Text(
-                  "search_message".tr(),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    color: AppColors.black,
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 64.h),
-          Align(
-            alignment: Alignment.topRight,
-            child: Text(
-              "latest_cases".tr(),
-              style: TextStyle(
-                fontSize: 24.sp,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-          ),
-          SizedBox(height: 16.h),
-        ],
+      SizedBox(height: 16.h),
+
+      ListView.builder(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        itemCount: results.length,
+        itemBuilder: (context, index) {
+          final doc = results[index];
+
+
+          return Padding(
+            padding: EdgeInsets.symmetric(vertical: 8.h),
+            child: ChildCard(theme: Theme.of(context), report: doc),
+          );
+        },
       ),
     ],
   );
