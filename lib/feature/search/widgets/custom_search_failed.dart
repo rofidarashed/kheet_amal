@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kheet_amal/core/utils/app_colors.dart';
 import 'package:kheet_amal/feature/filter/filter_screen.dart';
+import 'package:kheet_amal/feature/home/data/models/report_model.dart';
 
 Widget customSearchFailed({
   required BuildContext context,
-  required Function(List<DocumentSnapshot>) updateResults,
+  required Function(List<ReportModel>) updateResults,
   required Future<void> Function() fetchLatestCases,
 }) {
-
   Future<void> fetchLatestCases() async {
     try {
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
@@ -19,7 +19,16 @@ Widget customSearchFailed({
           .limit(10)
           .get();
 
-      updateResults(querySnapshot.docs);
+      updateResults(
+        querySnapshot.docs
+            .map(
+              (doc) => ReportModel.fromMap(
+                doc.id,
+                doc.data() as Map<String, dynamic>,
+              ),
+            )
+            .toList(),
+      );
     } catch (e) {
       if (e is FirebaseException) {
         ScaffoldMessenger.of(context).showSnackBar(

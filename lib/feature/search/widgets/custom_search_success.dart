@@ -1,13 +1,12 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import '../../profile/widgets/report_custom_card.dart';
+import 'package:kheet_amal/feature/home/data/models/report_model.dart';
+import 'package:kheet_amal/feature/home/presentation/widgets/child_card.dart';
 
 Widget customSearchSuccess({
   required BuildContext context,
-  required List<DocumentSnapshot> results,
+  required List<ReportModel> results,
 }) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -29,10 +28,12 @@ Widget customSearchSuccess({
         physics: const NeverScrollableScrollPhysics(),
         itemCount: results.length,
         itemBuilder: (context, index) {
-          final data = results[index].data() as Map<String, dynamic>;
+          final doc = results[index];
+
+
           return Padding(
             padding: EdgeInsets.symmetric(vertical: 8.h),
-            child: ReportCard(reportData: data),
+            child: ChildCard(theme: Theme.of(context), report: doc),
           );
         },
       ),

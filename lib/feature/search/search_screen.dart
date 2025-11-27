@@ -3,6 +3,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kheet_amal/core/widgets/custom_app_bar.dart';
+import 'package:kheet_amal/feature/add_report/data/backblaze_service.dart';
+import 'package:kheet_amal/feature/home/data/models/report_model.dart';
 import 'package:kheet_amal/feature/search/widgets/custom_search_row.dart';
 import 'package:kheet_amal/feature/search/widgets/custom_search_failed.dart';
 import 'package:kheet_amal/feature/search/widgets/custom_search_success.dart';
@@ -18,9 +20,9 @@ class SearchScreen extends StatefulWidget {
 }
 
 class SearchScreenState extends State<SearchScreen> {
-  List<DocumentSnapshot> searchResults = [];
+  List<ReportModel> searchResults = [];
   bool isSearching = false;
-  bool hasSearched = false;     // ← الجديد
+  bool hasSearched = false;
   final TextEditingController _searchController = TextEditingController();
 
   String? selectedStatus;
@@ -33,75 +35,139 @@ class SearchScreenState extends State<SearchScreen> {
   String? selectedDate;
 
   Future<void> searchInFirestore(String query) async {
+  setState(() {
+    isSearching = true;
+    hasSearched = true;
+  });
+
+  try {
+    Query reportsRef = FirebaseFirestore.instance.collection('reports');
+
+    if (query.isNotEmpty) {
+      reportsRef = reportsRef
+          .where('childName', isGreaterThanOrEqualTo: query)
+          .where('childName', isLessThanOrEqualTo: '$query\uf8ff');
+    }
+
+    if (selectedStatus != null)
+      reportsRef = reportsRef.where('status', isEqualTo: selectedStatus);
+    if (selectedGovernorate != null)
+      reportsRef =
+          reportsRef.where('governorate', isEqualTo: selectedGovernorate);
+    if (selectedGender.isNotEmpty)
+      reportsRef = reportsRef.where('gender', isEqualTo: selectedGender);
+    if (selectedEyeColor != null)
+      reportsRef = reportsRef.where('eyeColor', isEqualTo: selectedEyeColor);
+    if (selectedHairColor != null)
+      reportsRef = reportsRef.where('hairColor', isEqualTo: selectedHairColor);
+    if (selectedSpecialMark != null)
+      reportsRef =
+          reportsRef.where('specialMark', isEqualTo: selectedSpecialMark);
+
+    if (selectedAgeRange != null) {
+      reportsRef = reportsRef
+          .where('endAge', isGreaterThanOrEqualTo: selectedAgeRange!.start)
+          .where('endAge', isLessThanOrEqualTo: selectedAgeRange!.end);
+    }
+
+    if (selectedDate != null && selectedDate!.isNotEmpty) {
+      reportsRef = reportsRef.where('lastSeenDate', isEqualTo: selectedDate);
+    }
+
+    QuerySnapshot querySnapshot = await reportsRef.get();
+
+    List<ReportModel> results = [];
+
+    for (final doc in querySnapshot.docs) {
+      final data = doc.data() as Map<String, dynamic>;
+
+      String imageUrl = data['imageUrl'] ?? '';
+
+      if (imageUrl.contains('reports/')) {
+        final fileName = imageUrl.split('reports/').last;
+
+        final secureUrl = await BackblazeService.getTemporaryImageUrl(
+          'reports/$fileName',
+        );
+
+        if (secureUrl != null) {
+          imageUrl = secureUrl;
+        }
+      }
+
+      results.add(
+        ReportModel.fromMap(
+          doc.id,
+          {
+            ...data,
+            'imageUrl': imageUrl,
+          },
+        ),
+      );
+    }
+
     setState(() {
-      isSearching = true;
-      hasSearched = true; // ← أول ما المستخدم يعمل بحث
+      searchResults = results;
+      isSearching = false;
     });
 
-    try {
-      Query reportsRef = FirebaseFirestore.instance.collection('reports');
-
-      if (query.isNotEmpty) {
-        reportsRef = reportsRef
-            .where('childName', isGreaterThanOrEqualTo: query)
-            .where('childName', isLessThanOrEqualTo: '$query\uf8ff');
-      }
-
-      if (selectedStatus != null) reportsRef = reportsRef.where('status', isEqualTo: selectedStatus);
-      if (selectedGovernorate != null) reportsRef = reportsRef.where('governorate', isEqualTo: selectedGovernorate);
-      if (selectedGender.isNotEmpty) reportsRef = reportsRef.where('gender', isEqualTo: selectedGender);
-      if (selectedEyeColor != null) reportsRef = reportsRef.where('eyeColor', isEqualTo: selectedEyeColor);
-      if (selectedHairColor != null) reportsRef = reportsRef.where('hairColor', isEqualTo: selectedHairColor);
-      if (selectedSpecialMark != null) reportsRef = reportsRef.where('specialMark', isEqualTo: selectedSpecialMark);
-
-      if (selectedAgeRange != null) {
-        reportsRef = reportsRef
-            .where('endAge', isGreaterThanOrEqualTo: selectedAgeRange!.start)
-            .where('endAge', isLessThanOrEqualTo: selectedAgeRange!.end);
-      }
-
-      if (selectedDate != null && selectedDate!.isNotEmpty) {
-        reportsRef = reportsRef.where('lastSeenDate', isEqualTo: selectedDate);
-      }
-
-      QuerySnapshot querySnapshot = await reportsRef.get();
-
-      setState(() {
-        searchResults = querySnapshot.docs;
-        isSearching = false;
-      });
-    } catch (e) {
-      print('Error during search: $e');
-      setState(() {
-        isSearching = false;
-      });
-    }
-  }
-
-  Future<void> fetchLatestCases() async {
+  } catch (e) {
+    print('Error during search: $e');
     setState(() {
-      isSearching = true;
+      isSearching = false;
     });
-
-    try {
-      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-          .collection('reports')
-          .orderBy('createdAt', descending: true)
-          .limit(10)
-          .get();
-
-      setState(() {
-        searchResults = querySnapshot.docs;
-        isSearching = false;
-      });
-    } catch (e) {
-      setState(() {
-        isSearching = false;
-      });
-    }
   }
+}
 
-  void updateResults(List<DocumentSnapshot> newResults) {
+Future<void> fetchLatestCases() async {
+  setState(() {
+    isSearching = true;
+  });
+
+  try {
+    QuerySnapshot snapshot = await FirebaseFirestore.instance
+        .collection('reports')
+        .orderBy('createdAt', descending: true)
+        .limit(10)
+        .get();
+
+    List<ReportModel> reports = [];
+
+    for (final doc in snapshot.docs) {
+      final data = doc.data() as Map<String, dynamic>;
+
+      String imageUrl = data['imageUrl'] ?? '';
+
+      if (imageUrl.contains('reports/')) {
+        final fileName = imageUrl.split('reports/').last;
+
+        final secureUrl =
+            await BackblazeService.getTemporaryImageUrl('reports/$fileName');
+
+        if (secureUrl != null) {
+          imageUrl = secureUrl;
+        }
+      }
+
+      reports.add(
+        ReportModel.fromMap(doc.id, {
+          ...data,
+          'imageUrl': imageUrl,
+        }),
+      );
+    }
+
+    setState(() {
+      searchResults = reports; 
+      isSearching = false;
+    });
+  } catch (e) {
+    print("Error loading cases: $e");
+    setState(() => isSearching = false);
+  }
+}
+
+  void updateResults(List<ReportModel> newResults) {
     setState(() {
       searchResults = newResults;
       hasSearched = true;
@@ -117,7 +183,7 @@ class SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: 'search'.tr(),),
+      appBar: CustomAppBar(title: 'search'.tr()),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 25.w),
         child: SingleChildScrollView(
@@ -125,7 +191,6 @@ class SearchScreenState extends State<SearchScreen> {
             children: [
               SizedBox(height: 20.h),
 
-              /// شريط البحث
               customSearchRow(
                 context: context,
                 controller: _searchController,
@@ -153,7 +218,6 @@ class SearchScreenState extends State<SearchScreen> {
 
               SizedBox(height: 30.h),
 
-              /// 🌟 الصورة والجملة تظهر فقط قبل البحث
               if (!hasSearched)
                 Column(
                   children: [
@@ -176,20 +240,16 @@ class SearchScreenState extends State<SearchScreen> {
                   ],
                 ),
 
-              /// نتائج
               if (isSearching)
                 const Center(child: CircularProgressIndicator())
               else if (searchResults.isNotEmpty)
-                customSearchSuccess(
-                  context: context,
-                  results: searchResults,
-                )
+                customSearchSuccess(context: context, results: searchResults)
               else if (hasSearched && searchResults.isEmpty)
-                  customSearchFailed(
-                    context: context,
-                    updateResults: updateResults,
-                    fetchLatestCases: fetchLatestCases,
-                  ),
+                customSearchFailed(
+                  context: context,
+                  updateResults: updateResults,
+                  fetchLatestCases: fetchLatestCases,
+                ),
             ],
           ),
         ),
