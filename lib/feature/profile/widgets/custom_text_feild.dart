@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kheet_amal/core/utils/app_colors.dart';
 
 class CustomTextEditField extends StatelessWidget {
   const CustomTextEditField({
@@ -26,29 +27,33 @@ class CustomTextEditField extends StatelessWidget {
           label,
           textAlign: TextAlign.right,
           style: TextStyle(
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w400,
             fontSize: 24.sp,
           ),
         ),
         SizedBox(height: 5.h),
-        TextFormField(
-          controller: controller,
-          textAlign: TextAlign.right,
-          validator: validator,
-          readOnly: readOnly,
-          decoration: InputDecoration(
-            filled: fillColor != null,
-            fillColor: fillColor ?? Colors.white,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8.r),
-              borderSide: const BorderSide(color: Colors.blue),
+        SizedBox(
+          width: 390.w,
+          height: 45.h,
+          child: TextFormField(
+            controller: controller,
+            textAlign: TextAlign.right,
+            validator: validator,
+            readOnly: readOnly,
+            decoration: InputDecoration(
+              filled: fillColor != null,
+              fillColor: fillColor ?? AppColors.backgroundColor,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15.r),
+                borderSide: const BorderSide(color: AppColors.primaryColor),
+              ),
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: 10.w,
+                vertical: 10.h,
+              ),
             ),
-            contentPadding: EdgeInsets.symmetric(
-              horizontal: 12.w,
-              vertical: 14.h,
-            ),
+            style: TextStyle(fontSize: 16.sp),
           ),
-          style: TextStyle(fontSize: 18.sp),
         ),
         SizedBox(height: 15.h),
       ],
