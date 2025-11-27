@@ -11,7 +11,9 @@ class EditProfileCubit extends Cubit<EditProfileState> {
   final ImagePicker _picker = ImagePicker();
   final BackblazeService _backblazeService = BackblazeService();
   File? selectedImage;
+
   EditProfileCubit(this._repo) : super(EditProfileInitial());
+
   Future<void> selectImage() async {
     try {
       final XFile? pickedFile = await _picker.pickImage(
@@ -24,7 +26,7 @@ class EditProfileCubit extends Cubit<EditProfileState> {
         emit(EditProfileImageSelected(selectedImage!));
       }
     } catch (e) {
-      emit(const EditProfileError( 'Failed to pick image'));
+      emit(const EditProfileError('Failed to pick image'));
     }
   }
 
@@ -34,13 +36,22 @@ class EditProfileCubit extends Cubit<EditProfileState> {
       String? imageUrl;
 
       if (selectedImage != null) {
-        imageUrl = await _backblazeService.uploadImage(selectedImage!);
+        final uploadedUrl = await _backblazeService.uploadImage(selectedImage!);
+
+        if (uploadedUrl != null) {
+          final uri = Uri.parse(uploadedUrl);
+          final fileName = uri.pathSegments.last;
+          final folder = uri.pathSegments[uri.pathSegments.length - 2];
+          final fileKey = '$folder/$fileName';
+
+          final secureUrl = await BackblazeService.getTemporaryImageUrl(
+            fileKey,
+          );
+          imageUrl = secureUrl ?? uploadedUrl;
+        }
       }
 
-      await _repo.updateUserProfile(
-        updatedUser: user,
-        imageUrl: imageUrl,
-      );
+      await _repo.updateUserProfile(updatedUser: user, imageUrl: imageUrl);
 
       selectedImage = null;
       emit(EditProfileSuccess());
