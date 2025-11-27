@@ -1,22 +1,57 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:kheet_amal/core/utils/app_colors.dart';
-import 'package:kheet_amal/core/utils/app_icons.dart';
+import 'package:kheet_amal/feature/filter/filter_screen.dart';
+import 'package:kheet_amal/feature/home/data/models/report_model.dart';
 
-Widget customSearchfailed({required BuildContext context}) {
+Widget customSearchFailed({
+  required BuildContext context,
+  required Function(List<ReportModel>) updateResults,
+  required Future<void> Function() fetchLatestCases,
+}) {
+  Future<void> fetchLatestCases() async {
+    try {
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('reports')
+          .orderBy('createdAt', descending: true)
+          .limit(10)
+          .get();
+
+      updateResults(
+        querySnapshot.docs
+            .map(
+              (doc) => ReportModel.fromMap(
+                doc.id,
+                doc.data() as Map<String, dynamic>,
+              ),
+            )
+            .toList(),
+      );
+    } catch (e) {
+      if (e is FirebaseException) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('خطأ في جلب أحدث الحالات: ${e.message}')),
+        );
+      }
+      print('Error fetching latest cases: $e');
+    }
+  }
+
   return Column(
     children: [
-      SizedBox(height: 68.h),
+      SizedBox(height: 24.h),
       Center(
         child: Image.asset(
-          "assets/images/image.png",
-          height: 205.h,
+          "assets/images/search_failed.png",
+          height: 200.h,
           width: 180.w,
+          fit: BoxFit.contain,
+          semanticLabel: 'صورة عدم وجود نتائج البحث',
         ),
       ),
-      SizedBox(height: 67.h),
+      SizedBox(height: 24.h),
       Text(
         "change_governorate".tr(),
         textAlign: TextAlign.center,
@@ -25,32 +60,39 @@ Widget customSearchfailed({required BuildContext context}) {
           fontSize: 20.sp,
           fontWeight: FontWeight.w400,
         ),
+        semanticsLabel: 'تغيير معايير البحث أو المحافظة',
       ),
-      SizedBox(height: 72.h),
+      SizedBox(height: 24.h),
       ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => FilterScreen()),
+          );
+        },
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.secondaryColor,
-          minimumSize: Size(307.w, 45.h),
+          minimumSize: Size(double.infinity, 48.h),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(40.r),
           ),
         ),
         child: Text(
           "reset_filters".tr(),
+          semanticsLabel: 'إعادة ضبط الفلاتر',
           style: TextStyle(
             color: AppColors.white,
-            fontSize: 24.sp,
+            fontSize: 18.sp,
             fontWeight: FontWeight.w500,
           ),
         ),
       ),
-      SizedBox(height: 22.h),
+      SizedBox(height: 16.h),
       ElevatedButton(
-        onPressed: () {},
+        onPressed: fetchLatestCases,
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.backgroundColor,
-          minimumSize: Size(169.w, 24.h),
+          minimumSize: Size(double.infinity, 48.h),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(40.r),
           ),
@@ -58,9 +100,10 @@ Widget customSearchfailed({required BuildContext context}) {
         ),
         child: Text(
           "show_latest_cases".tr(),
+          semanticsLabel: 'عرض أحدث الحالات',
           style: TextStyle(
             color: AppColors.secondaryColor,
-            fontSize: 22.sp,
+            fontSize: 18.sp,
             fontWeight: FontWeight.w400,
           ),
         ),
