@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:kheet_amal/core/utils/app_colors.dart';
 import 'package:kheet_amal/feature/profile/data/models/user_model.dart';
 import 'cubits/edit_profile_cubit/edit_profile_cubit.dart';
 import 'cubits/edit_profile_cubit/edit_profile_state.dart';
@@ -78,13 +79,12 @@ class EditScreen extends StatelessWidget {
                                 children: [
                                   CircleAvatar(
                                     radius: 55.r,
-                                    backgroundColor: Colors.grey[300],
+                                    backgroundColor: Colors.grey[200],
                                     backgroundImage: avatarImage,
                                     child: avatarImage == null
-                                        ? Icon(
-                                            Icons.person,
-                                            size: 60.sp,
-                                            color: Colors.grey,
+                                        ? Image.asset("assets/images/profile_pict.png",
+                                            width: 112.w,
+                                            height: 112.h,
                                           )
                                         : null,
                                   ),
@@ -95,15 +95,15 @@ class EditScreen extends StatelessWidget {
                                       onTap: () => cubit.selectImage(),
                                       child: Container(
                                         decoration: const BoxDecoration(
-                                          color: Colors.orange,
+                                          color: AppColors.sligtGrey,
                                           shape: BoxShape.circle,
                                         ),
-                                        padding: const EdgeInsets.all(8),
-                                        child: const Icon(
-                                          Icons.camera_alt,
-                                          color: Colors.white,
-                                          size: 22,
-                                        ),
+                                        padding:  EdgeInsets.all(8.w),
+                                        child:  Image.asset(
+                                          "assets/images/camera-photo.png",
+                                          color: AppColors.black,
+                                          width: 20.w,
+                                          height: 20.h,),
                                       ),
                                     ),
                                   ),
