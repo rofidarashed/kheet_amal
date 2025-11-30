@@ -64,7 +64,6 @@ class _EditProfileFormSectionState extends State<EditProfileFormSection> {
             label: "email".tr(),
             controller: _emailController,
             readOnly: true,
-            fillColor: Colors.grey[200],
           ),
           CustomTextEditField(
             label: "phone".tr(),
@@ -117,7 +116,7 @@ class _EditProfileFormSectionState extends State<EditProfileFormSection> {
                         "save_changes".tr(),
                         style: TextStyle(
                           color: AppColors.white,
-                          fontSize: 20.sp,
+                          fontSize: 24.sp,
                           fontWeight: FontWeight.w400,
                         ),
                       ),

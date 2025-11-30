@@ -95,15 +95,15 @@ class EditScreen extends StatelessWidget {
                                       onTap: () => cubit.selectImage(),
                                       child: Container(
                                         decoration: const BoxDecoration(
-                                          color: AppColors.secondaryColor,
+                                          color: AppColors.sligtGrey,
                                           shape: BoxShape.circle,
                                         ),
                                         padding:  EdgeInsets.all(8.w),
-                                        child: const Icon(
-                                          Icons.camera_alt,
-                                          color: AppColors.white,
-                                          size: 22,
-                                        ),
+                                        child:  Image.asset(
+                                          "assets/images/camera-photo.png",
+                                          color: AppColors.black,
+                                          width: 20.w,
+                                          height: 20.h,),
                                       ),
                                     ),
                                   ),

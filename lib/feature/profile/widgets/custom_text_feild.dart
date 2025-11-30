@@ -26,10 +26,7 @@ class CustomTextEditField extends StatelessWidget {
         Text(
           label,
           textAlign: TextAlign.right,
-          style: TextStyle(
-            fontWeight: FontWeight.w400,
-            fontSize: 24.sp,
-          ),
+          style: TextStyle(fontWeight: FontWeight.w400, fontSize: 24.sp),
         ),
         SizedBox(height: 5.h),
         SizedBox(
@@ -41,11 +38,11 @@ class CustomTextEditField extends StatelessWidget {
             validator: validator,
             readOnly: readOnly,
             decoration: InputDecoration(
-              filled: fillColor != null,
+              filled: true,
               fillColor: fillColor ?? AppColors.backgroundColor,
-              border: OutlineInputBorder(
+              enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(15.r),
-                borderSide: const BorderSide(color: AppColors.primaryColor),
+                borderSide:  BorderSide(color: AppColors.primaryColor),
               ),
               contentPadding: EdgeInsets.symmetric(
                 horizontal: 10.w,
