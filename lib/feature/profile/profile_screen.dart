@@ -6,7 +6,7 @@ import 'package:kheet_amal/feature/auth/cubit/auth_cubit.dart';
 import 'package:kheet_amal/feature/auth/cubit/auth_state.dart';
 import 'package:kheet_amal/feature/auth/presentation/screens/login_screen.dart';
 import 'package:kheet_amal/feature/profile/data/models/user_model.dart';
-import 'package:kheet_amal/feature/profile/widgets/profile_menue_section.dart';
+import 'package:kheet_amal/feature/profile/widgets/profile_menu_section.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'edit_screen.dart';

@@ -4,6 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kheet_amal/core/routing/app_routes.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:kheet_amal/core/utils/app_colors.dart';
+import 'package:kheet_amal/core/utils/app_icons.dart';
 import 'package:kheet_amal/feature/notification/cubit/notification_cubit.dart';
 import 'package:kheet_amal/feature/notification/cubit/notification_state.dart';
 import 'package:kheet_amal/feature/statistics/screens/statistics_screen.dart';
@@ -64,14 +66,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
         ),
       ],
-      // Wrap the Leading widget with BlocBuilder to listen to changes
       leading: BlocBuilder<NotificationCubit, NotificationState>(
         builder: (context, state) {
           int notificationsCount = 0;
 
-          // Calculate count if loaded
           if (state is NotificationLoaded) {
-            // Count only UNREAD notifications
             notificationsCount = state.notifications
                 .where((n) => !n.isRead)
                 .length;
@@ -80,10 +79,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           return Stack(
             children: [
               IconButton(
-                icon: Icon(
-                  Icons.notifications_none,
-                  size: 25.sp,
-                  color: Colors.black87,
+                icon: SvgPicture.asset(
+                  AppIcons.bellNotification,
+                  width: 24.w,
+                  height: 24.w,
                 ),
                 onPressed: () {
                   Navigator.of(
@@ -94,17 +93,17 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
               if (notificationsCount > 0)
                 Positioned(
-                  left: 20.w,
-                  top: 4.h,
+                  left: 30.w,
+                  top: 9.h,
                   child: Container(
                     padding: EdgeInsets.all(3.w),
                     decoration: const BoxDecoration(
-                      color: Colors.red,
+                      color: AppColors.iconRed,
                       shape: BoxShape.circle,
                     ),
                     constraints: BoxConstraints(
-                      minWidth: 13.w,
-                      minHeight: 13.h,
+                      minWidth: 12.w,
+                      minHeight: 12.h,
                     ),
                     child: Text(
                       '$notificationsCount',

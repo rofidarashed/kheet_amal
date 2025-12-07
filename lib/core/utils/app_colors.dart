@@ -15,6 +15,8 @@ class AppColors {
   static const Color magentaviolet = Color(0xFFF440BB);
   static const Color royalblue = Color(0xFF1450B1);
 
+  static const Color iconRed = Color(0xffC50C0C);
+
   static const Color sBlue = Color(0xff5A60E7);
   static const Color sBrown = Color(0xff863800);
   static const Color sGreen = Color(0xff6FCC74);
@@ -29,5 +31,4 @@ class AppColors {
   static const Color black54 = Color.fromRGBO(0, 0, 0, 54);
   static const Color divider = Color(0xFFDDE3E9);
   static const Color sligtGrey = Color(0xFFE8E8E8);
- 
 }

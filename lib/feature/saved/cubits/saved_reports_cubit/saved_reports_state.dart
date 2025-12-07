@@ -13,3 +13,8 @@ final class SavedReportsToggled extends SavedReportsState {
   final bool isSaved;
   SavedReportsToggled({required this.reportId, required this.isSaved});
 }
+
+final class SavedReportsCountFetched extends SavedReportsState {
+  final int count;
+  SavedReportsCountFetched({required this.count});
+}

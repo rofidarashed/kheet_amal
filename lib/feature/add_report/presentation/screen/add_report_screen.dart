@@ -4,9 +4,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:kheet_amal/core/utils/app_icons.dart';
 import 'package:kheet_amal/core/utils/app_validators.dart';
+import 'package:kheet_amal/core/widgets/custom_app_bar.dart';
 import 'package:kheet_amal/core/widgets/custom_button.dart';
 import 'package:kheet_amal/core/widgets/custom_form_field.dart';
 import 'package:kheet_amal/feature/add_report/cubit/add_report_cubit.dart';
@@ -36,17 +35,7 @@ class AddReportScreen extends StatelessWidget {
             builder: (context, state) {
               final cubit = context.read<AddReportCubit>();
               return Scaffold(
-                appBar: AppBar(
-                  backgroundColor: Colors.white12,
-                  elevation: 0,
-                  surfaceTintColor: Colors.transparent,
-                  centerTitle: true,
-                  leading: IconButton(
-                    onPressed: () {},
-                    icon: SvgPicture.asset(AppIcons.bellNotification),
-                  ),
-                  title: Text('add_report.add_report'.tr()),
-                ),
+                appBar: CustomAppBar(title: 'add_report.add_report'.tr()),
                 body: Form(
                   key: _formKey,
                   child: SingleChildScrollView(
@@ -170,7 +159,6 @@ class AddReportScreen extends StatelessWidget {
                                   _clothesController.clear();
                                   _phoneController1.clear();
                                   _phoneController2.clear();
-
                                 },
                                 btnOkColor: Colors.orange,
                                 btnOkText: 'OK',

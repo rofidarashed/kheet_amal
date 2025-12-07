@@ -6,6 +6,7 @@ import 'package:kheet_amal/feature/home/data/models/report_model.dart';
 class SavedReportsRepository {
   final _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
+  static int savedReportsCount = 0;
 
   Future<List<ReportModel>> fetchSavedReports() async {
     try {
@@ -30,7 +31,9 @@ class SavedReportsRepository {
         String imageUrl = data['imageUrl'] ?? '';
         if (imageUrl.contains('reports/')) {
           final fileName = imageUrl.split('reports/').last;
-          final secureUrl = await BackblazeService.getTemporaryImageUrl('reports/$fileName');
+          final secureUrl = await BackblazeService.getTemporaryImageUrl(
+            'reports/$fileName',
+          );
           if (secureUrl != null) imageUrl = secureUrl;
         }
 
@@ -40,6 +43,7 @@ class SavedReportsRepository {
       }
 
       print('OOO Fetched ${reports.length} saved reports');
+      savedReportsCount = reports.length;
       return reports;
     } catch (e) {
       print('OOO Fetch saved reports error: $e');
@@ -61,24 +65,26 @@ class SavedReportsRepository {
         .orderBy('savedAt', descending: true)
         .snapshots()
         .asyncMap((snapshot) async {
-      final reports = <ReportModel>[];
+          final reports = <ReportModel>[];
 
-      for (final doc in snapshot.docs) {
-        final data = doc.data();
+          for (final doc in snapshot.docs) {
+            final data = doc.data();
 
-        String imageUrl = data['imageUrl'] ?? '';
-        if (imageUrl.contains('reports/')) {
-          final fileName = imageUrl.split('reports/').last;
-          final secureUrl = await BackblazeService.getTemporaryImageUrl('reports/$fileName');
-          if (secureUrl != null) imageUrl = secureUrl;
-        }
+            String imageUrl = data['imageUrl'] ?? '';
+            if (imageUrl.contains('reports/')) {
+              final fileName = imageUrl.split('reports/').last;
+              final secureUrl = await BackblazeService.getTemporaryImageUrl(
+                'reports/$fileName',
+              );
+              if (secureUrl != null) imageUrl = secureUrl;
+            }
 
-        reports.add(
-          ReportModel.fromMap(doc.id, {...data, 'imageUrl': imageUrl}),
-        );
-      }
+            reports.add(
+              ReportModel.fromMap(doc.id, {...data, 'imageUrl': imageUrl}),
+            );
+          }
 
-      return reports;
-    });
+          return reports;
+        });
   }
 }

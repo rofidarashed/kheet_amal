@@ -5,7 +5,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:kheet_amal/feature/saved/cubits/saved_reports_cubit/saved_reports_state.dart';
 
 class SavedReportsCubit extends Cubit<SavedReportsState> {
-  SavedReportsCubit() : super(SavedReportsInitial());
+  SavedReportsCubit() : super(SavedReportsInitial()){
+    fetchSavedReportsCount();
+  }
+  int savedReportsCount = 0;
 
   CollectionReference<Map<String, dynamic>> _userSavedReports(String userId) {
     return FirebaseFirestore.instance
@@ -45,6 +48,7 @@ class SavedReportsCubit extends Cubit<SavedReportsState> {
 
       if (!isClosed) {
         emit(SavedReportsToggled(reportId: reportId, isSaved: true));
+        await fetchSavedReportsCount();
       }
     } catch (e) {
       if (!isClosed) {
@@ -71,6 +75,7 @@ class SavedReportsCubit extends Cubit<SavedReportsState> {
 
       if (!isClosed) {
         emit(SavedReportsToggled(reportId: reportId, isSaved: false));
+        await fetchSavedReportsCount();
       }
     } catch (e) {
       if (!isClosed) {
@@ -117,6 +122,31 @@ class SavedReportsCubit extends Cubit<SavedReportsState> {
       if (!isClosed) {
         emit(SavedReportsToggled(reportId: reportId, isSaved: doc.exists));
       }
+    } catch (e) {
+      if (!isClosed) {
+        emit(SavedReportsFailed(message: e.toString()));
+      }
+    }
+  }
+
+  Future<void> fetchSavedReportsCount() async {
+    try {
+      final user = FirebaseAuth.instance.currentUser;
+      if (user == null) {
+        if (!isClosed) {
+          emit(SavedReportsCountFetched(count: 0));
+        }
+        return;
+      }
+
+      final snapshot = await _userSavedReports(user.uid).get();
+      final count = snapshot.size;
+      debugPrint('✅ Fetched saved reports count: $count');
+
+      if (!isClosed) {
+        emit(SavedReportsCountFetched(count: count));
+      }
+      savedReportsCount = count;
     } catch (e) {
       if (!isClosed) {
         emit(SavedReportsFailed(message: e.toString()));
