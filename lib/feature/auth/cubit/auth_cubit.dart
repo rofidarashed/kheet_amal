@@ -2,17 +2,26 @@ import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:kheet_amal/core/utils/shared_prefs_helper.dart';
 import 'package:kheet_amal/feature/profile/data/models/user_model.dart';
 import 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+ final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   bool value = false;
 
   AuthCubit() : super(AuthInitial()) {
     SharedPrefsHelper.init();
+  }
+
+  Future<String?> _getFcmToken() async {
+    try {
+      return await FirebaseMessaging.instance.getToken();
+    } catch (e) {
+      return null;
+    }
   }
 
   Future<void> registerUser({
@@ -30,8 +39,9 @@ class AuthCubit extends Cubit<AuthState> {
       );
 
       final user = userCredential.user!;
-
       await user.sendEmailVerification();
+
+      String? token = await _getFcmToken();
 
       await _firestore.collection('users').doc(user.uid).set({
         'uid': user.uid,
@@ -40,6 +50,7 @@ class AuthCubit extends Cubit<AuthState> {
         'email': email,
         'createdAt': DateTime.now(),
         'address': address,
+        'fcmToken': token, 
       });
 
       emit(AuthFailure("email-verification-sent"));
@@ -66,12 +77,13 @@ class AuthCubit extends Cubit<AuthState> {
       );
       final user = userCredential.user!;
 
-      // if (!user.emailVerified) {
-      //   await user.sendEmailVerification();
-      //   emit(AuthFailure("email-not-verified".tr()));
-      //   await _auth.signOut();
-      //   return;
-      // }
+      String? token = await _getFcmToken();
+      if (token != null) {
+        await _firestore.collection('users').doc(user.uid).set({
+          'fcmToken': token,
+        }, SetOptions(merge: true));
+      }
+
       await SharedPrefsHelper.saveUserLocally(userCredential.user);
       emit(AuthSuccess(userCredential.user!));
     } on FirebaseAuthException catch (e) {
@@ -80,7 +92,6 @@ class AuthCubit extends Cubit<AuthState> {
       emit(AuthFailure(e.toString()));
     }
   }
-
   Future<void> resetPassword(String email) async {
     emit(AuthLoading());
     try {

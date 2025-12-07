@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kheet_amal/feature/add_report/cubit/add_report_state.dart';
 import 'package:kheet_amal/feature/add_report/enums/enums.dart';
+import 'package:kheet_amal/feature/notification/service/notification_service_v1.dart';
 
 import '../data/backblaze_service.dart';
 
@@ -108,6 +109,7 @@ class AddReportCubit extends Cubit<AddReportState> {
           imageUrl = uploadedUrl;
         }
       }
+
       DocumentReference docRef = await FirebaseFirestore.instance
           .collection('reports')
           .add({
@@ -133,23 +135,40 @@ class AddReportCubit extends Cubit<AddReportState> {
             'phone2': phone2,
             'imageUrl': imageUrl,
             'createdAt': FieldValue.serverTimestamp(),
-                 'likes': 0,
-      'likedBy': [],
+            'likes': 0,
+            'likedBy': [],
           });
+
       await FirebaseFirestore.instance
           .collection('users')
           .doc(user!.uid)
           .collection('notifications')
           .add({
-            'title': "تحديث", 
-            'body':
-                "تم إضافة بلاغك بنجاح، سيتم مراجعته وإبلاغك بأي تحديثات.", 
-            'type': "update", 
-            'relatedReportId': docRef.id, 
+            'title': "تحديث",
+            'body': "تم إضافة بلاغك بنجاح، سيتم مراجعته وإبلاغك بأي تحديثات.",
+            'type': "update",
+            'relatedReportId': docRef.id,
             'isRead': false,
-            'senderId': "SYSTEM", 
+            'senderId': "SYSTEM",
             'createdAt': FieldValue.serverTimestamp(),
           });
+
+      final currentUserDoc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user!.uid)
+          .get();
+
+      if (currentUserDoc.exists &&
+          currentUserDoc.data()!.containsKey('fcmToken')) {
+        String myToken = currentUserDoc.data()!['fcmToken'];
+
+        await NotificationServiceV1.sendPushNotification(
+          fcmToken: myToken,
+          title: "تم الإرسال بنجاح ✅",
+          body: "تم استلام بلاغك عن ${nameController.text} وجاري مراجعته.",
+          data: {"reportId": docRef.id, "type": "report_submit"},
+        );
+      }
     } catch (e) {
       debugPrint(e.toString());
     }

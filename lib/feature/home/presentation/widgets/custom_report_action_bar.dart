@@ -1,5 +1,3 @@
-import 'dart:developer';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -100,7 +98,6 @@ class ReportActionBar extends StatelessWidget {
             builder: (context, state) {
               if (state is CommentCountState) {
                 int countComment = state.count;
-                log("$countComment");
                 return Text("$countComment", style: TextStyle(fontSize: 16.sp));
               }
               return Text('0', style: TextStyle(fontSize: 16.sp));
