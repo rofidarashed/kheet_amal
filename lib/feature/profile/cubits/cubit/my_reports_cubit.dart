@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kheet_amal/feature/home/data/models/report_model.dart';
+import 'package:kheet_amal/feature/profile/cubits/cubit/my_reports_state.dart';
 import 'package:kheet_amal/feature/profile/data/my_reports_repo.dart';
 
 class MyReportsCubit extends Cubit<MyReportsState> {
@@ -70,20 +71,3 @@ class MyReportsCubit extends Cubit<MyReportsState> {
   }
 }
 
-abstract class MyReportsState {}
-
-class MyReportsInitial extends MyReportsState {}
-
-class MyReportsLoading extends MyReportsState {}
-
-class MyReportsLoaded extends MyReportsState {
-  final List<ReportModel> reports;
-  
-  MyReportsLoaded({required this.reports});
-}
-
-class MyReportsError extends MyReportsState {
-  final String message;
-  
-  MyReportsError({required this.message});
-}

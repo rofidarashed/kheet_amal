@@ -5,6 +5,7 @@ import 'package:kheet_amal/core/utils/app_colors.dart';
 import 'package:kheet_amal/core/utils/app_icons.dart';
 import 'package:kheet_amal/core/widgets/custom_confirm_dialog.dart';
 import 'package:kheet_amal/feature/profile/cubits/cubit/my_reports_cubit.dart';
+import 'package:kheet_amal/feature/profile/cubits/cubit/my_reports_state.dart';
 import 'package:kheet_amal/feature/profile/data/my_reports_repo.dart';
 import 'package:kheet_amal/feature/profile/widgets/report_is_empty.dart';
 import 'package:kheet_amal/feature/profile/widgets/report_is_full.dart';
