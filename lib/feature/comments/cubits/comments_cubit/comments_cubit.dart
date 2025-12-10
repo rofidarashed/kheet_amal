@@ -28,7 +28,12 @@ class CommentsCubit extends Cubit<CommentsState> {
     required String text,
     String? userid,
   }) async {
-    if (_commentsCache.isEmpty) emit(CommentsStateLoading());
+    if (isClosed) return;
+    
+    if (_commentsCache.isEmpty) {
+      emit(CommentsStateLoading());
+    }
+    
     try {
       final String userName = await getUserName();
       await repo.addComments(
@@ -39,14 +44,22 @@ class CommentsCubit extends Cubit<CommentsState> {
       );
 
       await getComments(postId: postId);
-      emit(CommentsStateSuccess());
+      if (!isClosed) {
+        emit(CommentsStateSuccess());
+      }
     } catch (e) {
-      emit(CommentsStateError(e.toString()));
+      if (!isClosed) {
+        emit(CommentsStateError(e.toString()));
+      }
     }
   }
 
   Future<void> getComments({required String postId}) async {
-    if (_commentsCache.isEmpty) emit(CommentsGetLoading());
+    if (isClosed) return;
+    
+    if (_commentsCache.isEmpty) {
+      emit(CommentsGetLoading());
+    }
 
     try {
       final comments = await repo.getComments(postId: postId);
@@ -59,9 +72,13 @@ class CommentsCubit extends Cubit<CommentsState> {
         ..clear()
         ..addAll(comments);
 
-      emit(CommentsGetSuccess(List.unmodifiable(_commentsCache)));
+      if (!isClosed) {
+        emit(CommentsGetSuccess(List.unmodifiable(_commentsCache)));
+      }
     } catch (e) {
-      emit(CommentsGetError(e.toString()));
+      if (!isClosed) {
+        emit(CommentsGetError(e.toString()));
+      }
     }
   }
 
@@ -71,7 +88,10 @@ class CommentsCubit extends Cubit<CommentsState> {
     required String text,
     String? userid,
   }) async {
+    if (isClosed) return;
+    
     emit(ReplyStateLoading());
+    
     try {
       final String userName = await getUserName();
 
@@ -90,8 +110,11 @@ class CommentsCubit extends Cubit<CommentsState> {
       if (idx != -1) {
         final target = _commentsCache[idx];
         target.replies = [optimisticReply, ...target.replies];
-        emit(CommentsGetSuccess(List.unmodifiable(_commentsCache)));
+        if (!isClosed) {
+          emit(CommentsGetSuccess(List.unmodifiable(_commentsCache)));
+        }
       }
+      
       await repo.replyToComment(
         postId: postId,
         commentId: commentId,
@@ -102,9 +125,13 @@ class CommentsCubit extends Cubit<CommentsState> {
 
       await getReplies(postId: postId, commentId: commentId);
 
-      emit(ReplyStateSuccess());
+      if (!isClosed) {
+        emit(ReplyStateSuccess());
+      }
     } catch (e) {
-      emit(ReplyStateError(e.toString()));
+      if (!isClosed) {
+        emit(ReplyStateError(e.toString()));
+      }
     }
   }
 
@@ -112,6 +139,8 @@ class CommentsCubit extends Cubit<CommentsState> {
     required String postId,
     required String commentId,
   }) async {
+    if (isClosed) return;
+    
     try {
       final replies = await repo.getReplies(
         postId: postId,
@@ -121,13 +150,17 @@ class CommentsCubit extends Cubit<CommentsState> {
       final idx = _commentsCache.indexWhere((c) => c.id == commentId);
       if (idx != -1) {
         _commentsCache[idx].replies = replies;
-        emit(CommentsGetSuccess(List.unmodifiable(_commentsCache)));
+        if (!isClosed) {
+          emit(CommentsGetSuccess(List.unmodifiable(_commentsCache)));
+        }
         return;
       }
 
       await getComments(postId: postId);
     } catch (e) {
-      emit(RepliesGetError(commentId));
+      if (!isClosed) {
+        emit(RepliesGetError(commentId));
+      }
     }
   }
 
@@ -137,6 +170,8 @@ class CommentsCubit extends Cubit<CommentsState> {
     required String reason,
     required String details,
   }) async {
+    if (isClosed) return;
+    
     emit(ReportCommentLoading());
     try {
       await repo.reportComment(
@@ -146,9 +181,13 @@ class CommentsCubit extends Cubit<CommentsState> {
         details: details,
         reporterId: user.uid,
       );
-      emit(ReportCommentSuccess());
+      if (!isClosed) {
+        emit(ReportCommentSuccess());
+      }
     } catch (e) {
-      emit(ReportCommentError(e.toString()));
+      if (!isClosed) {
+        emit(ReportCommentError(e.toString()));
+      }
     }
   }
 
@@ -156,6 +195,8 @@ class CommentsCubit extends Cubit<CommentsState> {
     required String postId,
     required String commentId,
   }) async {
+    if (isClosed) return;
+    
     final uid = user.uid;
 
     final idx = _commentsCache.indexWhere((c) => c.id == commentId);
@@ -171,7 +212,9 @@ class CommentsCubit extends Cubit<CommentsState> {
         target.isLiked = false;
         target.likes--;
         target.likedBy.remove(uid);
-        emit(CommentsGetSuccess(List.unmodifiable(_commentsCache)));
+        if (!isClosed) {
+          emit(CommentsGetSuccess(List.unmodifiable(_commentsCache)));
+        }
 
         await repo.unlikeComment(
           postId: postId,
@@ -184,7 +227,9 @@ class CommentsCubit extends Cubit<CommentsState> {
         if (!target.likedBy.contains(uid)) {
           target.likedBy.add(uid);
         }
-        emit(CommentsGetSuccess(List.unmodifiable(_commentsCache)));
+        if (!isClosed) {
+          emit(CommentsGetSuccess(List.unmodifiable(_commentsCache)));
+        }
 
         await repo.likeComment(
           postId: postId,
@@ -203,7 +248,9 @@ class CommentsCubit extends Cubit<CommentsState> {
       } else {
         target.likedBy.remove(uid);
       }
-      emit(CommentsGetSuccess(List.unmodifiable(_commentsCache)));
+      if (!isClosed) {
+        emit(CommentsGetSuccess(List.unmodifiable(_commentsCache)));
+      }
     }
   }
 
@@ -212,6 +259,8 @@ class CommentsCubit extends Cubit<CommentsState> {
     required String commentId,
     required String replyId,
   }) async {
+    if (isClosed) return;
+    
     final uid = user.uid;
 
     final commentIdx = _commentsCache.indexWhere((c) => c.id == commentId);
@@ -232,7 +281,9 @@ class CommentsCubit extends Cubit<CommentsState> {
         target.isLiked = false;
         target.likes--;
         target.likedBy.remove(uid);
-        emit(CommentsGetSuccess(List.unmodifiable(_commentsCache)));
+        if (!isClosed) {
+          emit(CommentsGetSuccess(List.unmodifiable(_commentsCache)));
+        }
 
         await repo.unlikeReply(
           postId: postId,
@@ -246,7 +297,9 @@ class CommentsCubit extends Cubit<CommentsState> {
         if (!target.likedBy.contains(uid)) {
           target.likedBy.add(uid);
         }
-        emit(CommentsGetSuccess(List.unmodifiable(_commentsCache)));
+        if (!isClosed) {
+          emit(CommentsGetSuccess(List.unmodifiable(_commentsCache)));
+        }
 
         await repo.likeReply(
           postId: postId,
@@ -266,17 +319,24 @@ class CommentsCubit extends Cubit<CommentsState> {
       } else {
         target.likedBy.remove(uid);
       }
-      emit(CommentsGetSuccess(List.unmodifiable(_commentsCache)));
+      if (!isClosed) {
+        emit(CommentsGetSuccess(List.unmodifiable(_commentsCache)));
+      }
     }
   }
 
   Future<void> commentCount({required String postId}) async {
-    if (postId.isEmpty) {
+    if (isClosed || postId.isEmpty) {
       return;
     }
-    final count = await repo.getCountComment(postId: postId);
-    if (!isClosed) {
-      emit(CommentCountState(count: count));
+    
+    try {
+      final count = await repo.getCountComment(postId: postId);
+      if (!isClosed) {
+        emit(CommentCountState(count: count));
+      }
+    } catch (e) {
+      developer.log('Error getting comment count: $e', name: 'CommentsCubit');
     }
   }
 }
