@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kheet_amal/feature/comments/cubits/comments_cubit/comments_state.dart';
 import 'package:kheet_amal/feature/comments/data/repo/comments_repo.dart';
 import 'package:kheet_amal/feature/comments/data/models/comment_model.dart';
+import 'package:kheet_amal/feature/notification/service/notification_service_v1.dart';
 
 class CommentsCubit extends Cubit<CommentsState> {
   CommentsCubit() : super(CommentsStateInitial());
@@ -29,13 +30,14 @@ class CommentsCubit extends Cubit<CommentsState> {
     String? userid,
   }) async {
     if (isClosed) return;
-    
+
     if (_commentsCache.isEmpty) {
       emit(CommentsStateLoading());
     }
-    
+
     try {
       final String userName = await getUserName();
+
       await repo.addComments(
         postId: postId,
         text: text,
@@ -47,6 +49,59 @@ class CommentsCubit extends Cubit<CommentsState> {
       if (!isClosed) {
         emit(CommentsStateSuccess());
       }
+
+      try {
+        final reportDoc = await FirebaseFirestore.instance
+            .collection('reports')
+            .doc(postId)
+            .get();
+
+        if (reportDoc.exists && reportDoc.data() != null) {
+          final data = reportDoc.data()!;
+          final String ownerId = data['userId'];
+          final String childName = data['childName'] ?? 'الطفل';
+
+          if (ownerId != user.uid) {
+            await FirebaseFirestore.instance
+                .collection('users')
+                .doc(ownerId)
+                .collection('notifications')
+                .add({
+                  'title': "تعليق جديد",
+                  'body':
+                      "قام $userName بالتعليق على بلاغك عن $childName: $text",
+                  'type': "comment",
+                  'relatedReportId': postId,
+                  'isRead': false,
+                  'senderId': user.uid,
+                  'createdAt': FieldValue.serverTimestamp(),
+                });
+
+            final ownerUserDoc = await FirebaseFirestore.instance
+                .collection('users')
+                .doc(ownerId)
+                .get();
+
+            if (ownerUserDoc.exists &&
+                ownerUserDoc.data() != null &&
+                ownerUserDoc.data()!.containsKey('fcmToken')) {
+              String ownerToken = ownerUserDoc.data()!['fcmToken'];
+
+              await NotificationServiceV1.sendPushNotification(
+                fcmToken: ownerToken,
+                title: "تعليق جديد 💬",
+                body: "قام $userName بالتعليق على بلاغك عن $childName",
+                data: {"reportId": postId, "type": "comment"},
+              );
+            }
+          }
+        }
+      } catch (notificationError) {
+        developer.log(
+          "Error sending notification: $notificationError",
+          name: 'CommentsCubit',
+        );
+      }
     } catch (e) {
       if (!isClosed) {
         emit(CommentsStateError(e.toString()));
@@ -56,7 +111,7 @@ class CommentsCubit extends Cubit<CommentsState> {
 
   Future<void> getComments({required String postId}) async {
     if (isClosed) return;
-    
+
     if (_commentsCache.isEmpty) {
       emit(CommentsGetLoading());
     }
@@ -89,9 +144,9 @@ class CommentsCubit extends Cubit<CommentsState> {
     String? userid,
   }) async {
     if (isClosed) return;
-    
+
     emit(ReplyStateLoading());
-    
+
     try {
       final String userName = await getUserName();
 
@@ -114,7 +169,7 @@ class CommentsCubit extends Cubit<CommentsState> {
           emit(CommentsGetSuccess(List.unmodifiable(_commentsCache)));
         }
       }
-      
+
       await repo.replyToComment(
         postId: postId,
         commentId: commentId,
@@ -140,7 +195,7 @@ class CommentsCubit extends Cubit<CommentsState> {
     required String commentId,
   }) async {
     if (isClosed) return;
-    
+
     try {
       final replies = await repo.getReplies(
         postId: postId,
@@ -171,7 +226,7 @@ class CommentsCubit extends Cubit<CommentsState> {
     required String details,
   }) async {
     if (isClosed) return;
-    
+
     emit(ReportCommentLoading());
     try {
       await repo.reportComment(
@@ -196,7 +251,7 @@ class CommentsCubit extends Cubit<CommentsState> {
     required String commentId,
   }) async {
     if (isClosed) return;
-    
+
     final uid = user.uid;
 
     final idx = _commentsCache.indexWhere((c) => c.id == commentId);
@@ -260,7 +315,7 @@ class CommentsCubit extends Cubit<CommentsState> {
     required String replyId,
   }) async {
     if (isClosed) return;
-    
+
     final uid = user.uid;
 
     final commentIdx = _commentsCache.indexWhere((c) => c.id == commentId);
@@ -329,7 +384,7 @@ class CommentsCubit extends Cubit<CommentsState> {
     if (isClosed || postId.isEmpty) {
       return;
     }
-    
+
     try {
       final count = await repo.getCountComment(postId: postId);
       if (!isClosed) {
