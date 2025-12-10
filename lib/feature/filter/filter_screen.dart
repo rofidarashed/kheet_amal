@@ -1,3 +1,5 @@
+import 'dart:ui' as ui;
+
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -114,316 +116,331 @@ class _FilterScreenState extends State<FilterScreen> {
       appBar: AppBar(
         backgroundColor: AppColors.backgroundColor,
         title: Text("Filter".tr()),
+        elevation: 0,
+        surfaceTintColor: Colors.transparent,
       ),
       body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: context.locale.languageCode == 'ar'
-              ? CrossAxisAlignment.start
-              : CrossAxisAlignment.end,
-          children: [
-            Padding(
-              padding: EdgeInsets.all(16.0.w),
-              child: Container(
-                decoration: buildBoxDecoration(),
-                child: Padding(
-                  padding: EdgeInsets.all(10.w),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Status".tr(),
-                        style: TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 26.sp,
-                        ),
-                      ),
-                      buildRadioListTile(
-                        text: "Missing".tr(),
-                        value: "missing",
-                        selectedValue: selectedStatus,
-                        onChanged: (value) {
-                          setState(() {
-                            selectedStatus = value;
-                          });
-                        },
-                      ),
-
-                      buildRadioListTile(
-                        text: "Needs Verification".tr(),
-                        value: "needs_verification",
-                        selectedValue: selectedStatus,
-                        onChanged: (value) {
-                          setState(() {
-                            selectedStatus = value;
-                          });
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(bottom: 16.h, right: 16.w, left: 16.w),
-              child: Container(
-                decoration: buildBoxDecoration(),
-                child: Padding(
-                  padding: EdgeInsets.all(10.w),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Age".tr(),
-                        style: TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 26.sp,
-                        ),
-                      ),
-                      RangeSlider(
-                        values: _currentRangeValues,
-                        min: 0,
-                        max: 18,
-                        divisions: 18,
-                        activeColor: AppColors.primaryColor,
-                        inactiveColor: AppColors.inactiveTrackbarColor,
-                        labels: RangeLabels(
-                          "${_currentRangeValues.start.round().toString()} years"
-                              .tr(),
-                          "${_currentRangeValues.end.round().toString()} years"
-                              .tr(),
-                        ),
-                        onChanged: (RangeValues newRange) {
-                          setState(() {
-                            _currentRangeValues = newRange;
-                          });
-                        },
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(bottom: 7.h),
-                        child: Text(
-                          "Gender".tr(),
+        child: Directionality(
+          textDirection: context.locale.languageCode == 'ar'
+              ? ui.TextDirection.rtl
+              : ui.TextDirection.ltr,
+          child: Column(
+            crossAxisAlignment: context.locale.languageCode == 'ar'
+                ? CrossAxisAlignment.end
+                : CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.all(16.0.w),
+                child: Container(
+                  decoration: buildBoxDecoration(),
+                  child: Padding(
+                    padding: EdgeInsets.all(10.w),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Status".tr(),
                           style: TextStyle(
-                            fontSize: 24.sp,
                             fontWeight: FontWeight.w400,
+                            fontSize: 26.sp,
                           ),
                         ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          _GenderButton(
-                            color: AppColors.girlIcon,
-                            imagePath: AppImages.girl,
-                            value: "girl",
-                            selectedValue: selectedGender,
-                            onSelect: (value) {
-                              setState(() {
-                                selectedGender = value;
-                              });
-                            },
-                          ),
-                          SizedBox(width: 20.w),
-                          _GenderButton(
-                            color: AppColors.boyIcon,
-                            imagePath: AppImages.boy,
-                            value: "boy",
-                            selectedValue: selectedGender,
-                            onSelect: (value) {
-                              setState(() {
-                                selectedGender = value;
-                              });
-                            },
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 5.h),
-                      buildTextField("Skin tone".tr(), "Select Skin tone".tr()),
-                      SizedBox(height: 5.h),
-                      buildDropdown(
-                        "Eye Color".tr(),
-                        "Select Eye Color".tr(),
-                        eyeColors,
-                        selectedEyeColor,
-                      ),
-                      SizedBox(height: 5.h),
-                      buildDropdown(
-                        "Hair Color".tr(),
-                        "Select Hair Color".tr(),
-                        hairColors,
-                        selectedHairColor,
-                      ),
-                      SizedBox(height: 5.h),
-                      buildDropdown(
-                        "Special Marks (Optional)".tr(),
-                        "e.g. a small scar above the eyebrow".tr(),
-                        specialMarks,
-                        selectedSpecialMark,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(right: 16.w, left: 16.w, bottom: 16.h),
-              child: Container(
-                decoration: buildBoxDecoration(),
-                child: Padding(
-                  padding: EdgeInsets.all(10.w),
-                  child: Column(
-                    children: [
-                      buildDropdown(
-                        "Governorate".tr(),
-                        "example: Cairo, Giza, Alexandria".tr(),
-                        egyptGovernorates,
-                        selectedGovernorate,
-                      ),
-                      SizedBox(height: 5.h),
-                      buildTextField(
-                        "Area".tr(),
-                        "example: Nasr city, Maadi, Shopra".tr(),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(right: 16.w, left: 16.w, bottom: 16.h),
-              child: Container(
-                decoration: buildBoxDecoration(),
-                child: Padding(
-                  padding: EdgeInsets.all(10.w),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Date (Select the date of last viewing)".tr(),
-                        style: TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 20.sp,
+                        buildRadioListTile(
+                          text: "Missing".tr(),
+                          value: "missing",
+                          selectedValue: selectedStatus,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedStatus = value;
+                            });
+                          },
                         ),
-                      ),
-                      SizedBox(height: 3),
-                      GestureDetector(
-                        onTap: () async {
-                          final pickedDate =
-                              await showCalendarDatePicker2Dialog(
-                                context: context,
-                                config:
-                                    CalendarDatePicker2WithActionButtonsConfig(
-                                      calendarType:
-                                          CalendarDatePicker2Type.single,
-                                    ),
-                                dialogSize: const Size(325, 400),
-                                borderRadius: BorderRadius.circular(15),
-                                value: [],
-                              );
 
-                          if (pickedDate != null && pickedDate.isNotEmpty) {
-                            final date = pickedDate[0]!;
-                            _dateController.text =
-                                '${date.day}/${date.month}/${date.year}';
-                          }
-                        },
-                        child: AbsorbPointer(
-                          child: TextField(
-                            controller: _dateController,
-                            readOnly: true,
-                            decoration: InputDecoration(
-                              hintText: 'Day/Month/Year'.tr(),
-                              hintStyle: TextStyle(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 16,
-                                color: AppColors.inactiveTrackbarColor,
-                              ),
-                              helperStyle: TextStyle(
-                                fontSize: 12,
-                                color: AppColors.inactiveTrackbarColor,
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(15.r),
-                                borderSide: BorderSide(
-                                  color: AppColors.primaryColor,
+                        buildRadioListTile(
+                          text: "Needs Verification".tr(),
+                          value: "needs_verification",
+                          selectedValue: selectedStatus,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedStatus = value;
+                            });
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(bottom: 16.h, right: 16.w, left: 16.w),
+                child: Container(
+                  decoration: buildBoxDecoration(),
+                  child: Padding(
+                    padding: EdgeInsets.all(10.w),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Age".tr(),
+                          style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 26.sp,
+                          ),
+                        ),
+                        // CustomAgeSlider(cubit: cubit, state: state),
+                        RangeSlider(
+                          values: _currentRangeValues,
+                          min: 0,
+                          max: 18,
+                          divisions: 18,
+                          activeColor: AppColors.primaryColor,
+                          inactiveColor: AppColors.inactiveTrackbarColor,
+                          labels: RangeLabels(
+                            "${_currentRangeValues.start.round().toString()} years"
+                                .tr(),
+                            "${_currentRangeValues.end.round().toString()} years"
+                                .tr(),
+                          ),
+                          onChanged: (RangeValues newRange) {
+                            setState(() {
+                              _currentRangeValues = newRange;
+                            });
+                          },
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 7.h),
+                          child: Text(
+                            "Gender".tr(),
+                            style: TextStyle(
+                              fontSize: 24.sp,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            _GenderButton(
+                              color: AppColors.girlIcon,
+                              imagePath: AppImages.girl,
+                              value: "girl",
+                              selectedValue: selectedGender,
+                              onSelect: (value) {
+                                setState(() {
+                                  selectedGender = value;
+                                });
+                              },
+                            ),
+                            SizedBox(width: 20.w),
+                            _GenderButton(
+                              color: AppColors.boyIcon,
+                              imagePath: AppImages.boy,
+                              value: "boy",
+                              selectedValue: selectedGender,
+                              onSelect: (value) {
+                                setState(() {
+                                  selectedGender = value;
+                                });
+                              },
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 5.h),
+                        buildTextField(
+                          "Skin tone".tr(),
+                          "Select Skin tone".tr(),
+                        ),
+                        SizedBox(height: 5.h),
+                        buildDropdown(
+                          "Eye Color".tr(),
+                          "Select Eye Color".tr(),
+                          eyeColors,
+                          selectedEyeColor,
+                        ),
+                        SizedBox(height: 5.h),
+                        buildDropdown(
+                          "Hair Color".tr(),
+                          "Select Hair Color".tr(),
+                          hairColors,
+                          selectedHairColor,
+                        ),
+                        SizedBox(height: 5.h),
+                        buildDropdown(
+                          "Special Marks (Optional)".tr(),
+                          "e.g. a small scar above the eyebrow".tr(),
+                          specialMarks,
+                          selectedSpecialMark,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(right: 16.w, left: 16.w, bottom: 16.h),
+                child: Container(
+                  decoration: buildBoxDecoration(),
+                  child: Padding(
+                    padding: EdgeInsets.all(10.w),
+                    child: Column(
+                      children: [
+                        buildDropdown(
+                          "Governorate".tr(),
+                          "example: Cairo, Giza, Alexandria".tr(),
+                          egyptGovernorates,
+                          selectedGovernorate,
+                        ),
+                        SizedBox(height: 5.h),
+                        buildTextField(
+                          "Area".tr(),
+                          "example: Nasr city, Maadi, Shopra".tr(),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(right: 16.w, left: 16.w, bottom: 16.h),
+                child: Container(
+                  decoration: buildBoxDecoration(),
+                  child: Padding(
+                    padding: EdgeInsets.all(10.w),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Date (Select the date of last viewing)".tr(),
+                          style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 20.sp,
+                          ),
+                        ),
+                        SizedBox(height: 3),
+                        GestureDetector(
+                          onTap: () async {
+                            final pickedDate =
+                                await showCalendarDatePicker2Dialog(
+                                  context: context,
+                                  config:
+                                      CalendarDatePicker2WithActionButtonsConfig(
+                                        calendarType:
+                                            CalendarDatePicker2Type.single,
+                                      ),
+                                  dialogSize: const Size(325, 400),
+                                  borderRadius: BorderRadius.circular(15),
+                                  value: [],
+                                );
+
+                            if (pickedDate != null && pickedDate.isNotEmpty) {
+                              final date = pickedDate[0]!;
+                              _dateController.text =
+                                  '${date.day}/${date.month}/${date.year}';
+                            }
+                          },
+                          child: AbsorbPointer(
+                            child: TextField(
+                              controller: _dateController,
+                              readOnly: true,
+                              decoration: InputDecoration(
+                                hintText: 'Day/Month/Year'.tr(),
+                                hintStyle: TextStyle(
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 16,
+                                  color: AppColors.inactiveTrackbarColor,
                                 ),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(15.r),
-                                borderSide: BorderSide(
-                                  color: AppColors.primaryColor,
+                                helperStyle: TextStyle(
+                                  fontSize: 12,
+                                  color: AppColors.inactiveTrackbarColor,
                                 ),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(15.r),
-                                borderSide: BorderSide(
-                                  color: AppColors.primaryColor,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(15.r),
+                                  borderSide: BorderSide(
+                                    color: AppColors.primaryColor,
+                                  ),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(15.r),
+                                  borderSide: BorderSide(
+                                    color: AppColors.primaryColor,
+                                  ),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(15.r),
+                                  borderSide: BorderSide(
+                                    color: AppColors.primaryColor,
+                                  ),
                                 ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(height: 20.h),
-            Padding(
-              padding: EdgeInsets.only(right: 50.w, left: 50.w, bottom: 35.h),
-              child: SizedBox(
-                width: double.infinity.w,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context, {
-                      'status': selectedStatus,
-                      'governorate': selectedGovernorate,
-                      'gender': selectedGender,
-                      'eyeColor': selectedEyeColor,
-                      'hairColor': selectedHairColor,
-                      'specialMark': selectedSpecialMark,
-                      'ageRange': _currentRangeValues,
-                      'date': _dateController.text,
-                    });
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.secondaryColor,
-                    padding: EdgeInsets.symmetric(vertical: 14.h),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(40.r),
+                      ],
                     ),
                   ),
-                  child: Text(
-                    "Add".tr(),
-                    style: TextStyle(fontSize: 24.sp, color: AppColors.white),
+                ),
+              ),
+              SizedBox(height: 20.h),
+              Padding(
+                padding: EdgeInsets.only(right: 50.w, left: 50.w, bottom: 35.h),
+                child: SizedBox(
+                  width: double.infinity.w,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(context, {
+                        'status': selectedStatus,
+                        'governorate': selectedGovernorate,
+                        'gender': selectedGender,
+                        'eyeColor': selectedEyeColor,
+                        'hairColor': selectedHairColor,
+                        'specialMark': selectedSpecialMark,
+                        'ageRange': _currentRangeValues,
+                        'date': _dateController.text,
+                      });
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.secondaryColor,
+                      padding: EdgeInsets.symmetric(vertical: 14.h),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(40.r),
+                      ),
+                    ),
+                    child: Text(
+                      "Add".tr(),
+                      style: TextStyle(fontSize: 24.sp, color: AppColors.white),
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
 
-  RadioListTile<String?> buildRadioListTile({
+  Widget buildRadioListTile({
     required String text,
     required String value,
     required String? selectedValue,
     required Function(String?) onChanged,
   }) {
-    return RadioListTile(
-      title: Text(
-        text,
-        style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w400),
+    return SizedBox(
+      height: 50.h,
+      child: RadioListTile(
+        // contentPadding: EdgeInsets.all(value),
+        title: Text(
+          text,
+          style: TextStyle(fontSize: 22.sp, fontWeight: FontWeight.w400),
+        ),
+        value: value,
+        groupValue: selectedValue,
+        onChanged: onChanged,
+        shape: StadiumBorder(side: BorderSide(color: AppColors.primaryColor)),
+        fillColor: MaterialStateProperty.all(AppColors.primaryColor),
+        activeColor: AppColors.primaryColor,
+        selectedTileColor: AppColors.primaryColor.withOpacity(0.1),
       ),
-      value: value,
-      groupValue: selectedValue,
-      onChanged: onChanged,
-      shape: StadiumBorder(side: BorderSide(color: AppColors.primaryColor)),
-      fillColor: MaterialStateProperty.all(AppColors.primaryColor),
-      activeColor: AppColors.primaryColor,
-      selectedTileColor: AppColors.primaryColor.withOpacity(0.1),
     );
   }
 
@@ -435,6 +452,7 @@ class _FilterScreenState extends State<FilterScreen> {
           text,
           style: TextStyle(fontWeight: FontWeight.w400, fontSize: 24.sp),
         ),
+        SizedBox(height: 10.h),
         TextField(
           decoration: InputDecoration(
             hintText: hint,
@@ -470,7 +488,7 @@ class _FilterScreenState extends State<FilterScreen> {
           text,
           style: TextStyle(fontSize: 24.sp, fontWeight: FontWeight.w400),
         ),
-        SizedBox(height: 4.h),
+        SizedBox(height: 10.h),
         DropdownButtonFormField<String>(
           decoration: InputDecoration(
             hintText: hint,

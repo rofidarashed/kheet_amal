@@ -51,71 +51,7 @@ Container childFeatures(
       ),
       SizedBox(height: 12.h),
       Text('add_report.age'.tr(), style: TextStyle(fontSize: 20.sp)),
-      LayoutBuilder(
-        builder: (context, constraints) {
-          return SizedBox(
-            width: constraints.maxWidth,
-            child: FlutterSlider(
-              values: [state.startAge.toDouble(), state.endAge.toDouble()],
-              min: 0,
-              max: 17,
-              rangeSlider: true,
-              trackBar: FlutterSliderTrackBar(
-                inactiveTrackBar: BoxDecoration(
-                  color: AppColors.inactiveTrackbarColor,
-                ),
-                activeTrackBar: BoxDecoration(color: AppColors.primaryColor),
-                activeTrackBarHeight: 5.h,
-              ),
-              tooltip: FlutterSliderTooltip(
-                positionOffset: FlutterSliderTooltipPositionOffset(top: 55),
-
-                alwaysShowTooltip: true,
-                disabled: false,
-                custom: (value) {
-                  return Text(
-                    '${value.toInt()} ${'add_report.years'.tr()}',
-                    style: TextStyle(fontSize: 14.sp),
-                    textDirection: context.locale.languageCode == 'ar'
-                        ? ui.TextDirection.rtl
-                        : ui.TextDirection.ltr,
-                  );
-                },
-              ),
-              onDragging: (handlerIndex, lowerValue, upperValue) =>
-                  cubit.selectAge(lowerValue.toInt(), upperValue.toInt()),
-              handler: FlutterSliderHandler(
-                decoration: BoxDecoration(),
-                child: Material(
-                  type: MaterialType.circle,
-                  color: AppColors.primaryColor,
-                  elevation: 0,
-                  child: Container(
-                    width: 29.w,
-                    height: 29.h,
-                    padding: EdgeInsets.all(5),
-                    child: Icon(Icons.circle, color: Colors.white, size: 11),
-                  ),
-                ),
-              ),
-              rightHandler: FlutterSliderHandler(
-                decoration: BoxDecoration(),
-                child: Material(
-                  type: MaterialType.circle,
-                  color: AppColors.primaryColor,
-                  elevation: 0,
-                  child: Container(
-                    width: 29,
-                    height: 29,
-                    padding: EdgeInsets.all(5),
-                    child: Icon(Icons.circle, color: AppColors.white, size: 11),
-                  ),
-                ),
-              ),
-            ),
-          );
-        },
-      ),
+      CustomAgeSlider(cubit: cubit, state: state,),
       SizedBox(height: 8.h),
       CustomDropdown<SkinColor>(
         title: 'add_report.skin_color'.tr(),
@@ -279,4 +215,79 @@ Container childFeatures(
       ),
     ],
   );
+}
+
+class CustomAgeSlider extends StatelessWidget {
+  const CustomAgeSlider({super.key, required this.cubit, required this.state});
+  final AddReportCubit cubit;
+  final AddReportState state;
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return SizedBox(
+          width: constraints.maxWidth,
+          child: FlutterSlider(
+            values: [state.startAge.toDouble(), state.endAge.toDouble()],
+            min: 0,
+            max: 17,
+            rangeSlider: true,
+            trackBar: FlutterSliderTrackBar(
+              inactiveTrackBar: BoxDecoration(
+                color: AppColors.inactiveTrackbarColor,
+              ),
+              activeTrackBar: BoxDecoration(color: AppColors.primaryColor),
+              activeTrackBarHeight: 5.h,
+            ),
+            tooltip: FlutterSliderTooltip(
+              positionOffset: FlutterSliderTooltipPositionOffset(top: 55),
+
+              alwaysShowTooltip: true,
+              disabled: false,
+              custom: (value) {
+                return Text(
+                  '${value.toInt()} ${'add_report.years'.tr()}',
+                  style: TextStyle(fontSize: 14.sp),
+                  textDirection: context.locale.languageCode == 'ar'
+                      ? ui.TextDirection.rtl
+                      : ui.TextDirection.ltr,
+                );
+              },
+            ),
+            onDragging: (handlerIndex, lowerValue, upperValue) =>
+                cubit.selectAge(lowerValue.toInt(), upperValue.toInt()),
+            handler: FlutterSliderHandler(
+              decoration: BoxDecoration(),
+              child: Material(
+                type: MaterialType.circle,
+                color: AppColors.primaryColor,
+                elevation: 0,
+                child: Container(
+                  width: 29.w,
+                  height: 29.h,
+                  padding: EdgeInsets.all(5),
+                  child: Icon(Icons.circle, color: Colors.white, size: 11),
+                ),
+              ),
+            ),
+            rightHandler: FlutterSliderHandler(
+              decoration: BoxDecoration(),
+              child: Material(
+                type: MaterialType.circle,
+                color: AppColors.primaryColor,
+                elevation: 0,
+                child: Container(
+                  width: 29,
+                  height: 29,
+                  padding: EdgeInsets.all(5),
+                  child: Icon(Icons.circle, color: AppColors.white, size: 11),
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
 }

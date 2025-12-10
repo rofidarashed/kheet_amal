@@ -16,6 +16,7 @@ class AppColors {
   static const Color royalblue = Color(0xFF1450B1);
 
   static const Color iconRed = Color(0xffC50C0C);
+  static const Color deleteIcon = Color(0xffE84545);
 
   static const Color sBlue = Color(0xff5A60E7);
   static const Color sBrown = Color(0xff863800);

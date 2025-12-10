@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 class CustomConfirmationDialog extends StatelessWidget {
@@ -60,7 +61,7 @@ class CustomConfirmationDialog extends StatelessWidget {
                     child: Text(
                       'cancel'.tr(),
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 20.sp,
                         color: Colors.grey.shade600,
                         fontWeight: FontWeight.w600,
                       ),
@@ -70,13 +71,12 @@ class CustomConfirmationDialog extends StatelessWidget {
                 const SizedBox(width: 12),
 
                 Expanded(
-                  child: TextButton(
-                    onPressed: onPressed,
-
+                  child: InkWell(
+                    onTap: onPressed,
                     child: Text(
                       actionText,
-                      style: const TextStyle(
-                        fontSize: 16,
+                      style: TextStyle(
+                        fontSize: 20.sp,
                         color: Colors.red,
                         fontWeight: FontWeight.w600,
                       ),

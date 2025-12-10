@@ -35,7 +35,9 @@ class _EditProfileFormSectionState extends State<EditProfileFormSection> {
     _nameController = TextEditingController(text: widget.user.name);
     _emailController = TextEditingController(text: widget.user.email);
     _phoneController = TextEditingController(text: widget.user.phone);
-    _locationController = TextEditingController(text: widget.user.address ?? '');
+    _locationController = TextEditingController(
+      text: widget.user.address ?? '',
+    );
   }
 
   @override
@@ -64,6 +66,7 @@ class _EditProfileFormSectionState extends State<EditProfileFormSection> {
             label: "email".tr(),
             controller: _emailController,
             readOnly: true,
+            enabled: false,
           ),
           CustomTextEditField(
             label: "phone".tr(),
@@ -102,6 +105,7 @@ class _EditProfileFormSectionState extends State<EditProfileFormSection> {
                   ),
                   padding: EdgeInsets.zero,
                   elevation: 2,
+                  shadowColor: Colors.transparent,
                 ),
                 child: widget.isLoading
                     ? SizedBox(

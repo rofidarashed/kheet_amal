@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kheet_amal/core/utils/app_colors.dart';
 import 'package:kheet_amal/feature/filter/filter_screen.dart';
 import 'package:kheet_amal/feature/home/data/models/report_model.dart';
+import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 
 Widget customSearchFailed({
   required BuildContext context,
@@ -65,9 +66,10 @@ Widget customSearchFailed({
       SizedBox(height: 24.h),
       ElevatedButton(
         onPressed: () {
-          Navigator.push(
+          PersistentNavBarNavigator.pushNewScreen(
             context,
-            MaterialPageRoute(builder: (context) => FilterScreen()),
+            screen: FilterScreen(),
+            withNavBar: false,
           );
         },
         style: ElevatedButton.styleFrom(

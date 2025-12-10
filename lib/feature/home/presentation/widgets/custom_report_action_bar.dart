@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:kheet_amal/feature/comments/presentation/screen/comments_screen.dart';
 import 'package:kheet_amal/feature/home/cubit/home_cubit.dart';
 import 'package:kheet_amal/feature/home/cubit/home_state.dart';
+import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 import '../../../comments/cubits/comments_cubit/comments_cubit.dart';
 import '../../../comments/cubits/comments_cubit/comments_state.dart';
 import '../../data/models/report_model.dart';
@@ -41,7 +42,6 @@ class ReportActionBar extends StatelessWidget {
               return GestureDetector(
                 onTap: () {
                   context.read<HomeCubit>().toggleLike(report.id);
-
                 },
                 child: SvgPicture.asset(
                   currentReport.isLiked
@@ -75,15 +75,14 @@ class ReportActionBar extends StatelessWidget {
 
           // Comments button
           InkWell(
-            onTap: () => Navigator.push(
+            onTap: () => PersistentNavBarNavigator.pushNewScreen(
               context,
-              MaterialPageRoute(
-                builder: (_) => BlocProvider(
-                  create: (context) =>
-                      CommentsCubit()..commentCount(postId: report.id),
-                  child: CommentsPage(reportId: report.id),
-                ),
+              screen: BlocProvider(
+                create: (context) =>
+                    CommentsCubit()..commentCount(postId: report.id),
+                child: CommentsPage(reportId: report.id),
               ),
+              withNavBar: false,
             ),
             child: Image.asset(
               "assets/images/messages_icon.png",
@@ -115,4 +114,3 @@ class ReportActionBar extends StatelessWidget {
     );
   }
 }
-

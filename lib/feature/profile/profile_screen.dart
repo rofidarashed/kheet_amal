@@ -71,13 +71,12 @@ class ProfileScreen extends StatelessWidget {
                           onPressed: isLoading
                               ? null
                               : () async {
-                                  final updated = await Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (_) =>
-                                          EditScreen(user: displayUser),
-                                    ),
-                                  );
+                                  final updated =
+                                      await PersistentNavBarNavigator.pushNewScreen(
+                                        context,
+                                        screen: EditScreen(user: displayUser),
+                                        withNavBar: false,
+                                      );
 
                                   if (updated == true) {
                                     authCubit.fetchUserData();
@@ -87,8 +86,8 @@ class ProfileScreen extends StatelessWidget {
                         Text(
                           'my_account'.tr(),
                           style: TextStyle(
-                            fontSize: 20.sp,
-                            fontWeight: FontWeight.bold,
+                            fontSize: 28.sp,
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
                         const SizedBox(width: 30),

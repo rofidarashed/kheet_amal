@@ -13,6 +13,7 @@ import 'package:kheet_amal/feature/home/presentation/screens/report_details_scre
 import 'package:kheet_amal/feature/home/presentation/widgets/custom_icon_button.dart';
 import 'package:kheet_amal/feature/home/presentation/widgets/custom_report_action_bar.dart';
 import 'package:kheet_amal/feature/saved/cubits/saved_reports_cubit/saved_reports_cubit.dart';
+import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import '../../../saved/cubits/saved_reports_cubit/saved_reports_state.dart';
 import 'info_row.dart';
@@ -124,18 +125,35 @@ class ChildCard extends StatelessWidget {
                   children: [
                     showDelete == true
                         ? PopupMenuButton(
+                            constraints: BoxConstraints(
+                              maxWidth: 150.w,
+                              maxHeight: 50.h,
+                            ),
+                            menuPadding: EdgeInsets.zero,
                             itemBuilder: (context) => [
                               PopupMenuItem(
                                 onTap: onTap,
                                 value: 'delete',
-                                child: Row(
-                                  children: [
-                                    Icon(Icons.delete, color: Colors.red),
-                                    Text(
-                                      "حذف البلاغ",
-                                      style: TextStyle(color: Colors.red),
-                                    ),
-                                  ],
+                                child: Center(
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        context.locale.languageCode == 'ar'
+                                        ? MainAxisAlignment.end
+                                        : MainAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "حذف البلاغ",
+                                        style: TextStyle(
+                                          color: AppColors.deleteIcon,
+                                        ),
+                                      ),
+                                      SizedBox(width: 8.w),
+                                      Icon(
+                                        Icons.delete_outline,
+                                        color: AppColors.deleteIcon,
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ],
@@ -196,18 +214,13 @@ class ChildCard extends StatelessWidget {
                       onPressed: () {
                         final savedCubit = context.read<SavedReportsCubit>();
 
-
-                        Navigator.push(
+                        PersistentNavBarNavigator.pushNewScreen(
                           context,
-                          MaterialPageRoute(
-                            builder: (context) => MultiBlocProvider(
-                              providers: [
-                                BlocProvider.value(value: savedCubit),
-
-                              ],
-                              child: ReportDetails(report: report),
-                            ),
+                          screen: MultiBlocProvider(
+                            providers: [BlocProvider.value(value: savedCubit)],
+                            child: ReportDetails(report: report),
                           ),
+                          withNavBar: false,
                         );
                       },
                     ),

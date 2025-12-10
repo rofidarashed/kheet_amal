@@ -9,6 +9,7 @@ import 'package:kheet_amal/core/utils/app_icons.dart';
 import 'package:kheet_amal/feature/notification/cubit/notification_cubit.dart';
 import 'package:kheet_amal/feature/notification/cubit/notification_state.dart';
 import 'package:kheet_amal/feature/statistics/screens/statistics_screen.dart';
+import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({super.key, required this.title});
@@ -23,7 +24,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       title: Text(
         title,
-        style: TextStyle(fontWeight: FontWeight.w700, fontSize: 22.sp),
+        style: TextStyle(fontWeight: FontWeight.w700, fontSize: 28.sp),
       ),
       centerTitle: true,
       elevation: 0,
@@ -52,13 +53,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   height: 20.w,
                 ),
                 onPressed: () {
-                  Navigator.push(
+                  PersistentNavBarNavigator.pushNewScreen(
                     context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return StatisticsScreen();
-                      },
-                    ),
+                    screen: StatisticsScreen(),
+                    withNavBar: false,
+                    pageTransitionAnimation: PageTransitionAnimation.cupertino,
                   );
                 },
               ),

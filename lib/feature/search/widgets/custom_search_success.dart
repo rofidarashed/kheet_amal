@@ -13,23 +13,20 @@ Widget customSearchSuccess({
     children: [
       SizedBox(height: 10.h),
 
-      Align(
-        alignment: Alignment.topRight,
-        child: Text(
-          "latest_cases".tr(),
-          style: TextStyle(fontSize: 24.sp, fontWeight: FontWeight.w400),
-        ),
-      ),
-
-      SizedBox(height: 16.h),
-
+      // Align(
+      //   alignment: Alignment.topRight,
+      //   child: Text(
+      //     "latest_cases".tr(),
+      //     style: TextStyle(fontSize: 24.sp, fontWeight: FontWeight.w400),
+      //   ),
+      // ),
+      // SizedBox(height: 16.h),
       ListView.builder(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         itemCount: results.length,
         itemBuilder: (context, index) {
           final doc = results[index];
-
 
           return Padding(
             padding: EdgeInsets.symmetric(vertical: 8.h),

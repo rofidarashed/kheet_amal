@@ -11,6 +11,7 @@ import 'package:kheet_amal/feature/profile/widgets/change_lang.dart';
 import 'package:kheet_amal/feature/saved/cubits/saved_reports_cubit/saved_reports_cubit.dart';
 import 'package:kheet_amal/feature/saved/saved_screen.dart';
 import 'package:kheet_amal/feature/settings/settings_home.dart';
+import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 import 'menu_item.dart';
 
 class ProfileMenuSection extends StatelessWidget {
@@ -30,18 +31,20 @@ class ProfileMenuSection extends StatelessWidget {
                 title: 'saved'.tr(),
                 icon: Icons.bookmark_border,
                 count: context.watch<SavedReportsCubit>().savedReportsCount,
-                onTap: () => Navigator.push(
+                onTap: () => PersistentNavBarNavigator.pushNewScreen(
                   context,
-                  MaterialPageRoute(builder: (context) => SavedScreen()),
+                  screen: SavedScreen(),
+                  withNavBar: false,
                 ),
               ),
               MenuItem(
                 title: 'reports'.tr(),
                 icon: Icons.edit_outlined,
                 count: context.watch<MyReportsCubit>().reportsCount,
-                onTap: () => Navigator.push(
+                onTap: () => PersistentNavBarNavigator.pushNewScreen(
                   context,
-                  MaterialPageRoute(builder: (context) => MyReports()),
+                  screen: MyReports(),
+                  withNavBar: false,
                 ),
               ),
               const ChangeLang(),
@@ -49,11 +52,10 @@ class ProfileMenuSection extends StatelessWidget {
                 title: 'settings'.tr(),
                 icon: Icons.settings,
                 onTap: () {
-                  Navigator.push(
+                  PersistentNavBarNavigator.pushNewScreen(
                     context,
-                    MaterialPageRoute(
-                      builder: (context) => const SettingsHome(),
-                    ),
+                    screen: const SettingsHome(),
+                    withNavBar: false,
                   );
                 },
               ),

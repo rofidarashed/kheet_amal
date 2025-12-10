@@ -10,12 +10,14 @@ class CustomTextEditField extends StatelessWidget {
     this.validator,
     this.readOnly = false,
     this.fillColor,
+    this.enabled,
   });
 
   final String label;
   final TextEditingController controller;
   final String? Function(String?)? validator;
   final bool readOnly;
+  final bool? enabled;
   final Color? fillColor;
 
   @override
@@ -33,6 +35,7 @@ class CustomTextEditField extends StatelessWidget {
           width: 390.w,
           height: 45.h,
           child: TextFormField(
+            enabled: enabled,
             controller: controller,
             textAlign: TextAlign.right,
             validator: validator,
@@ -42,7 +45,11 @@ class CustomTextEditField extends StatelessWidget {
               fillColor: fillColor ?? AppColors.backgroundColor,
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(15.r),
-                borderSide:  BorderSide(color: AppColors.primaryColor),
+                borderSide: BorderSide(color: AppColors.primaryColor),
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15.r),
+                borderSide: BorderSide(color: AppColors.primaryColor),
               ),
               contentPadding: EdgeInsets.symmetric(
                 horizontal: 10.w,
